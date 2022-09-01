@@ -2,6 +2,7 @@
 
 from flask import Flask, render_template
 
+from pathlib import Path
 # TODO: Access to the tracks should be implemented via the repository pattern and using blueprints, so this can not
 #  stay here!
 from music.domainmodel.track import Track
@@ -16,8 +17,29 @@ def create_some_track():
     return some_track
 
 
-def create_app():
+def create_app(test_config=None):
+    """Construct the core application."""
+
     app = Flask(__name__)
+
+    # Configure the app from configuration-file settings.
+    app.config.from_object('config.Config')
+    data_path = Path('music') / 'adapters' / 'data'
+
+    if test_config is not None:
+        # Load test configuration, and override any configuration settings.
+        app.config.from_mapping(test_config)
+        data_path = app.config['TEST_DATA_PATH']
+
+    # Create the memory repository
+
+    # fill the content of the memory repository from the provided csv files
+
+    # Build the application - these steps require an application context.
+    # Register the blueprints to the app instance.
+    with app.app_context():
+        from .home import home
+        app.register_blueprint(home.home_blueprint)
 
     @app.route('/')
     def home():

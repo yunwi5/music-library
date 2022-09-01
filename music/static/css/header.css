@@ -1,0 +1,83 @@
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+
+    padding: 0.75rem 3rem;
+    border-bottom: 2px solid var(--color-gray-3);
+}
+
+#header .header__search {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.header__search select {
+    background-color: var(--color-primary-6);
+    color: var(--color-white);
+    padding: 0.5rem 1rem;
+    border-radius: 3px;
+    font-size: 1.1rem;
+    box-shadow: var(--shadow-light);
+    border: 2px solid transparent;
+}
+
+.header__search select:hover {
+    background-color: var(--color-primary-7);
+}
+
+.header__search select:focus {
+    border: 2px solid var(--color-gray-4);
+    background-color: var(--color-gray-2);
+    color: var(--color-gray-7);
+}
+
+.header__search select option {
+    background-color: var(--color-gray-2);
+}
+
+#header .header__input {
+    display: flex;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: var(--shadow-light);
+}
+
+#header .header__input:focus-within {
+    outline: var(--color-primary-6) solid 2px;
+}
+
+#header .header__input input {
+    height: 100%;
+    width: 100%;
+    padding: 0 7px;
+    min-width: 13.5rem;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border: 1.5px solid var(--color-gray-4);
+}
+
+#header .header__input button {
+    background-color: var(--color-primary-6);
+    padding: 5px;
+    padding-left: 7.5px;
+    padding-right: 7.5px;
+}
+
+#header .header__input button:hover {
+    background-color: var(--color-primary-8);
+}
+
+.header__nav {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.header__nav-auth {
+    display: flex;
+    gap: 0.5rem;
+}

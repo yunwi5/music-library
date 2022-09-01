@@ -1,0 +1,19 @@
+#footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    margin: 0 8%;
+    border-top: 2px solid var(--color-gray-3);
+    padding: 0.5rem 3px;
+}
+
+#footer .heading-2 {
+    font-size: 1.35rem;
+}
+
+#footer .footer__content {
+    color: var(--color-gray-6);
+    opacity: 0.9;
+}
