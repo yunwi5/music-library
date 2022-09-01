@@ -20,11 +20,11 @@
     </form>
     <nav class="header__nav">
         <div class="header__nav-items">
-            <a>Browse</a>
+            <a class="link">Browse</a>
         </div>
         <div class="header__nav-auth">
-            <button class="btn btn-empty">Login</button>
-            <button class="btn btn-fill">Register</button>
+            <a class="btn btn-empty" href="{{ url_for('authentication_bp.login') }}">Login</a>
+            <a class="btn btn-fill" href="{{ url_for('authentication_bp.register') }}">Register</a>
         </div>
     </nav>
 </header>
