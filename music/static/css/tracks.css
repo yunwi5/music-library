@@ -26,6 +26,10 @@
     border-collapse: separate;
 }
 
+.track-row:hover {
+    background-color: var(--color-primary-1);
+}
+
 .track-row td {
     padding: 5px 0;
 }
