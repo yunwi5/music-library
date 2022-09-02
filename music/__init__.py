@@ -49,6 +49,10 @@ def create_app(test_config=None):
         from .authentication import authentication
         app.register_blueprint(authentication.authentication_blueprint)
 
+        # Track blueprint
+        from .tracks import tracks
+        app.register_blueprint(tracks.tracks_blueprint)
+
     # No need
     # @app.route('/')
     # def home():

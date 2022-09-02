@@ -8,7 +8,6 @@ from password_validator import PasswordValidator
 
 from functools import wraps
 
-# import music.utilities.utilities as utilities
 import music.authentication.services as services
 import music.adapters.repository as repo
 
@@ -38,6 +37,7 @@ def register():
     return render_template(
         'authentication/auth.html',
         title='Register',
+        sub_title='Starts your music journey',
         form=form,
         user_name_error_message=user_name_not_unique,
         handler_url=url_for('authentication_bp.register'),
@@ -77,6 +77,7 @@ def login():
     return render_template(
         'authentication/auth.html',
         title='Login',
+        sub_title='Continue your music journey',
         user_name_error_message=user_name_not_recognised,
         password_error_message=password_does_not_match_user_name,
         form=form,
@@ -119,16 +120,20 @@ class PasswordValid:
 class RegistrationForm(FlaskForm):
     user_name = StringField('Username', [
         DataRequired(message='Your user name is required'),
-        Length(min=3, message='Your user name is too short')])
+        Length(min=3, message='Your user name is too short')],
+        render_kw={"placeholder": "Enter your username"})
     password = PasswordField('Password', [
         DataRequired(message='Your password is required'),
-        PasswordValid()])
+        PasswordValid()],
+        render_kw={"placeholder": "Enter your password"})
     submit = SubmitField('Register')
 
 
 class LoginForm(FlaskForm):
     user_name = StringField('Username', [
-        DataRequired()])
+        DataRequired()],
+        render_kw={"placeholder": "Enter your username"})
     password = PasswordField('Password', [
-        DataRequired()])
+        DataRequired()],
+        render_kw={"placeholder": "Enter your password"})
     submit = SubmitField('Login')

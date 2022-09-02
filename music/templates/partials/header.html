@@ -20,11 +20,21 @@
     </form>
     <nav class="header__nav">
         <div class="header__nav-items">
-            <a class="link">Browse</a>
+            <a class="link" href="{{ url_for('tracks_bp.browse_tracks') }}">Browse</a>
         </div>
         <div class="header__nav-auth">
+            <!-- If the username is not found, that means user is not authenticated. So show login and register links -->
+            {% if not user_name %}
             <a class="btn btn-empty" href="{{ url_for('authentication_bp.login') }}">Login</a>
             <a class="btn btn-fill" href="{{ url_for('authentication_bp.register') }}">Register</a>
+
+            <!-- If authenticated, show username and logout button -->
+            {% else %}
+            <p class="header__user">
+                {{user_name}}
+            </p>
+            <a class="btn btn-empty" href="{{ url_for('authentication_bp.logout') }}">Logout</a>
+            {% endif %}
         </div>
     </nav>
 </header>

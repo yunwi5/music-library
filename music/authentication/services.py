@@ -1,3 +1,4 @@
+import random
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from music.adapters.repository import AbstractRepository
@@ -25,8 +26,10 @@ def add_user(user_name: str, password: str, repo: AbstractRepository):
     # Encrypt password so that the database doesn't store passwords 'in the clear'.
     password_hash = generate_password_hash(password)
 
+    user_id = random.randrange(1, 1000000)
     # Create and store the new User, with password encrypted.
-    user = User(user_name, password_hash)
+    user = User(user_id, user_name, password_hash)
+    print('New user:', user)
     repo.add_user(user)
 
 

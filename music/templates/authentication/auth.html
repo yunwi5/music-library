@@ -2,15 +2,17 @@
 
 {% block content %}
 <main id="auth">
-    Auth page
     <div class="form-wrapper">
-        <h1 class="title">{{ title }}</h1>
+        <div class="auth-heading">
+            <h1 class="auth-heading__title">{{ title }}</h1>
+            <p class="auth-heading__subtitle">{{sub_title}}</p>
+        </div>
         <form class="auth-form" method="POST" action="{{ handler_url }}">
             {{ form.csrf_token }}
             <!-- Need to include this token - Flask WTForms requires it. -->
-            <div class="form-field">{{ form.user_name.label }} {{ form.user_name }}
+            <div class="auth-form__field">{{ form.user_name.label }} {{ form.user_name }}
                 {% if form.user_name.errors or user_name_error_message is not none %}
-                <ul class="errors">
+                <ul class="auth-form_errors">
                     {% if user_name_error_message is not none %}
                     <li>
                         {{ user_name_error_message }}
@@ -22,9 +24,9 @@
                 </ul>
                 {% endif %}
             </div>
-            <div class="form-field">{{ form.password.label }} {{ form.password }}
+            <div class="auth-form__field">{{ form.password.label }} {{ form.password }}
                 {% if form.password.errors or password_error_message is not none %}
-                <ul class="errors">
+                <ul class="auth-form__errors">
                     {% if password_error_message is not none %}
                     <li>
                         {{ password_error_message }}
@@ -37,6 +39,15 @@
                 {% endif %}
             </div>
             {{ form.submit }}
+
+            <!-- Auth redirect between login and register pages -->
+            {% if title.lower() == 'login' %}
+            <p class="auth-redirect"><span>Do not have an accout?</span> <a class="link"
+                    href="{{ url_for('authentication_bp.register') }}">Sign Up!</a></p>
+            {% else %}
+            <p class="auth-redirect"><span>Already have an accout?</span> <a class="link"
+                    href="{{ url_for('authentication_bp.login') }}">Login!</a></p>
+            {% endif %}
         </form>
     </div>
 </main>

@@ -29,11 +29,12 @@ class MemoryRepository(AbstractRepository):
 
     def add_user(self, user: User):
         self.__users.append(user)
+        print('New users:', self.__users)
 
     def get_user(self, user_name) -> User:
         return next((user for user in self.__users if user.user_name == user_name), None)
 
-    def get_tracks(self):
+    def get_tracks(self) -> List[Track]:
         return self.__tracks
 
     def add_track(self, track: Track):

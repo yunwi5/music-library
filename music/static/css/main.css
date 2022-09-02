@@ -4,6 +4,8 @@
 /* Import App CSS files */
 @import './header.css';
 @import './footer.css';
+@import './auth.css';
+@import './tracks.css';
 
 :root {
     /* Primary color sheme */
@@ -19,6 +21,8 @@
     --color-primary-10: #1e3a8a;
 
     /* Secondary color scheme */
+
+    --color-danger: #db2777;
 
     /* Gray color scheme */
     --color-gray-1: #f9fafb;
@@ -38,17 +42,6 @@
     --shadow-light: 1px 1.5px 2.2px rgb(0, 0, 0, 0.2);
 }
 
-html,
-body {
-    min-height: 100vh;
-    background-color: var(--color-gray-1);
-    color: var(--color-gray-8);
-}
-
-main {
-    min-height: 82.5vh;
-}
-
 *,
 *::before,
 *::after {
@@ -58,6 +51,21 @@ main {
     list-style: none;
     text-decoration: none;
     font-family: 'Open Sans', sans-serif;
+}
+
+html,
+body {
+    min-height: 100vh;
+    background-color: var(--color-gray-1);
+    color: var(--color-gray-8);
+}
+
+main {
+    min-height: 82.5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 h1,
@@ -77,6 +85,11 @@ button {
 a,
 button {
     cursor: pointer;
+}
+
+.link,
+.link:visited {
+    color: var(--color-gray-8);
 }
 
 .link:hover {
@@ -109,6 +122,11 @@ button {
     background-color: var(--color-primary-6);
 }
 
+.btn-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .btn-empty:hover,
 .btn-fill:hover {
     border: 2px solid var(--color-primary-8);
@@ -119,6 +137,10 @@ button {
 .heading-2 {
     font-size: 1.5rem;
     font-weight: 600;
+    color: var(--color-primary-7);
+}
+
+.heading-2 a:visited {
     color: var(--color-primary-7);
 }
 

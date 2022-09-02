@@ -35,7 +35,7 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_tracks(self):
+    def get_tracks(self) -> List[Track]:
         raise NotImplementedError
 
     @abc.abstractmethod
