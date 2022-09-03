@@ -19,11 +19,7 @@ def browse_tracks():
 
     # Current page of browsing which starts from 0
     page = request.args.get('page')
-
-    if page is None or not page.isdigit():
-        page = 0
-    else:
-        page = int(page)
+    page = int(page) if page is not None and page.isdigit() else 0
 
     num_tracks = services.get_number_of_tracks(repo.repo_instance)
     page_tracks = services.get_tracks_for_page(
@@ -49,7 +45,10 @@ def browse_tracks():
 
     return render_template(
         'tracks/browse.html',
-        title='Browse Tracks',
+        # Custom page title
+        title=f'Browse Tracks | Music Librarian',
+        # Page heading
+        heading='Browse Tracks',
         page=page,
         search_form=SearchForm(),
         user_name=user_name,
@@ -115,8 +114,11 @@ def search_tracks():
 
     return render_template(
         'tracks/browse.html',
-        title='Tracks for',
-        # Highlight text on the title
+        # Custom page title
+        title=f'Tracks By {search_key.capitalize()} | Music Librarian',
+        # Page heading
+        heading='Tracks for',
+        # Highlight text on the heading
         highlight=f'{search_key.capitalize()}s based on "{text}"',
         page=page,
         search_form=search_form,

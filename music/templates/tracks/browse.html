@@ -2,12 +2,12 @@
 <main id="tracks">
     <header class="tracks-header">
         {% if not highlight %}
-        <!-- Mark up for normal browsing page title -->
-        <h1>{{title}}</h1>
+        <!-- Mark up for normal browsing page title heading -->
+        <h1>{{heading}}</h1>
         {% else %}
-        <!-- Mark up for the title containing highlight such as search key 'Artist', 'Author' that should be emphasized -->
+        <!-- Mark up for the heading containing highlight such as search key 'Artist', 'Author' that should be emphasized -->
         <h1>
-            <span class="title">{{title}}</span>
+            <span class="heading">{{heading}}</span>
             <span class="highlight">{{highlight}}</span>
         </h1>
         {% endif %}

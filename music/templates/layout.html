@@ -4,12 +4,17 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Music Librarian</title>
+    <!-- If there is a custom title for the page, display it instead of the default title. -->
+    <title>
+        {% if title %}
+        {{title}}
+        {% else %}
+        Music Librarian
+        {% endif %}
+    </title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="static/css/main.css">
-    <!-- <link rel="bookmark" type="image/x-icon" href="favicon.ico" /> -->
-    <!-- <link rel="icon" href="favicon.ico" /> -->
 </head>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">

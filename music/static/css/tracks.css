@@ -10,7 +10,7 @@
     color: var(--color-primary-7);
 }
 
-.tracks-header .title {
+.tracks-header .heading {
     color: var(--color-gray-7);
     font-weight: 400;
 }
