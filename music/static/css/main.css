@@ -5,7 +5,8 @@
 @import './header.css';
 @import './footer.css';
 @import './auth.css';
-@import './tracks.css';
+@import './browse.css';
+@import './track-detail.css';
 
 :root {
     /* Primary color sheme */
@@ -132,6 +133,13 @@ button {
     border: 2px solid var(--color-primary-8);
     background-color: var(--color-primary-8);
     color: var(--color-white);
+}
+
+.wrapper {
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    border: 2px solid var(--color-gray-4);
+    box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
 }
 
 .heading-2 {

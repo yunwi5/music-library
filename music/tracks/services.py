@@ -18,8 +18,11 @@ class InvalidSearchKeyException(Exception):
     pass
 
 
-def get_track(track_id: int, repo: AbstractRepository):
-    pass
+def get_track(track_id: int, repo: AbstractRepository) -> dict:
+    if track_id is None:
+        return None
+    track = repo.get_track(track_id)
+    return track_to_dict(track) if track is not None else None
 
 
 def get_number_of_tracks(repo: AbstractRepository):
@@ -68,6 +71,9 @@ def get_duration_format(total_seconds: int):
 
 
 def track_to_dict(track: Track):
+    genre_names = [genre.name for genre in track.genres]
+    genres_format = ', '.join(genre_names)
+
     track_dict = {
         'track_id': track.track_id,
         'title': track.title,
@@ -75,7 +81,7 @@ def track_to_dict(track: Track):
         'album': track.album.title if track.album is not None else None,
         'track_url': track.track_url,
         'track_duration': get_duration_format(track.track_duration),
-        'genres': [genre.name for genre in track.genres]
+        'genres': genres_format
     }
     return track_dict
 

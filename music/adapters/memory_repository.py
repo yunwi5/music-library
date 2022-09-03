@@ -34,6 +34,10 @@ class MemoryRepository(AbstractRepository):
     def get_user(self, user_name) -> User:
         return next((user for user in self.__users if user.user_name == user_name), None)
 
+    # Get a specific track by id
+    def get_track(self, track_id: int) -> Track:
+        return next((track for track in self.__tracks if track.track_id == track_id), None)
+
     def get_tracks(self) -> List[Track]:
         return self.__tracks
 

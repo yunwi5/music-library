@@ -1,0 +1,38 @@
+/* Styles for track detail section & track review section */
+
+.track-wrapper {
+    min-width: 35rem;
+}
+
+.track-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1rem;
+    row-gap: 1rem;
+}
+
+/* Track section label styling */
+.track-grid__section strong {
+    display: inline-block;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-primary-7);
+    margin-bottom: 0.15rem;
+}
+
+.track-grid__long {
+    grid-column: 1/-1;
+}
+
+.track-action {
+    margin-top: 3.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.track-action .link {
+    color: var(--color-primary-7) !important;
+}
+
+/* Review section styling */

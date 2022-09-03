@@ -3,6 +3,12 @@ from datetime import date
 from flask import Blueprint
 from flask import request, render_template, redirect, url_for, session
 
+from better_profanity import profanity
+from flask_wtf import FlaskForm
+from wtforms import TextAreaField, HiddenField, SubmitField, validators, IntegerField
+from wtforms.validators import DataRequired, Length, ValidationError
+from music.domainmodel.review import Review
+
 import music.tracks.services as services
 import music.adapters.repository as repo
 from music.utilities.utilities import SearchForm
@@ -41,7 +47,8 @@ def browse_tracks():
 
     # TODO: Construct urls for viewing tracks reviews and adding comments.
     for track in page_tracks:
-        pass
+        track['track_detail_url'] = url_for(
+            'tracks_bp.track_detail', track_id=track['track_id'])
 
     return render_template(
         'tracks/browse.html',
@@ -129,3 +136,82 @@ def search_tracks():
         next_tracks_url=next_tracks_url,
         last_tracks_url=last_tracks_url
     )
+
+
+# Helper functions to get track_id as an integer
+def get_track_id_arg():
+    track_id = request.args.get('track_id')
+    track_id = int(
+        track_id) if track_id is not None and track_id.isdigit() else None
+    return track_id
+
+
+@tracks_blueprint.route('/track_review', methods=['GET', 'POST'])
+@login_required
+def track_review():
+    user_name = session['user_name'] if 'user_name' in session else None
+    review_form = ReviewForm()
+
+    track_id = get_track_id_arg()
+    track = services.get_track(track_id, repo.repo_instance)
+    if request.method == 'GET':
+        # Request is a HTTP GET to display the form.
+        # Store the track id in the form.
+        review_form.track_id.data = track_id
+
+        track_title = track['title']
+        return render_template(
+            'tracks/track_detail.html',
+            title=f'Review on {track_title} | Music Librarian',
+            track=track,
+            user_name=user_name,
+            search_form=SearchForm(),
+            review_form=review_form,
+            handler_url=url_for('tracks_bp.track_review')
+        )
+
+    # Redirect the rest for now.
+    return redirect(url_for('tracks_bp.browse_tracks'))
+
+
+@tracks_blueprint.route('/track_detail', methods=['GET'])
+def track_detail():
+    user_name = session['user_name'] if 'user_name' in session else None
+    track_id = get_track_id_arg()
+    track = services.get_track(track_id, repo.repo_instance)
+
+    # If track was not found, redirect to the browsing page.
+    if track is None:
+        return redirect(url_for('tracks_bp.browse_tracks'))  # Need testing
+
+    return render_template(
+        'tracks/track_detail.html',
+        title=f"Track {track['title']} | Music Librarian",
+        track_review_url=url_for(
+            'tracks_bp.track_review', track_id=track['track_id']),
+        search_form=SearchForm(),
+        user_name=user_name,
+        track=track,
+    )
+
+
+class ProfanityFree:
+    def __init__(self, message=None):
+        if not message:
+            message = u'Field must not contain profanity'
+        self.message = message
+
+    def __call__(self, form, field):
+        if profanity.contains_profanity(field.data):
+            raise ValidationError(self.message)
+
+
+class ReviewForm(FlaskForm):
+    rating = IntegerField('Rating', [validators.DataRequired(), validators.NumberRange(
+        min=1, max=5, message='Your rating should be between 1 and 5')])
+    review_text = TextAreaField('Comment', [
+        DataRequired(),
+        Length(min=5, message='Your review should be at least 5 characters'),
+        ProfanityFree(message='Your review must not contain profanity')])
+    track_id = HiddenField('Track id')
+    submit = SubmitField('Confirm')

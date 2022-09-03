@@ -39,6 +39,10 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def get_track(self, track_id: int) -> Track:
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def add_track(self, track: Track):
         raise NotImplementedError
 

@@ -1,0 +1,72 @@
+{% extends 'layout.html' %} {% block content %}
+<main id="track-detail">
+    <section class="wrapper track-wrapper">
+        <article class="track-grid">
+            <div class="track-grid__section track-grid__long">
+                <strong>Title</strong>
+                <h2>{{track.title}}</h2>
+            </div>
+            <div class="track-grid__section">
+                <strong>Artist</strong>
+                <p>{{track.artist}}</p>
+            </div>
+            <div class="track-grid__section">
+                <strong>Album</strong>
+                <p>{{track.album}}</p>
+            </div>
+            <div class="track-grid__section">
+                <strong>Genres</strong>
+                <p>{{track.genres}}</p>
+            </div>
+            <div class="track-grid__section">
+                <strong>Duration</strong>
+                <p>{{track.track_duration}}</p>
+            </div>
+        </article>
+        <div class="track-action">
+            <a href="{{track.track_url}}" class="link">More About This Track</a>
+            <button class="btn btn-fill" onclick="location.href='{{track_review_url}}'">+ Review</button>
+        </div>
+
+        {% if review_form %}
+        <div class="form-wrapper">
+            <form action="{{handler_url}}" method="post">
+                {{review_form.article_id}}
+                <!-- Need to include this hidden field as it tracks the article being commented. -->
+                {{review_form.csrf_token}}
+                <!-- Need to include this token - Flask WTForms requires it. -->
+                <br>
+                <div class="form-field">
+                    <!-- Rating input group -->
+                    {{review_form.rating.label}} {{review_form.rating}}
+
+                    <!-- Rating errors -->
+                    {% if review_form.rating.errors %}
+                    <ul class="errors">
+                        {% for error in review_form.rating.errors %}
+                        <li>{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    <!-- Review text input group -->
+                    {{review_form.review_text.label}}
+                    {{review_form.review_text(size = 100, placeholder="Type your comment",
+                    class="textarea", cols="50", rows="6", wrap="hard")}}
+
+                    <!-- Review text errors -->
+                    {% if review_form.review_text.errors %}
+                    <ul class="errors">
+                        {% for error in review_form.review_text.errors %}
+                        <li>{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                {{ review_form.submit }}
+            </form>
+        </div>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}
