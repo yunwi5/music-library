@@ -8,12 +8,13 @@
     border-bottom: 2px solid var(--color-gray-3);
 }
 
-#header .header__search {
+/* Header searchbar form styling */
+.search-form {
     display: flex;
     gap: 0.5rem;
 }
 
-.header__search select {
+.search-form select {
     background-color: var(--color-primary-6);
     color: var(--color-white);
     padding: 0.5rem 0.5rem;
@@ -23,32 +24,32 @@
     border: 2px solid transparent;
 }
 
-.header__search select:hover {
+.search-form select:hover {
     background-color: var(--color-primary-7);
 }
 
-.header__search select:focus {
+.search-form select:focus {
     border: 2px solid var(--color-gray-4);
     background-color: var(--color-gray-2);
     color: var(--color-gray-7);
 }
 
-.header__search select option {
+.search-form select option {
     background-color: var(--color-gray-2);
 }
 
-#header .header__input {
+.search-form__group {
     display: flex;
     border-radius: 3px;
     overflow: hidden;
     box-shadow: var(--shadow-light);
 }
 
-#header .header__input:focus-within {
+.search-form__group:focus-within {
     outline: var(--color-primary-6) solid 2px;
 }
 
-#header .header__input input {
+.search-form__group .input {
     height: 100%;
     width: 100%;
     padding: 0 7px;
@@ -58,17 +59,18 @@
     border: 1.5px solid var(--color-gray-4);
 }
 
-#header .header__input button {
-    background-color: var(--color-primary-6);
+.search-form__group .submit {
     padding: 5px;
-    padding-left: 7.5px;
-    padding-right: 7.5px;
+    background-color: var(--color-primary-6);
+    border: none;
+    color: var(--color-white);
 }
 
-#header .header__input button:hover {
+.search-form__group .submit:hover {
     background-color: var(--color-primary-8);
 }
 
+/* Header navigation */
 .header__nav {
     flex: 1;
     display: flex;
@@ -83,6 +85,7 @@
     align-items: center;
 }
 
+/* Header user name indication */
 .header__user {
     font-size: 1.1rem;
     margin-right: 0.5rem;

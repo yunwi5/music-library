@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, session
 
+from music.utilities.utilities import SearchForm
 
 home_blueprint = Blueprint(
     'home_bp', __name__)
@@ -13,5 +14,6 @@ def home():
 
     return render_template(
         'home/home.html',
+        search_form=SearchForm(),
         user_name=user_name,
     )

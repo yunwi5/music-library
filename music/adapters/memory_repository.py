@@ -67,8 +67,40 @@ class MemoryRepository(AbstractRepository):
     def get_reviews(self) -> List[Review]:
         return self.__reviews
 
+    def seach_tracks_by_artist(self, artist_name: str):
+        searched_tracks = list(filter(lambda track: search_string(
+            track.artist.full_name if track.artist is not None else '', artist_name), self.__tracks))
+
+        return searched_tracks
+
+    def search_tracks_by_album(self, album_string: str):
+        searched_tracks = list(filter(lambda track: search_string(
+            track.album.title if track.album is not None else '', album_string), self.__tracks))
+
+        return searched_tracks
+
+    def search_tracks_by_genre(self, genre_string: str):
+        searched_tracks = []
+        for track in self.__tracks:
+
+            contained = False
+            for genre in track.genres:
+                if search_string(genre.name, genre_string):
+                    contained = True
+
+            if contained:
+                searched_tracks.append(track)
+
+        return searched_tracks
+
+
+# Case insensitive search
+def search_string(name: str, substring: str):
+    return substring.strip().lower() in name.lower()
 
 # Populate the memory repository with the data from the csv files using the csv reader.
+
+
 def populate(data_path: Path, repo: MemoryRepository):
 
     albums_filename = str(Path(data_path) / "raw_albums_excerpt.csv")

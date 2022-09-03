@@ -1,7 +1,16 @@
 {% extends 'layout.html' %} {% block content %}
 <main id="tracks">
     <header class="tracks-header">
+        {% if not highlight %}
+        <!-- Mark up for normal browsing page title -->
         <h1>{{title}}</h1>
+        {% else %}
+        <!-- Mark up for the title containing highlight such as search key 'Artist', 'Author' that should be emphasized -->
+        <h1>
+            <span class="title">{{title}}</span>
+            <span class="highlight">{{highlight}}</span>
+        </h1>
+        {% endif %}
     </header>
 
     <!-- Tracks table layout -->
@@ -10,6 +19,7 @@
             <tr>
                 <th>Title</th>
                 <th>Album</th>
+                <th>Genre(s)</th>
                 <th>Duration</th>
             </tr>
         </thead>
@@ -21,6 +31,11 @@
                     <span class="track-heading__artist">{{track.artist}}</span>
                 </td>
                 <td class="track-album">{{track.album}}</td>
+                <td>
+                    {% for genre in track.genres %}
+                    {{genre}}
+                    {% endfor %}
+                </td>
                 <td class="track-duration">{{track.track_duration}}</td>
             </tr>
             {% endfor %}

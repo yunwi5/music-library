@@ -80,3 +80,28 @@ class AbstractRepository(abc.ABC):
     @abc.abstractmethod
     def get_reviews(self) -> List[Review]:
         raise NotImplementedError
+
+    @abc.abstractmethod
+    def seach_tracks_by_artist(self, artist_name: str) -> List[Track]:
+        """Search for the tracks whose artist contains the input artist_name string.
+        It searches for artist names in case-insensitive and without trailing spaces.
+        Returns searched tracks as a list
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def search_tracks_by_album(self, album_string: str) -> List[Track]:
+        """Search for the tracks of which album contains the input album_name string.
+        It searches for album names in case-insensitive and without trailing spaces.
+        Returns searched tracks as a list
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def search_tracks_by_genre(self, genre_string: str) -> List[Track]:
+        """Search for the tracks of which genres contains the input genre_string.
+        If any of the track's genres contain the substring genre_string, that track should be selected for the search.
+        It searches for genre names in case-insensitive and without trailing spaces.
+        Returns searched tracks as a list
+        """
+        raise NotImplementedError

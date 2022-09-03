@@ -7,6 +7,7 @@ from wtforms.validators import DataRequired, Length, ValidationError
 from password_validator import PasswordValidator
 
 from functools import wraps
+from music.utilities.utilities import SearchForm
 
 import music.authentication.services as services
 import music.adapters.repository as repo
@@ -41,6 +42,7 @@ def register():
         form=form,
         user_name_error_message=user_name_not_unique,
         handler_url=url_for('authentication_bp.register'),
+        search_form=SearchForm()
     )
 
 
@@ -81,6 +83,7 @@ def login():
         user_name_error_message=user_name_not_recognised,
         password_error_message=password_does_not_match_user_name,
         form=form,
+        search_form=SearchForm(),
     )
 
 
