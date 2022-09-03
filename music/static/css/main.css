@@ -7,6 +7,7 @@
 @import './auth.css';
 @import './browse.css';
 @import './track-detail.css';
+@import './reviews.css';
 
 :root {
     /* Primary color sheme */
@@ -83,6 +84,10 @@ button {
     border: none;
 }
 
+input[type='submit'] {
+    cursor: pointer;
+}
+
 a,
 button {
     cursor: pointer;
@@ -98,6 +103,9 @@ button {
     text-decoration: underline;
     text-underline-offset: 3px;
     text-decoration-thickness: 1.2px;
+}
+
+.input {
 }
 
 .btn {
@@ -154,4 +162,11 @@ button {
 
 .heading-2 a:hover {
     color: var(--color-primary-8);
+}
+
+.errors {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: var(--color-danger);
 }

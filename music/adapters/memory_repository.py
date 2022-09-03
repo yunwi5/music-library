@@ -68,8 +68,11 @@ class MemoryRepository(AbstractRepository):
         super().add_review(review)
         self.__reviews.append(review)
 
-    def get_reviews(self) -> List[Review]:
-        return self.__reviews
+    def get_reviews_for_track(self, track_id: str) -> List[Track]:
+        # Get reviews for track. Select reviews that have a track and its track_id matches the input track_id
+        track_reviews = [
+            review for review in self.__reviews if review.track and review.track.track_id == track_id]
+        return track_reviews
 
     def seach_tracks_by_artist(self, artist_name: str):
         searched_tracks = list(filter(lambda track: search_string(

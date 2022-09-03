@@ -62,7 +62,6 @@
     margin-bottom: -7px;
     background-color: var(--color-primary-6);
     color: var(--color-white);
-    cursor: pointer;
     font-size: 1.2rem;
     border-radius: 3px;
     transition: all 0.3s ease-in-out;
@@ -92,12 +91,4 @@
 .auth-form__errors {
     max-width: 20rem;
     margin-bottom: -5px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    color: var(--color-danger);
-}
-
-/* Each error message */
-.auth-form .auth-form__errors li {
 }

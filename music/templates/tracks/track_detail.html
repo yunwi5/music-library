@@ -28,27 +28,30 @@
             <button class="btn btn-fill" onclick="location.href='{{track_review_url}}'">+ Review</button>
         </div>
 
+        <!-- Review form rendered only if it was included -->
         {% if review_form %}
         <div class="form-wrapper">
-            <form action="{{handler_url}}" method="post">
-                {{review_form.article_id}}
+            <form class="review-form" action="{{url_for('tracks_bp.track_review')}}" method="post">
+                {{review_form.track_id}}
                 <!-- Need to include this hidden field as it tracks the article being commented. -->
                 {{review_form.csrf_token}}
                 <!-- Need to include this token - Flask WTForms requires it. -->
                 <br>
-                <div class="form-field">
+                <div class="review-form__field">
                     <!-- Rating input group -->
                     {{review_form.rating.label}} {{review_form.rating}}
 
                     <!-- Rating errors -->
                     {% if review_form.rating.errors %}
-                    <ul class="errors">
+                    <ul class="review-form__errors errors">
                         {% for error in review_form.rating.errors %}
                         <li>{{error}}</li>
                         {% endfor %}
                     </ul>
                     {% endif %}
+                </div>
 
+                <div class="review-form__field">
                     <!-- Review text input group -->
                     {{review_form.review_text.label}}
                     {{review_form.review_text(size = 100, placeholder="Type your comment",
@@ -56,15 +59,49 @@
 
                     <!-- Review text errors -->
                     {% if review_form.review_text.errors %}
-                    <ul class="errors">
+                    <ul class="review-form__errors errors">
                         {% for error in review_form.review_text.errors %}
                         <li>{{error}}</li>
                         {% endfor %}
                     </ul>
                     {% endif %}
                 </div>
-                {{ review_form.submit }}
+                {{ review_form.submit(class_="submit btn btn-fill") }}
             </form>
+        </div>
+        {% endif %}
+
+
+        <!-- List of existing reviews -->
+        {% if track.reviews %}
+        <div class="reviews-wrapper">
+            <h2 class="heading">Reviews</h2>
+            <ul class="reviews">
+                <!-- Render list of review dics as html element -->
+                {% for review in track.reviews %}
+                <li class="review-card">
+                    <div class="review-card__info">
+                        <h5 class="review-card__user">
+                            {{review.user}}
+                        </h5>
+                        <span class="review-card__rating">
+                            {% for n in range(review.rating) %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill-rule="evenodd"
+                                stroke-linejoin="round" stroke-miterlimit="2" clip-rule="evenodd" viewBox="0 0 500 500">
+                                <path fill="#f4c01e"
+                                    d="M250,25L305.112,148.906C307.229,153.665 310.562,157.782 314.776,160.844C318.99,163.906 323.936,165.803 329.116,166.346L463.988,180.471L363.177,271.175C359.305,274.659 356.419,279.101 354.809,284.055C353.2,289.008 352.923,294.299 354.008,299.393L382.252,432.029L264.835,364.181C260.325,361.575 255.209,360.203 250,360.203C244.791,360.203 239.675,361.575 235.165,364.181L117.748,432.029L145.992,299.393C147.077,294.299 146.8,289.008 145.191,284.055C143.581,279.101 140.695,274.659 136.823,271.175L36.012,180.471L170.884,166.346C176.064,165.803 181.01,163.906 185.224,160.844C189.438,157.782 192.771,153.665 194.888,148.906L250,25Z"
+                                    transform="translate(-25.612 -2.561) scale(1.10245)" />
+                            </svg>
+                            {% endfor %}
+                        </span>
+                        <time class="review-card__timestamp">{{review.timestamp}}</time>
+                    </div>
+                    <p>
+                        {{review.review_text}}
+                    </p>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
         {% endif %}
     </section>

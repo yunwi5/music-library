@@ -1,5 +1,6 @@
 from datetime import datetime
 from music.domainmodel.track import Track
+from music.domainmodel.user import User
 
 
 class Review:
@@ -18,11 +19,22 @@ class Review:
         else:
             raise ValueError('Invalid value for the rating.')
 
+        self.__user: User = None
         self.__timestamp = datetime.now()
 
     @property
     def track(self) -> Track:
         return self.__track
+
+    @property
+    def user(self) -> User:
+        return self.__user
+
+    @user.setter
+    def user(self, new_user: User):
+        if not isinstance(new_user, User):
+            return
+        self.__user = new_user
 
     @property
     def review_text(self) -> str:

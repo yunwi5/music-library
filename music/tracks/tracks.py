@@ -45,7 +45,7 @@ def browse_tracks():
         last_tracks_url = url_for(
             'tracks_bp.browse_tracks', page=(num_tracks-1)//tracks_per_page)
 
-    # TODO: Construct urls for viewing tracks reviews and adding comments.
+    # Construct urls for viewing tracks details and reviews.
     for track in page_tracks:
         track['track_detail_url'] = url_for(
             'tracks_bp.track_detail', track_id=track['track_id'])
@@ -115,9 +115,10 @@ def search_tracks():
         last_tracks_url = url_for(
             'tracks_bp.search_tracks', page=(number_of_searched_tracks-1)//tracks_per_page, search_key=search_key, text=text)
 
-    # TODO: Construct urls for viewing tracks reviews and adding comments.
+    # Construct urls for viewing tracks details and reviews.
     for track in searched_page_tracks:
-        pass
+        track['track_detail_url'] = url_for(
+            'tracks_bp.track_detail', track_id=track['track_id'])
 
     return render_template(
         'tracks/browse.html',
@@ -138,47 +139,13 @@ def search_tracks():
     )
 
 
-# Helper functions to get track_id as an integer
-def get_track_id_arg():
-    track_id = request.args.get('track_id')
-    track_id = int(
-        track_id) if track_id is not None and track_id.isdigit() else None
-    return track_id
-
-
-@tracks_blueprint.route('/track_review', methods=['GET', 'POST'])
-@login_required
-def track_review():
-    user_name = session['user_name'] if 'user_name' in session else None
-    review_form = ReviewForm()
-
-    track_id = get_track_id_arg()
-    track = services.get_track(track_id, repo.repo_instance)
-    if request.method == 'GET':
-        # Request is a HTTP GET to display the form.
-        # Store the track id in the form.
-        review_form.track_id.data = track_id
-
-        track_title = track['title']
-        return render_template(
-            'tracks/track_detail.html',
-            title=f'Review on {track_title} | Music Librarian',
-            track=track,
-            user_name=user_name,
-            search_form=SearchForm(),
-            review_form=review_form,
-            handler_url=url_for('tracks_bp.track_review')
-        )
-
-    # Redirect the rest for now.
-    return redirect(url_for('tracks_bp.browse_tracks'))
-
-
 @tracks_blueprint.route('/track_detail', methods=['GET'])
 def track_detail():
     user_name = session['user_name'] if 'user_name' in session else None
     track_id = get_track_id_arg()
-    track = services.get_track(track_id, repo.repo_instance)
+
+    # Get reviews for this track as list of dictionaries
+    track = get_tracks_and_reviews(track_id)
 
     # If track was not found, redirect to the browsing page.
     if track is None:
@@ -195,6 +162,71 @@ def track_detail():
     )
 
 
+@tracks_blueprint.route('/track_review', methods=['GET', 'POST'])
+@login_required
+def track_review():
+    user_name = session['user_name'] if 'user_name' in session else None
+    review_form = ReviewForm()
+
+    if review_form.validate_on_submit():
+        # Successful POST, i.e. the rating and review_text have passed data validation.
+        track_id = int(review_form.track_id.data)
+        review_text = review_form.review_text.data
+        rating = review_form.rating.data
+
+        # Use the service function to add the review to the repository
+        services.add_review(track_id, user_name, review_text,
+                            rating, repo.repo_instance)
+
+        track = services.get_track(track_id, repo.repo_instance)
+        return redirect(url_for('tracks_bp.track_detail', track_id=track['track_id']))
+
+    track_id = None
+
+    if request.method == 'GET':
+        track_id = get_track_id_arg()
+        # Request is a HTTP GET to display the form.
+        # Store the track id in the form.
+        review_form.track_id.data = track_id
+
+    else:
+        # Request is a HTTP POST where form validation has failed.
+        # Extract the track id being hidden in form.
+        track_id = int(review_form.track_id.data)
+
+    track = get_tracks_and_reviews(track_id)
+
+    return render_template(
+        'tracks/track_detail.html',
+        title=f"Review on {track['title']} | Music Librarian",
+        track=track,
+        user_name=user_name,
+        search_form=SearchForm(),
+        review_form=review_form,
+    )
+
+
+# Helper functions to get track_id as an integer
+def get_track_id_arg():
+    track_id = request.args.get('track_id')
+    track_id = int(
+        track_id) if track_id is not None and track_id.isdigit() else None
+    return track_id
+
+# Helper function for finding track, and add its reviews as its attribute
+
+
+def get_tracks_and_reviews(track_id: int):
+    track = services.get_track(track_id, repo.repo_instance)
+    if track is None:
+        return None
+
+    # Get reviews for this track as list of dictionaries
+    review_dicts = services.get_reviews_for_track(track_id, repo.repo_instance)
+    track['reviews'] = review_dicts
+    return track
+
+
 class ProfanityFree:
     def __init__(self, message=None):
         if not message:
@@ -207,7 +239,7 @@ class ProfanityFree:
 
 
 class ReviewForm(FlaskForm):
-    rating = IntegerField('Rating', [validators.DataRequired(), validators.NumberRange(
+    rating = IntegerField('Rating (1 - 5)', [validators.DataRequired(), validators.NumberRange(
         min=1, max=5, message='Your rating should be between 1 and 5')])
     review_text = TextAreaField('Comment', [
         DataRequired(),

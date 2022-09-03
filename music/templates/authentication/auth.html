@@ -12,7 +12,7 @@
             <!-- Need to include this token - Flask WTForms requires it. -->
             <div class="auth-form__field">{{ form.user_name.label }} {{ form.user_name }}
                 {% if form.user_name.errors or user_name_error_message is not none %}
-                <ul class="auth-form__errors">
+                <ul class="auth-form__errors errors">
                     {% if user_name_error_message is not none %}
                     <li>
                         {{ user_name_error_message }}
@@ -26,7 +26,7 @@
             </div>
             <div class="auth-form__field">{{ form.password.label }} {{ form.password }}
                 {% if form.password.errors or password_error_message is not none %}
-                <ul class="auth-form__errors">
+                <ul class="auth-form__errors errors">
                     {% if password_error_message is not none %}
                     <li>
                         {{ password_error_message }}

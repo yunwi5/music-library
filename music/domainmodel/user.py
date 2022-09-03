@@ -1,4 +1,4 @@
-from music.domainmodel.review import Review
+# from music.domainmodel.review import Review
 from music.domainmodel.track import Track
 
 
@@ -19,7 +19,7 @@ class User:
         else:
             self.__password = None
 
-        self.__reviews: list[Review] = []
+        # self.__reviews: list[Review] = []
         self.__liked_tracks: list[Track] = []
 
     @property
@@ -34,19 +34,19 @@ class User:
     def password(self) -> str:
         return self.__password
 
-    @property
-    def reviews(self) -> list:
-        return self.__reviews
+    # @property
+    # def reviews(self) -> list:
+    #     return self.__reviews
 
-    def add_review(self, new_review: Review):
-        if not isinstance(new_review, Review) or new_review in self.__reviews:
-            return
-        self.__reviews.append(new_review)
+    # def add_review(self, new_review: Review):
+    #     if not isinstance(new_review, Review) or new_review in self.__reviews:
+    #         return
+    #     self.__reviews.append(new_review)
 
-    def remove_review(self, review: Review):
-        if not isinstance(review, Review) or review not in self.__reviews:
-            return
-        self.__reviews.remove(review)
+    # def remove_review(self, review: Review):
+    #     if not isinstance(review, Review) or review not in self.__reviews:
+    #         return
+    #     self.__reviews.remove(review)
 
     @property
     def liked_tracks(self) -> list:

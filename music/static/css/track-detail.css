@@ -1,9 +1,13 @@
-/* Styles for track detail section & track review section */
+/* Styles for track detail section */
+#track-detail {
+    padding: 4rem 3rem;
+}
 
 .track-wrapper {
     min-width: 35rem;
 }
 
+/* Track information grid styling */
 .track-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -25,7 +29,7 @@
 }
 
 .track-action {
-    margin-top: 3.5rem;
+    margin-top: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -34,5 +38,3 @@
 .track-action .link {
     color: var(--color-primary-7) !important;
 }
-
-/* Review section styling */
