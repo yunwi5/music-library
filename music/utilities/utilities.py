@@ -1,11 +1,11 @@
-from flask import Blueprint, request, render_template, redirect, url_for, session
+from flask import Blueprint
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField
-from wtforms.validators import DataRequired, Length, ValidationError
+from wtforms import StringField, SubmitField, SelectField
+from wtforms.validators import DataRequired, Length
 
-# # Configure Blueprint.
-# utilities_blueprint = Blueprint(
-#     'utilities_bp', __name__)
+# Configure Blueprint.
+utilities_blueprint = Blueprint(
+    'utilities_bp', __name__)
 
 
 class SearchForm(FlaskForm):

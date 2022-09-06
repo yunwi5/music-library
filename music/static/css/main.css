@@ -4,6 +4,7 @@
 /* Import App CSS files */
 @import './header.css';
 @import './footer.css';
+@import './home.css';
 @import './auth.css';
 @import './browse.css';
 @import './track-detail.css';
@@ -21,8 +22,6 @@
     --color-primary-8: #1d4ed8;
     --color-primary-9: #1e40af;
     --color-primary-10: #1e3a8a;
-
-    /* Secondary color scheme */
 
     --color-danger: #db2777;
 
@@ -103,9 +102,6 @@ button {
     text-decoration: underline;
     text-underline-offset: 3px;
     text-decoration-thickness: 1.2px;
-}
-
-.input {
 }
 
 .btn {

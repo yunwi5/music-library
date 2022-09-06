@@ -1,12 +1,10 @@
-import csv
 from pathlib import Path
-from datetime import date, datetime
 from typing import List
-from bisect import bisect, bisect_left, insort_left
+from bisect import insort_left
 
 from werkzeug.security import generate_password_hash
 
-from music.adapters.repository import AbstractRepository, RepositoryException
+from music.adapters.repository import AbstractRepository
 from music.adapters.csvdatareader import TrackCSVReader
 from music.domainmodel.user import User
 from music.domainmodel.artist import Artist
@@ -25,7 +23,6 @@ class MemoryRepository(AbstractRepository):
         self.__albums = set()
         self.__genres = set()
         self.__reviews = list()
-        self.__tracks_index = dict()
 
     def add_user(self, user: User):
         self.__users.append(user)
@@ -34,16 +31,16 @@ class MemoryRepository(AbstractRepository):
     def get_user(self, user_name) -> User:
         return next((user for user in self.__users if user.user_name == user_name), None)
 
-    # Get a specific track by id
     def get_track(self, track_id: int) -> Track:
+        # Get a specific track by id
         return next((track for track in self.__tracks if track.track_id == track_id), None)
 
     def get_tracks(self) -> List[Track]:
         return self.__tracks
 
     def add_track(self, track: Track):
-        insort_left(self.__tracks, track)
-        self.__tracks_index[track.track_id] = track
+        # When inserting the track, keep the track list sorted alphabetically by the title.
+        insort_left(self.__tracks, track, key=lambda t: t.title)
 
     def get_number_of_tracks(self):
         return len(self.__tracks)
@@ -120,11 +117,6 @@ def populate(data_path: Path, repo: MemoryRepository):
     artists = reader.dataset_of_artists
     genres = reader.dataset_of_genres
     tracks = reader.dataset_of_tracks
-
-    # print('Num artists:', len(artists))
-    # print('Num albums:', len(albums))
-    # print('Num tracks:', len(tracks))
-    # print('Num genres:', len(genres))
 
     # Add albums to the repo
     for album in albums:

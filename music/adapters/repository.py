@@ -18,7 +18,6 @@ class RepositoryException(Exception):
         print(f'RepositoryException: {message}')
 
 
-# TODO: Need to add more methods as we implement more features.
 class AbstractRepository(abc.ABC):
 
     @abc.abstractmethod

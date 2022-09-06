@@ -11,15 +11,6 @@ import music.adapters.repository as repo
 from music.adapters.memory_repository import MemoryRepository, populate
 
 
-# TODO: Access to the tracks should be implemented via the repository pattern and using blueprints, so this can not
-#  stay here!
-def create_some_track():
-    some_track = Track(1, "Heat Waves")
-    some_track.track_duration = 250
-    some_track.track_url = 'https://spotify/track/1'
-    return some_track
-
-
 def create_app(test_config=None):
     """Construct the core application."""
 
@@ -53,11 +44,8 @@ def create_app(test_config=None):
         from .tracks import tracks
         app.register_blueprint(tracks.tracks_blueprint)
 
-    # No need
-    # @app.route('/')
-    # def home():
-    #     some_track = create_some_track()
-    #     # Use Jinja to customize a predefined html page rendering the layout for showing a single track.
-    #     return render_template('simple_track.html', track=some_track)
+        # Utility blueprint
+        from .utilities import utilities
+        app.register_blueprint(utilities.utilities_blueprint)
 
     return app

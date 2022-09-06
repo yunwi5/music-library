@@ -1,5 +1,3 @@
-from datetime import date
-
 from flask import Blueprint
 from flask import request, render_template, redirect, url_for, session
 
@@ -7,7 +5,6 @@ from better_profanity import profanity
 from flask_wtf import FlaskForm
 from wtforms import TextAreaField, HiddenField, SubmitField, validators, IntegerField
 from wtforms.validators import DataRequired, Length, ValidationError
-from music.domainmodel.review import Review
 
 import music.tracks.services as services
 import music.adapters.repository as repo
@@ -18,7 +15,7 @@ from music.authentication.authentication import login_required
 tracks_blueprint = Blueprint('tracks_bp', __name__)
 
 
-@tracks_blueprint.route('/tracks', methods=['GET'])
+@tracks_blueprint.route('/browse_tracks', methods=['GET'])
 def browse_tracks():
     user_name = session['user_name'] if 'user_name' in session else None
     tracks_per_page = 10
@@ -53,7 +50,7 @@ def browse_tracks():
     return render_template(
         'tracks/browse.html',
         # Custom page title
-        title=f'Browse Tracks | Music Librarian',
+        title=f'Browse Tracks | CS235 Music Library',
         # Page heading
         heading='Browse Tracks',
         page=page,
@@ -123,7 +120,7 @@ def search_tracks():
     return render_template(
         'tracks/browse.html',
         # Custom page title
-        title=f'Tracks By {search_key.capitalize()} | Music Librarian',
+        title=f'Tracks By {search_key.capitalize()} | CS235 Music Library',
         # Page heading
         heading='Tracks for',
         # Highlight text on the heading
@@ -153,7 +150,7 @@ def track_detail():
 
     return render_template(
         'tracks/track_detail.html',
-        title=f"Track {track['title']} | Music Librarian",
+        title=f"Track {track['title']} | CS235 Music Library",
         track_review_url=url_for(
             'tracks_bp.track_review', track_id=track['track_id']),
         search_form=SearchForm(),
@@ -178,11 +175,9 @@ def track_review():
         services.add_review(track_id, user_name, review_text,
                             rating, repo.repo_instance)
 
-        track = services.get_track(track_id, repo.repo_instance)
-        return redirect(url_for('tracks_bp.track_detail', track_id=track['track_id']))
+        return redirect(url_for('tracks_bp.track_detail', track_id=track_id))
 
     track_id = None
-
     if request.method == 'GET':
         track_id = get_track_id_arg()
         # Request is a HTTP GET to display the form.
@@ -198,7 +193,7 @@ def track_review():
 
     return render_template(
         'tracks/track_detail.html',
-        title=f"Review on {track['title']} | Music Librarian",
+        title=f"Review on {track['title']} | CS235 Music Library",
         track=track,
         user_name=user_name,
         search_form=SearchForm(),
