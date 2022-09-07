@@ -57,6 +57,9 @@ class MemoryRepository(AbstractRepository):
     def add_album(self, album: Album):
         self.__albums.add(album)
 
+    def get_genres(self) -> list:
+        return list(self.__genres)
+
     def add_genre(self, genre: Genre):
         self.__genres.add(genre)
 
@@ -71,7 +74,7 @@ class MemoryRepository(AbstractRepository):
             review for review in self.__reviews if review.track and review.track.track_id == track_id]
         return track_reviews
 
-    def seach_tracks_by_artist(self, artist_name: str):
+    def search_tracks_by_artist(self, artist_name: str):
         searched_tracks = list(filter(lambda track: search_string(
             track.artist.full_name if track.artist is not None else '', artist_name), self.__tracks))
 
@@ -106,9 +109,10 @@ def search_string(name: str, substring: str):
 
 
 def populate(data_path: Path, repo: MemoryRepository):
-
     albums_filename = str(Path(data_path) / "raw_albums_excerpt.csv")
     tracks_filename = str(Path(data_path) / "raw_tracks_excerpt.csv")
+
+    print(albums_filename, tracks_filename)
     reader = TrackCSVReader(albums_filename, tracks_filename)
 
     reader.read_csv_files()

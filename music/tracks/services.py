@@ -45,7 +45,7 @@ def get_tracks_for_search(search_key: str, text: str, repo: AbstractRepository):
         searched = repo.search_tracks_by_album(text)
 
     elif search_key == 'artist':
-        searched = repo.seach_tracks_by_artist(text)
+        searched = repo.search_tracks_by_artist(text)
 
     elif search_key == 'genre':
         searched = repo.search_tracks_by_genre(text)

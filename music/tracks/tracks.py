@@ -142,7 +142,7 @@ def track_detail():
     track_id = get_track_id_arg()
 
     # Get reviews for this track as list of dictionaries
-    track = get_tracks_and_reviews(track_id)
+    track = get_track_and_reviews(track_id)
 
     # If track was not found, redirect to the browsing page.
     if track is None:
@@ -189,7 +189,7 @@ def track_review():
         # Extract the track id being hidden in form.
         track_id = int(review_form.track_id.data)
 
-    track = get_tracks_and_reviews(track_id)
+    track = get_track_and_reviews(track_id)
 
     return render_template(
         'tracks/track_detail.html',
@@ -211,7 +211,7 @@ def get_track_id_arg():
 # Helper function for finding track, and add its reviews as its attribute
 
 
-def get_tracks_and_reviews(track_id: int):
+def get_track_and_reviews(track_id: int):
     track = services.get_track(track_id, repo.repo_instance)
     if track is None:
         return None

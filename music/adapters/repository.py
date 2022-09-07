@@ -66,6 +66,10 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def get_genres(self, genre: Genre) -> List[Genre]:
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def add_genre(self, genre: Genre):
         raise NotImplementedError
 
@@ -85,7 +89,7 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def seach_tracks_by_artist(self, artist_name: str) -> List[Track]:
+    def search_tracks_by_artist(self, artist_name: str) -> List[Track]:
         """Search for the tracks whose artist contains the input artist_name string.
         It searches for artist names in case-insensitive and without trailing spaces.
         Returns searched tracks as a list

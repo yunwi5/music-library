@@ -636,44 +636,6 @@ class TestUser:
         user1.add_liked_track(track1_copy)
         assert len(user1.liked_tracks) == 3
 
-    def test_review_methods(self):
-        """ Test add_review() and remove_review() methods """
-        user1 = User(7232, 'gavi', 'gavi9281')
-        track1 = Track(2, 'Heat Waves')
-        review1 = Review(track1, 'review 1', 2)
-        review2 = Review(track1, 'review 2', 3)
-        review3 = Review(track1, 'review 3', 5)
-
-        assert user1.reviews == []
-
-        user1.add_review(review1)
-        user1.add_review(review2)
-        user1.add_review(review3)
-        assert user1.reviews == [review1, review2, review3]
-
-        # Test it does not add the same review twice
-        user1.add_review(review1)
-        assert len(user1.reviews) == 3
-
-        # Test it does not add review of invalid types
-        user1.add_review(300)
-        user1.add_review('review')
-        user1.add_review(None)
-        assert len(user1.reviews) == 3
-
-        user1.remove_review(review2)
-        user1.remove_review(review1)
-        assert user1.reviews == [review3]
-
-        # Test removing non-existing review does nothing
-        user1.remove_review(review2)
-        assert user1.reviews == [review3]
-
-        user1.remove_review(None)
-        user1.remove_review(928)
-        user1.remove_review('review')
-        assert user1.reviews == [review3]
-
 
 def create_csv_reader():
     dirname = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
