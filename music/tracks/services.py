@@ -1,3 +1,4 @@
+from tracemalloc import start
 from typing import List, Iterable
 
 from music.adapters.repository import AbstractRepository
@@ -12,6 +13,10 @@ class NonExistentTrackException(Exception):
 
 
 class UnknownUserException(Exception):
+    pass
+
+
+class InvalidPageException(Exception):
     pass
 
 
@@ -31,8 +36,16 @@ def get_number_of_tracks(repo: AbstractRepository):
 
 
 def get_tracks_for_page(page_index: int, tracks_per_page: str, repo: AbstractRepository):
+    if type(page_index) is not int:
+        raise InvalidPageException('Page should be a type integer')
+    if page_index < 0:
+        raise InvalidPageException('Negative page does not exist.')
+
     tracks = repo.get_tracks()
     start_index = page_index * tracks_per_page
+    if start_index + tracks_per_page >= len(tracks):
+        raise InvalidPageException('The page does not exist.')
+
     tracks_for_page = tracks[start_index:start_index+tracks_per_page]
     return tracks_to_dicts(tracks_for_page)
 
