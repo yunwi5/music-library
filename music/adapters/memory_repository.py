@@ -2,8 +2,6 @@ from pathlib import Path
 from typing import List
 from bisect import insort_left
 
-from werkzeug.security import generate_password_hash
-
 from music.adapters.repository import AbstractRepository
 from music.adapters.csvdatareader import TrackCSVReader
 from music.domainmodel.user import User
@@ -25,8 +23,9 @@ class MemoryRepository(AbstractRepository):
         self.__reviews = list()
 
     def add_user(self, user: User):
-        self.__users.append(user)
-        print('New users:', self.__users)
+        if (isinstance(user, User)):
+            self.__users.append(user)
+            print('New users:', self.__users)
 
     def get_user(self, user_name) -> User:
         return next((user for user in self.__users if user.user_name == user_name), None)
@@ -40,7 +39,8 @@ class MemoryRepository(AbstractRepository):
 
     def add_track(self, track: Track):
         # When inserting the track, keep the track list sorted alphabetically by the title.
-        insort_left(self.__tracks, track, key=lambda t: t.title)
+        # Tracks will be sorted by title due to __lt__ method of the Track class.
+        insort_left(self.__tracks, track)
 
     def get_number_of_tracks(self):
         return len(self.__tracks)
@@ -49,21 +49,29 @@ class MemoryRepository(AbstractRepository):
         return list(self.__artists)
 
     def add_artist(self, artist: Artist):
-        self.__artists.add(artist)
+        # Verify that the artist param is type Artist.
+        if (isinstance(artist, Artist)):
+            self.__artists.add(artist)
 
     def get_albums(self) -> list:
         return list(self.__albums)
 
     def add_album(self, album: Album):
-        self.__albums.add(album)
+        # Verify that the album param is type Album.
+        if (isinstance(album, Album)):
+            self.__albums.add(album)
 
     def get_genres(self) -> list:
         return list(self.__genres)
 
     def add_genre(self, genre: Genre):
-        self.__genres.add(genre)
+        # Verify that the genre param is type Album.
+        if (isinstance(genre, Genre)):
+            self.__genres.add(genre)
 
     def add_review(self, review: Review):
+        if not isinstance(review, Review):
+            return
         # call parent class first, add_review relies on implementation of code common to all derived classes
         super().add_review(review)
         self.__reviews.append(review)
@@ -75,18 +83,24 @@ class MemoryRepository(AbstractRepository):
         return track_reviews
 
     def search_tracks_by_artist(self, artist_name: str):
+        # Retrieve tracks whose artist names contain the substring artist_name of the input parameter.
+        # Sometimes track does not have an artist, so we need to handle the case where the artist = None.
         searched_tracks = list(filter(lambda track: search_string(
             track.artist.full_name if track.artist is not None else '', artist_name), self.__tracks))
 
         return searched_tracks
 
     def search_tracks_by_album(self, album_string: str):
+        # Retrive tracks whose albums contain the substring album_string of the input parameter.
+        # Sometimes track does not have an album, so we need to handle the case where the album = None.
         searched_tracks = list(filter(lambda track: search_string(
             track.album.title if track.album is not None else '', album_string), self.__tracks))
 
         return searched_tracks
 
     def search_tracks_by_genre(self, genre_string: str):
+        # Search for tracks based on its list of genres.
+        # If any of its genre name contains the input substring genre_string, the track will be searched.
         searched_tracks = []
         for track in self.__tracks:
 
@@ -94,6 +108,7 @@ class MemoryRepository(AbstractRepository):
             for genre in track.genres:
                 if search_string(genre.name, genre_string):
                     contained = True
+                    break
 
             if contained:
                 searched_tracks.append(track)
@@ -101,7 +116,8 @@ class MemoryRepository(AbstractRepository):
         return searched_tracks
 
 
-# Case insensitive search
+# Helper function to find out whether the name string includes the substring.
+# Case insensitive search.
 def search_string(name: str, substring: str):
     return substring.strip().lower() in name.lower()
 
@@ -112,9 +128,10 @@ def populate(data_path: Path, repo: MemoryRepository):
     albums_filename = str(Path(data_path) / "raw_albums_excerpt.csv")
     tracks_filename = str(Path(data_path) / "raw_tracks_excerpt.csv")
 
-    print(albums_filename, tracks_filename)
+    # Construct a track csv reader class object.
     reader = TrackCSVReader(albums_filename, tracks_filename)
 
+    # Read two csv files tracks and albums csv.
     reader.read_csv_files()
 
     albums = reader.dataset_of_albums

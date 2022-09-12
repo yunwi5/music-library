@@ -146,7 +146,7 @@ def track_detail():
 
     # If track was not found, redirect to the browsing page.
     if track is None:
-        return redirect(url_for('tracks_bp.browse_tracks'))  # Need testing
+        return redirect(url_for('tracks_bp.browse_tracks'))
 
     return render_template(
         'tracks/track_detail.html',
@@ -201,14 +201,14 @@ def track_review():
     )
 
 
-# Helper functions to get track_id as an integer
+# Helper functions to get track_id query param as an integer.
 def get_track_id_arg():
     track_id = request.args.get('track_id')
     track_id = int(
         track_id) if track_id is not None and track_id.isdigit() else None
     return track_id
 
-# Helper function for finding track, and add its reviews as its attribute
+# Helper function for finding track, and add its reviews as its attribute.
 
 
 def get_track_and_reviews(track_id: int):

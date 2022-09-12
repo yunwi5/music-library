@@ -1,11 +1,8 @@
-from tracemalloc import start
-from typing import List, Iterable
+from typing import List
 
 from music.adapters.repository import AbstractRepository
-from music.domainmodel.user import User, Track
+from music.domainmodel.user import Track
 from music.domainmodel.review import Review
-from music.domainmodel.album import Album
-from music.domainmodel.artist import Artist
 
 
 class NonExistentTrackException(Exception):
@@ -42,10 +39,13 @@ def get_tracks_for_page(page_index: int, tracks_per_page: str, repo: AbstractRep
         raise InvalidPageException('Negative page does not exist.')
 
     tracks = repo.get_tracks()
+
+    # Find the start index of the tracks for the current page.
     start_index = page_index * tracks_per_page
-    if start_index + tracks_per_page >= len(tracks):
+    if start_index >= len(tracks):
         raise InvalidPageException('The page does not exist.')
 
+    # Retrieve tracks list for the current page as a list.
     tracks_for_page = tracks[start_index:start_index+tracks_per_page]
     return tracks_to_dicts(tracks_for_page)
 

@@ -36,8 +36,6 @@ def test_register(client):
     ('test', '', b'Your password is required'),
     ('test', 'test', b'Your password must be at least 8 characters, and contain an upper case letter,\
             a lower case letter and a digit'),
-    # ('denis9', 'Test#6^0',
-    #  b'Your user name is already taken - please supply another'),
 ))
 def test_register_with_invalid_input(client, user_name, password, message):
     # Check that attempting to register with invalid combinations of user name and password

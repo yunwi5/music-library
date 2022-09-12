@@ -137,6 +137,7 @@ class TrackCSVReader:
         # duplicated dataset.
         self.__dataset_of_tracks = []
         for track_row in track_rows:
+
             track = create_track_object(track_row)
             artist = create_artist_object(track_row)
             track.artist = artist

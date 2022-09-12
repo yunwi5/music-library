@@ -99,7 +99,23 @@ class Track:
     def __lt__(self, other):
         if not isinstance(other, self.__class__):
             return True
-        return self.track_id < other.track_id
+
+        # Check non-empty title exists in either track first to prevent errors when calling string methods.
+        if other.title is None or len(other.title) == 0:
+            return True
+        if self.title is None or len(self.title) == 0:
+            return False
+
+        # In ASCII, numeric characters and special characters come before alphabetical characteres in ordering.
+        # However, in this application, titles starting with alphabets should come first in ordering.
+        if self.title[0].isalpha() and other.title[0].isalpha():
+            return self.title.strip().lower() < other.title.strip().lower()
+        elif self.title[0].isalpha():
+            return True
+        elif other.title[0].isalpha():
+            return False
+        else:
+            return self.title.strip().lower() < other.title.strip().lower()
 
     def __hash__(self):
         return hash(self.track_id)

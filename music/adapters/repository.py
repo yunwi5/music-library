@@ -1,6 +1,5 @@
 import abc
 from typing import List
-from datetime import date
 
 from music.domainmodel.user import User
 from music.domainmodel.artist import Artist
@@ -13,7 +12,6 @@ repo_instance = None
 
 
 class RepositoryException(Exception):
-
     def __init__(self, message=None):
         print(f'RepositoryException: {message}')
 
@@ -35,49 +33,59 @@ class AbstractRepository(abc.ABC):
 
     @abc.abstractmethod
     def get_tracks(self) -> List[Track]:
+        """ Returns the list of tracks. """
         raise NotImplementedError
 
     @abc.abstractmethod
     def get_track(self, track_id: int) -> Track:
+        """ Reutrns the track of the parameter track_id.
+        If the track of the specified track_id does not exist, returns None. """
         raise NotImplementedError
 
     @abc.abstractmethod
     def add_track(self, track: Track):
+        """ Add a track to the repository list of tracks. """
         raise NotImplementedError
 
     @abc.abstractmethod
     def get_number_of_tracks(self):
+        """ Returns a number of tracks exist in the repository. """
         raise NotImplementedError
 
     @abc.abstractmethod
     def get_artists(self) -> list:
+        """ Returns artists as a list from the repository. """
         raise NotImplementedError
 
     @abc.abstractmethod
     def add_artist(self, artist: Artist):
+        """ Add an artist to the repository. """
         raise NotImplementedError
 
     @abc.abstractmethod
     def get_albums(self) -> list:
+        """ Returns albums as a list from the repository. """
         raise NotImplementedError
 
     @abc.abstractmethod
     def add_album(self, album: Album):
+        """ Add an album to the repository. """
         raise NotImplementedError
 
     @abc.abstractmethod
     def get_genres(self, genre: Genre) -> List[Genre]:
+        """ Return all genres that exist in the repository. """
         raise NotImplementedError
 
     @abc.abstractmethod
     def add_genre(self, genre: Genre):
+        """ Add a genre to the repository. """
         raise NotImplementedError
 
     @abc.abstractmethod
     def add_review(self, review: Review):
         """ Adds a Review to the repository.
-
-        If the Review doesn't have bidirectional links with an Article and a User, this method raises a
+        If the Review doesn't have a link to the track, this method raises a
         RepositoryException and doesn't update the repository.
         """
         if review.track is None:
@@ -86,6 +94,8 @@ class AbstractRepository(abc.ABC):
 
     @abc.abstractmethod
     def get_reviews_for_track(self, track_id: str) -> List[Track]:
+        """ Receives track_id, and searches for reviews for the track of this id.
+        Returns a list of reviews for this track as a list. """
         raise NotImplementedError
 
     @abc.abstractmethod
