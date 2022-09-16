@@ -58,6 +58,11 @@ def login():
         try:
             user = services.get_user(form.user_name.data, repo.repo_instance)
 
+            # If the user is None, this means the user is not registered.
+            # Hence, redirect the user to the register page.
+            if user is None:
+                return redirect(url_for('authentication_bp.register'))
+
             # Authenticate user.
             services.authenticate_user(
                 user['user_name'], form.password.data, repo.repo_instance)

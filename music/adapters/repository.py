@@ -107,6 +107,13 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def search_tracks_by_title(self, title_string: str) -> List[Track]:
+        """Search for the tracks whose title includes the parameter title_string.
+        It searches for the track title in case-insensitive and without trailing space.
+        For example, the title 'Empire' will be searched if the title_string is 'empir'. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def search_tracks_by_album(self, album_string: str) -> List[Track]:
         """Search for the tracks of which album contains the input album_name string.
         It searches for album names in case-insensitive and without trailing spaces.

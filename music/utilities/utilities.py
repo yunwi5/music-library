@@ -11,7 +11,7 @@ utilities_blueprint = Blueprint(
 class SearchForm(FlaskForm):
     search_key = SelectField(
         'SearchKey',
-        choices=[('artist', 'Artist'), ('album', 'Album'), ('genre', 'Genre')])
+        choices=[('title', 'Title'), ('artist', 'Artist'), ('album', 'Album'), ('genre', 'Genre')])
     text = StringField('Text', [
         DataRequired(message='Search text is required'),
         Length(min=1, message='Search text is too short')])

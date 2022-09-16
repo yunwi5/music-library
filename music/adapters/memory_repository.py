@@ -82,7 +82,14 @@ class MemoryRepository(AbstractRepository):
             review for review in self.__reviews if review.track and review.track.track_id == track_id]
         return track_reviews
 
-    def search_tracks_by_artist(self, artist_name: str):
+    def search_tracks_by_title(self, title_string: str) -> List[Track]:
+        # Retrieve tracks whose title contains the title_string passed by the user search.
+        # This is a case-insensitive search without trailing spaces.
+        searched_tracks = list(filter(lambda track: search_string(
+            track.title if track.title is not None else '', title_string), self.__tracks))
+        return searched_tracks
+
+    def search_tracks_by_artist(self, artist_name: str) -> List[Track]:
         # Retrieve tracks whose artist names contain the substring artist_name of the input parameter.
         # Sometimes track does not have an artist, so we need to handle the case where the artist = None.
         searched_tracks = list(filter(lambda track: search_string(
@@ -90,7 +97,7 @@ class MemoryRepository(AbstractRepository):
 
         return searched_tracks
 
-    def search_tracks_by_album(self, album_string: str):
+    def search_tracks_by_album(self, album_string: str) -> List[Track]:
         # Retrive tracks whose albums contain the substring album_string of the input parameter.
         # Sometimes track does not have an album, so we need to handle the case where the album = None.
         searched_tracks = list(filter(lambda track: search_string(
@@ -98,7 +105,7 @@ class MemoryRepository(AbstractRepository):
 
         return searched_tracks
 
-    def search_tracks_by_genre(self, genre_string: str):
+    def search_tracks_by_genre(self, genre_string: str) -> List[Track]:
         # Search for tracks based on its list of genres.
         # If any of its genre name contains the input substring genre_string, the track will be searched.
         searched_tracks = []
@@ -121,9 +128,8 @@ class MemoryRepository(AbstractRepository):
 def search_string(name: str, substring: str):
     return substring.strip().lower() in name.lower()
 
+
 # Populate the memory repository with the data from the csv files using the csv reader.
-
-
 def populate(data_path: Path, repo: MemoryRepository):
     albums_filename = str(Path(data_path) / "raw_albums_excerpt.csv")
     tracks_filename = str(Path(data_path) / "raw_tracks_excerpt.csv")

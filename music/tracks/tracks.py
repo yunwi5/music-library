@@ -74,10 +74,9 @@ def search_tracks():
     # Create search form on the header searchbar
     search_form = SearchForm()
     if search_form.validate_on_submit():
-        # Search key: 'artist' | 'album' | 'genre'
+        # Search key: 'title' | 'artist' | 'album' | 'genre'
         search_key = search_form.search_key.data
         text = search_form.text.data
-        print(f'key: {search_key}, text: {text}')
 
     # If it is a get request, get search_key and text from the query strings to continue to search
     if request.method == 'GET':
@@ -141,7 +140,7 @@ def track_detail():
     user_name = session['user_name'] if 'user_name' in session else None
     track_id = get_track_id_arg()
 
-    # Get reviews for this track as list of dictionaries
+    # Get tracks for the track_id and add its list of reviews to the dict.
     track = get_track_and_reviews(track_id)
 
     # If track was not found, redirect to the browsing page.
@@ -189,6 +188,7 @@ def track_review():
         # Extract the track id being hidden in form.
         track_id = int(review_form.track_id.data)
 
+    # Get tracks for the track_id and add its list of reviews to the dict.
     track = get_track_and_reviews(track_id)
 
     return render_template(
@@ -208,9 +208,9 @@ def get_track_id_arg():
         track_id) if track_id is not None and track_id.isdigit() else None
     return track_id
 
+
 # Helper function for finding track, and add its reviews as its attribute.
-
-
+# Used in track_detail() and track_review() functions
 def get_track_and_reviews(track_id: int):
     track = services.get_track(track_id, repo.repo_instance)
     if track is None:

@@ -53,8 +53,12 @@ def get_tracks_for_page(page_index: int, tracks_per_page: str, repo: AbstractRep
 def get_tracks_for_search(search_key: str, text: str, repo: AbstractRepository):
     search_key = search_key.strip().lower()
     searched = []
-    # Only three types of search keys: 'artist' | 'album' | 'genre'. Otherwise, they are invalid search keys.
-    if search_key == 'album':
+    # Only four types of search keys: 'title' | 'artist' | 'album' | 'genre'.
+    # Otherwise, they are invalid search keys.
+    if search_key == 'title':
+        searched = repo.search_tracks_by_title(text)
+
+    elif search_key == 'album':
         searched = repo.search_tracks_by_album(text)
 
     elif search_key == 'artist':
