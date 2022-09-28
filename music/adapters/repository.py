@@ -48,6 +48,11 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def add_many_tracks(self, tracks: List[Track]):
+        """ Add many tracks to the repository list of tracks. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def get_number_of_tracks(self):
         """ Returns a number of tracks exist in the repository. """
         raise NotImplementedError
@@ -63,6 +68,11 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def add_many_artists(self, artists: List[Artist]):
+        """ Add many artists to the repository. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def get_albums(self) -> list:
         """ Returns albums as a list from the repository. """
         raise NotImplementedError
@@ -73,6 +83,11 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def add_many_albums(self, albums: List[Album]):
+        """ Add many albums as a list to the repository. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def get_genres(self, genre: Genre) -> List[Genre]:
         """ Return all genres that exist in the repository. """
         raise NotImplementedError
@@ -80,6 +95,11 @@ class AbstractRepository(abc.ABC):
     @abc.abstractmethod
     def add_genre(self, genre: Genre):
         """ Add a genre to the repository. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def add_many_genres(self, genres: List[Genre]):
+        """ Add many genres to the repository. """
         raise NotImplementedError
 
     @abc.abstractmethod

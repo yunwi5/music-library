@@ -71,7 +71,7 @@ class SqlAlchemyRepository(AbstractRepository):
                 User._User__user_name == user_name).one()
         except NoResultFound:
             # Ignore any exception and return None.
-            pass
+            print(f'User {user_name} was not found')
 
         return user
 
@@ -86,13 +86,17 @@ class SqlAlchemyRepository(AbstractRepository):
                 Track).filter(Track._Track__track_id == track_id).one()
         except NoResultFound:
             print(f'Track {track_id} was not found')
-            pass
 
         return track
 
     def add_track(self, track: Track):
         with self._session_cm as scm:
             scm.session.add(track)
+            scm.commit()
+
+    def add_many_tracks(self, tracks: List[Track]):
+        with self._session_cm as scm:
+            scm.session.add_all(tracks)
             scm.commit()
 
     def get_number_of_tracks(self) -> List[Track]:
@@ -108,6 +112,11 @@ class SqlAlchemyRepository(AbstractRepository):
             scm.session.add(artist)
             scm.commit()
 
+    def add_many_artists(self, artists: List[Artist]):
+        with self._session_cm as scm:
+            scm.session.add_all(artists)
+            scm.commit()
+
     def get_albums(self) -> List[Album]:
         albums = self._session_cm.session.query(Album).all()
         return albums
@@ -117,6 +126,11 @@ class SqlAlchemyRepository(AbstractRepository):
             scm.session.add(album)
             scm.commit()
 
+    def add_many_albums(self, albums: List[Album]):
+        with self._session_cm as scm:
+            scm.session.add_all(albums)
+            scm.commit()
+
     def get_genres(self) -> List[Genre]:
         genres = self._session_cm.session.query(Genre).all()
         return genres
@@ -124,6 +138,11 @@ class SqlAlchemyRepository(AbstractRepository):
     def add_genre(self, genre: Genre):
         with self._session_cm as scm:
             scm.session.add(genre)
+            scm.commit()
+
+    def add_many_genres(self, genres: List[Genre]):
+        with self._session_cm as scm:
+            scm.session.add_all(genres)
             scm.commit()
 
     def add_review(self, review: Review):
@@ -139,10 +158,10 @@ class SqlAlchemyRepository(AbstractRepository):
         return reviews
 
     def search_tracks_by_title(self, title_string: str) -> List[Track]:
-        """Search for the tracks whose title includes the parameter title_string.
-        It searches for the track title in case-insensitive and without trailing space.
-        For example, the title 'Empire' will be searched if the title_string is 'empir'. """
-        return []
+        tracks = self._session_cm.session.query(Track).all()
+        searched_tracks = list(filter(lambda track: search_string(
+            track.title if track.title is not None else '', title_string), tracks))
+        return searched_tracks
 
     def search_tracks_by_artist(self, artist_name: str) -> List[Track]:
         tracks = self._session_cm.session.query(Track).all()
@@ -152,16 +171,24 @@ class SqlAlchemyRepository(AbstractRepository):
         return searched_tracks
 
     def search_tracks_by_album(self, album_string: str) -> List[Track]:
-        """Search for the tracks of which album contains the input album_name string.
-        It searches for album names in case-insensitive and without trailing spaces.
-        Returns searched tracks as a list
-        """
-        return []
+        tracks = self._session_cm.session.query(Track).all()
+        searched_tracks = list(filter(lambda track: search_string(
+            track.album.title if track.album is not None else '', album_string), tracks))
+        return searched_tracks
 
     def search_tracks_by_genre(self, genre_string: str) -> List[Track]:
-        """Search for the tracks of which genres contains the input genre_string.
-        If any of the track's genres contain the substring genre_string, that track should be selected for the search.
-        It searches for genre names in case-insensitive and without trailing spaces.
-        Returns searched tracks as a list
-        """
-        return []
+        tracks = self._session_cm.session.query(Track).all()
+
+        searched_tracks = []
+        for track in tracks:
+
+            contained = False
+            for genre in track.genres:
+                if search_string(genre.name, genre_string):
+                    contained = True
+                    break
+
+            if contained:
+                searched_tracks.append(track)
+
+        return searched_tracks

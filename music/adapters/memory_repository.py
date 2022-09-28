@@ -42,6 +42,10 @@ class MemoryRepository(AbstractRepository):
         # Tracks will be sorted by title due to __lt__ method of the Track class.
         insort_left(self.__tracks, track)
 
+    def add_many_tracks(self, tracks: List[Track]):
+        for track in tracks:
+            self.add_track(track)
+
     def get_number_of_tracks(self):
         return len(self.__tracks)
 
@@ -53,6 +57,10 @@ class MemoryRepository(AbstractRepository):
         if (isinstance(artist, Artist)):
             self.__artists.add(artist)
 
+    def add_many_artists(self, artists: List[Artist]):
+        for artist in artists:
+            self.add_artist(artist)
+
     def get_albums(self) -> list:
         return list(self.__albums)
 
@@ -61,6 +69,10 @@ class MemoryRepository(AbstractRepository):
         if (isinstance(album, Album)):
             self.__albums.add(album)
 
+    def add_many_albums(self, albums: List[Album]):
+        for album in albums:
+            self.add_album(album)
+
     def get_genres(self) -> list:
         return list(self.__genres)
 
@@ -68,6 +80,10 @@ class MemoryRepository(AbstractRepository):
         # Verify that the genre param is type Album.
         if (isinstance(genre, Genre)):
             self.__genres.add(genre)
+
+    def add_many_genres(self, genres: List[Genre]):
+        for genre in genres:
+            self.add_genre(genre)
 
     def add_review(self, review: Review):
         if not isinstance(review, Review):
