@@ -6,6 +6,7 @@ from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
 from sqlalchemy.orm import scoped_session
 
+from music.adapters.utils import search_string
 from music.adapters.repository import AbstractRepository
 from music.domainmodel.user import User
 from music.domainmodel.artist import Artist
@@ -164,7 +165,3 @@ class SqlAlchemyRepository(AbstractRepository):
         Returns searched tracks as a list
         """
         return []
-
-
-def search_string(name: str, substring: str):
-    return substring.strip().lower() in name.lower()

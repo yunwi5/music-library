@@ -2,8 +2,8 @@ from pathlib import Path
 from typing import List
 from bisect import insort_left
 
+from music.adapters.utils import search_string
 from music.adapters.repository import AbstractRepository
-from music.adapters.csvdatareader import TrackCSVReader
 from music.domainmodel.user import User
 from music.domainmodel.artist import Artist
 from music.domainmodel.album import Album
@@ -121,9 +121,3 @@ class MemoryRepository(AbstractRepository):
                 searched_tracks.append(track)
 
         return searched_tracks
-
-
-# Helper function to find out whether the name string includes the substring.
-# Case insensitive search.
-def search_string(name: str, substring: str):
-    return substring.strip().lower() in name.lower()
