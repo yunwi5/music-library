@@ -1,4 +1,4 @@
-# from music.domainmodel.review import Review
+from typing import  List
 from music.domainmodel.track import Track
 
 
@@ -19,8 +19,7 @@ class User:
         else:
             self.__password = None
 
-        # self.__reviews: list[Review] = []
-        self.__liked_tracks: list[Track] = []
+        self.__liked_tracks: List[Track] = []
 
     @property
     def user_id(self) -> int:
@@ -35,7 +34,7 @@ class User:
         return self.__password
 
     @property
-    def liked_tracks(self) -> list:
+    def liked_tracks(self) -> List[Track]:
         return self.__liked_tracks
 
     def add_liked_track(self, track: Track):
