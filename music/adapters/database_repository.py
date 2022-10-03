@@ -60,6 +60,7 @@ class SqlAlchemyRepository(AbstractRepository):
         self._session_cm.reset_session()
 
     def add_user(self, user: User):
+        # Need to handle the case where user.user_name is not unique.
         with self._session_cm as scm:
             scm.session.add(user)
             scm.commit()

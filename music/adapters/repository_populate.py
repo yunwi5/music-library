@@ -13,66 +13,80 @@ def populate(data_path: Path, repo: AbstractRepository, database_mode: bool):
     reader = TrackCSVReader(albums_filename, tracks_filename)
 
     if database_mode is False:
-        # Read two csv files tracks and albums csv.
-        reader.read_csv_files()
-
-        albums = reader.dataset_of_albums
-        artists = reader.dataset_of_artists
-        genres = reader.dataset_of_genres
-        tracks = reader.dataset_of_tracks
-
-        # Add albums to the repo
-        repo.add_many_albums(albums)
-
-        # Add artists to the repo
-        repo.add_many_artists(artists)
-
-        # Add genres to the repo
-        repo.add_many_genres(genres)
-
-        # Add tracks to the repo
-        repo.add_many_tracks(tracks)
+        populate_memory_repository(reader, repo)
 
     else:
-        print('DATABASE MODE POPULATE')
-        albums_dict = reader.read_albums_file_as_dict()
-        track_rows = reader.read_tracks_file()
+        populate_database_repository(reader, repo)
 
-        album_tracks = dict()
-        artist_tracks = dict()
-        genre_tracks = dict()
-        tracks = []
 
-        for track_row in track_rows:
-            track = create_track_object(track_row)
-            tracks.append(track)
+# Populate repository for memory_database mode
+def populate_memory_repository(reader: TrackCSVReader, repo: AbstractRepository):
+    # Read two csv files tracks and albums csv.
+    reader.read_csv_files()
 
-            album_id = int(
-                track_row['album_id']) if track_row['album_id'].isdigit() else None
-            album = albums_dict[album_id] if album_id in albums_dict else None
+    albums = reader.dataset_of_albums
+    artists = reader.dataset_of_artists
+    genres = reader.dataset_of_genres
+    tracks = reader.dataset_of_tracks
 
-            artist = create_artist_object(track_row)
+    # Add albums to the repo
+    repo.add_many_albums(albums)
 
-            if album is not None:
-                if album in album_tracks:
-                    album_tracks[album].append(track.track_id)
+    # Add artists to the repo
+    repo.add_many_artists(artists)
+
+    # Add genres to the repo
+    repo.add_many_genres(genres)
+
+    # Add tracks to the repo
+    repo.add_many_tracks(tracks)
+
+
+# Populate repository for dataabase_database mode
+def populate_database_repository(reader: TrackCSVReader, repo: AbstractRepository):
+    print('DATABASE MODE POPULATE')
+    albums_dict = reader.read_albums_file_as_dict()
+    track_rows = reader.read_tracks_file()
+
+    # Key is album object, and value is the list of tracks that the key album is associated with.
+    album_tracks = dict()
+    # Key is artist object, and value is the list of tracks that the key artist is associated with.
+    artist_tracks = dict()
+    # Key is genre object, and value is the list of tracks that the key genre is associated with.
+    genre_tracks = dict()
+    # List of all tracks (2000 tracks for the current dataset)
+    tracks = []
+
+    for track_row in track_rows:
+        track = create_track_object(track_row)
+        tracks.append(track)
+
+        album_id = int(
+            track_row['album_id']) if track_row['album_id'].isdigit() else None
+        album = albums_dict[album_id] if album_id in albums_dict else None
+
+        artist = create_artist_object(track_row)
+
+        if album is not None:
+            if album in album_tracks:
+                album_tracks[album].append(track.track_id)
+            else:
+                album_tracks[album] = [track.track_id]
+
+        if artist is not None:
+            if artist in artist_tracks:
+                artist_tracks[artist].append(track.track_id)
+            else:
+                artist_tracks[artist] = [track.track_id]
+
+        # Extract track_genres attributes
+        track_genres = extract_genres(track_row)
+        for genre in track_genres:
+            if genre is not None:
+                if genre in genre_tracks:
+                    genre_tracks[genre].append(track.track_id)
                 else:
-                    album_tracks[album] = [track.track_id]
-
-            if artist is not None:
-                if artist in artist_tracks:
-                    artist_tracks[artist].append(track.track_id)
-                else:
-                    artist_tracks[artist] = [track.track_id]
-
-            # Extract track_genres attributes
-            track_genres = extract_genres(track_row)
-            for genre in track_genres:
-                if genre is not None:
-                    if genre in genre_tracks:
-                        genre_tracks[genre].append(track.track_id)
-                    else:
-                        genre_tracks[genre] = [track.track_id]
+                    genre_tracks[genre] = [track.track_id]
 
         repo.add_many_tracks(tracks)
 
