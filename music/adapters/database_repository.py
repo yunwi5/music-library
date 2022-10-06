@@ -69,11 +69,10 @@ class SqlAlchemyRepository(AbstractRepository):
         user = None
         try:
             user = self._session_cm.session.query(User).filter(
-                User._User__user_name == user_name).one()
+                User._User__user_name == user_name.strip().lower()).one()
         except NoResultFound:
             # Ignore any exception and return None.
             print(f'User {user_name} was not found')
-
         return user
 
     def get_tracks(self) -> List[Track]:
