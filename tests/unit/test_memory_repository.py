@@ -162,6 +162,25 @@ def test_repository_can_retrieve_review_for_a_track(memory_repo: MemoryRepositor
     assert len(memory_repo.get_reviews_for_track(track_id)) == 1
 
 
+# Test repository search tracks by title
+def test_repository_can_search_tracks_by_title(memory_repo: MemoryRepository):
+    # Create sample tracks
+    track1 = Track(29149, 'New track 1')
+    track2 = Track(2914997, 'New track 2')
+    track3 = Track(2914998, 'Random track')
+
+    memory_repo.add_track(track1)
+    memory_repo.add_track(track2)
+    memory_repo.add_track(track3)
+
+    # Search tracks based on artist name - no extra whitespace and case in-sensitive
+    searched_tracks = memory_repo.search_tracks_by_title(
+        '  new track  ')
+    # Based on the search string, track1 and track2 should be searched, but not track3
+    assert sorted(searched_tracks) == [track1, track2]
+
+
+# Test repository search tracks by artist
 def test_repository_can_search_tracks_by_artist(memory_repo: MemoryRepository):
     # Create a sample artist for testing purpose
     artist = Artist(2918392, 'New Test Artist')
@@ -169,6 +188,7 @@ def test_repository_can_search_tracks_by_artist(memory_repo: MemoryRepository):
     # Create sample tests for this artist
     track1 = Track(29149939, 'New track 1')
     track2 = Track(29149940, 'New track 2')
+    track3 = Track(29149949, 'Track not by this artist')
 
     track1.artist = artist
     track2.artist = artist
@@ -176,13 +196,16 @@ def test_repository_can_search_tracks_by_artist(memory_repo: MemoryRepository):
     memory_repo.add_artist(artist)
     memory_repo.add_track(track1)
     memory_repo.add_track(track2)
+    memory_repo.add_track(track3)
 
     # Search tracks based on artist name - no extra whitespace and case in-sensitive
     searched_tracks = memory_repo.search_tracks_by_artist(
         '  new test artist  ')
+    # track1 and track2 should be searched, but not track3
     assert sorted(searched_tracks) == [track1, track2]
 
 
+# Test repository search tracks by album
 def test_repository_can_search_tracks_by_album(memory_repo: MemoryRepository):
     # Create a sample album for testing purpose
     album = Album(2918392, 'New Test Album')
@@ -203,6 +226,7 @@ def test_repository_can_search_tracks_by_album(memory_repo: MemoryRepository):
     assert sorted(searched_tracks) == [track1, track2]
 
 
+# Test repository search tracks by genre name
 def test_repository_can_search_tracks_by_genre(memory_repo: MemoryRepository):
     # Create a sample genre for testing purpose
     genre = Genre(2918392, 'New Test Genre')

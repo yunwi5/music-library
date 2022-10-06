@@ -187,7 +187,28 @@ def test_review_with_invalid_rating(client, auth, rating, messages):
         assert message in response.data
 
 
-# # Test searching
+# Test searching
+def test_search_tracks_by_title(client):
+    title = 'food'
+    response = client.get(
+        f'/search_tracks?page=0&search_key=title&text={title}')
+
+    assert response.status_code == 200
+
+    # Test the appropirate heading is displayed on the page
+    assert b'Titles based on' in response.data
+
+    # Test tracks of the searhed title is displayed on the page
+    assert b'Food' in response.data
+
+    # Test the artist is displayed on the page
+    assert b'AWOL' in response.data
+    # Test the album is displayed on the page
+    assert b'AWOL - A Way Of Life' in response.data
+    # Test the genre is displayed on the page
+    assert b'Hip-Hop' in response.data
+
+
 def test_search_tracks_by_artist(client):
     artist_name = 'AWOL'
     response = client.get(

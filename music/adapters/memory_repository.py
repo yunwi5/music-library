@@ -39,9 +39,10 @@ class MemoryRepository(AbstractRepository):
         return self.__tracks
 
     def add_track(self, track: Track):
-        # When inserting the track, keep the track list sorted alphabetically by the title.
-        # Tracks will be sorted by title due to __lt__ method of the Track class.
-        insort_left(self.__tracks, track)
+        if isinstance(track, Track):
+            # When inserting the track, keep the track list sorted alphabetically by the title.
+            # Tracks will be sorted by title due to __lt__ method of the Track class.
+            insort_left(self.__tracks, track)
 
     def get_number_of_tracks(self):
         return len(self.__tracks)
