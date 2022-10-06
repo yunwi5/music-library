@@ -2,9 +2,8 @@ import pytest
 
 from flask import session
 
+
 # Helper function to register and login the sample user (NOT an actual testing function)
-
-
 def perform_login(client, auth):
     # First register a sample user.
     client.post(

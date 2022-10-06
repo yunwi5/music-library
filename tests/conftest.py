@@ -1,7 +1,7 @@
 import pytest
 
 from music import create_app
-from music.adapters import memory_repository
+from music.adapters import repository_populate
 from music.adapters.memory_repository import MemoryRepository
 
 from utils import get_project_root
@@ -14,7 +14,7 @@ TEST_DATA_PATH = get_project_root() / "tests" / "data"
 @pytest.fixture
 def memory_repo():
     repo = MemoryRepository()
-    memory_repository.populate(TEST_DATA_PATH, repo)
+    repository_populate.populate(TEST_DATA_PATH, repo)
     return repo
 
 
