@@ -14,10 +14,10 @@ from music.adapters.repository import RepositoryException
 def test_repository_can_add_a_user(session_factory):
     repo = SqlAlchemyRepository(session_factory)
 
-    user = User(1329, 'Gabriel', '123456789')
+    user = User('Gabriel', '123456789')
     repo.add_user(user)
 
-    repo.add_user(User(2123, 'Martin', '123456789'))
+    repo.add_user(User('Martin', '123456789'))
 
     user2 = repo.get_user('Gabriel')
     assert user2 == user and user2 is user

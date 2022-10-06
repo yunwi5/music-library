@@ -410,17 +410,17 @@ class TestTrack:
         assert track2 != 30
         assert track3 != 'Bad Habit'
 
-    # def test_sorting(self):
-    #     track1 = Track(1, 'Shivers')
-    #     track2 = Track(8, 'Heat Waves')
-    #     track3 = Track(10, 'Bad Habit')
+    def test_sorting(self):
+        track1 = Track(1, 'Shivers')
+        track2 = Track(8, 'Heat Waves')
+        track3 = Track(10, 'Bad Habit')
 
-    #     assert track1 < track2
-    #     assert track2 < track3
-    #     assert track3 > track1
+        assert track1 < track2
+        assert track2 < track3
+        assert track3 > track1
 
-    #     track_list = [track3, track1, track2, track1]
-    #     assert sorted(track_list) == [track1, track1, track2, track3]
+        track_list = [track3, track1, track2, track1]
+        assert sorted(track_list) == [track1, track1, track2, track3]
 
     def test_set(self):
         track1 = Track(1, 'Bad Habit')

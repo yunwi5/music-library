@@ -69,29 +69,29 @@ def test_repository_does_not_retrieve_a_non_existent_track(memory_repo: MemoryRe
 def test_repository_can_retrieve_track_count(memory_repo: MemoryRepository):
     number_of_tracks = memory_repo.get_number_of_tracks()
 
-    # Check that the query returned 2000 tracks
-    assert number_of_tracks == 2000
+    # Check that the query returned 10 tracks in the testing file raw_tracks_test.csv.
+    assert number_of_tracks == 10
 
 
 def test_repository_can_retrieve_all_tracks(memory_repo: MemoryRepository):
-    # Check that the memory repository has all 2000 tracks from csv
+    # Check that the memory repository has all 10 tracks from csv
     tracks = memory_repo.get_tracks()
-    assert len(tracks) == 2000
+    assert len(tracks) == 10
 
 
 def test_repository_can_add_a_genre(memory_repo: MemoryRepository):
     genre = Genre(3031, 'New Genre')
     memory_repo.add_genre(genre)
 
-    # Test repo has added a new genre and its number of genre increased.
-    assert len(memory_repo.get_genres()) == 61
+    # Test repo has added a new genre and its number of genre increased from 7 to 8.
+    assert len(memory_repo.get_genres()) == 8
 
 
 def test_repository_can_retrieve_genres(memory_repo: MemoryRepository):
     genres = memory_repo.get_genres()
 
-    # Test there are total 60 unique genres in the dataset.
-    assert len(genres) == 60
+    # Test there are total 7 unique genres in the test dataset.
+    assert len(genres) == 7
 
 
 def test_repository_can_add_album(memory_repo: MemoryRepository):
@@ -105,7 +105,8 @@ def test_repository_can_add_album(memory_repo: MemoryRepository):
 
 def test_repository_can_retrieve_albums(memory_repo: MemoryRepository):
     albums = memory_repo.get_albums()
-    assert len(albums) == 427
+    # Test file has total 5 albums
+    assert len(albums) == 5
 
 
 def test_repository_can_add_artist(memory_repo: MemoryRepository):
@@ -119,8 +120,8 @@ def test_repository_can_add_artist(memory_repo: MemoryRepository):
 def test_repository_can_retrieve_artists(memory_repo: MemoryRepository):
     artists = memory_repo.get_artists()
 
-    # Test there are total 263 artits inside
-    assert len(artists) == 263
+    # Test there are total 5 artits inside
+    assert len(artists) == 5
 
 
 def test_repository_can_add_review(memory_repo: MemoryRepository):

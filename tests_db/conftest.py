@@ -52,7 +52,7 @@ def session_factory():
     repo_instance = database_repository.SqlAlchemyRepository(session_factory)
     database_mode = True
     repository_populate.populate(
-        TEST_DATA_PATH_DATABASE_LIMITED, repo_instance, database_mode)
+        TEST_DATA_PATH_DATABASE_LIMITED, repo_instance, testing=True, database_mode=database_mode)
     yield session_factory
     metadata.drop_all(engine)
 
