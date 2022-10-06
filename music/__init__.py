@@ -1,11 +1,7 @@
 """Initialize Flask app."""
 
 from flask import Flask, render_template
-
 from pathlib import Path
-# TODO: Access to the tracks should be implemented via the repository pattern and using blueprints, so this can not
-#  stay here!
-from music.domainmodel.track import Track
 
 import music.adapters.repository as repo
 from music.adapters.memory_repository import MemoryRepository, populate
@@ -19,16 +15,18 @@ def create_app(test_config=None):
     # Configure the app from configuration-file settings.
     app.config.from_object('config.Config')
     data_path = Path('music') / 'adapters' / 'data'
+    testing = False
 
     if test_config is not None:
         # Load test configuration, and override any configuration settings.
         app.config.from_mapping(test_config)
         data_path = app.config['TEST_DATA_PATH']
+        testing = True
 
     # Create the MemoryRepository implementation for a memory-based repository.
     repo.repo_instance = MemoryRepository()
     # fill the content of the repository from the provided csv files
-    populate(data_path, repo.repo_instance)
+    populate(data_path, repo.repo_instance, testing)
 
     # Build the application - these steps require an application context.
     with app.app_context():

@@ -253,4 +253,3 @@ def test_search_tracks_by_genre(client):
 
     # Test tracks of the album is displayed on the page
     assert b'Electric Ave' in response.data
-    assert b'Dream' in response.data
