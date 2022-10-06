@@ -11,14 +11,14 @@ from music.domainmodel.genre import Genre
 
 
 def test_repository_can_add_a_user(memory_repo: MemoryRepository):
-    user = User(2, 'denis', 'Denis9389')
+    user = User('denis', 'Denis9389')
     memory_repo.add_user(user)
 
     assert memory_repo.get_user('denis') is user
 
 
 def test_repository_can_retrieve_a_user(memory_repo: MemoryRepository):
-    user = User(2, 'denis', 'Denis9389')
+    user = User('denis', 'Denis9389')
     memory_repo.add_user(user)
 
     # Retrieving an added user should return the correct object
