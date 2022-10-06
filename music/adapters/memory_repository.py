@@ -27,8 +27,9 @@ class MemoryRepository(AbstractRepository):
             self.__users.append(user)
             print('New users:', self.__users)
 
-    def get_user(self, user_name) -> User:
-        return next((user for user in self.__users if user.user_name == user_name), None)
+    def get_user(self, user_name: str) -> User:
+        # Username must be lowercase case-insensitive.
+        return next((user for user in self.__users if user.user_name == user_name.strip().lower()), None)
 
     def get_track(self, track_id: int) -> Track:
         # Get a specific track by id

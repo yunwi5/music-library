@@ -22,8 +22,12 @@ def test_repository_can_retrieve_a_user(memory_repo: MemoryRepository):
     memory_repo.add_user(user)
 
     # Retrieving an added user should return the correct object
-    user = memory_repo.get_user('denis')
-    assert user == User(2, 'denis', 'Denis9389')
+    user2 = memory_repo.get_user('denis')
+    assert user2 == user
+
+    # Retrieving user is case-insensitive without trailing spaces.
+    user2 = memory_repo.get_user(' Denis ')
+    assert user2 == user
 
 
 def test_repository_does_not_retrieve_a_non_existent_user(memory_repo: MemoryRepository):
