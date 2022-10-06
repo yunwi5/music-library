@@ -4,11 +4,7 @@ from music.domainmodel.track import Track
 
 class User:
 
-    def __init__(self, user_id: int, user_name: str, password: str):
-        if type(user_id) is not int or user_id < 0:
-            raise ValueError("User ID should be a non negative integer.")
-        self.__user_id = user_id
-
+    def __init__(self, user_name: str, password: str):
         if type(user_name) is str:
             self.__user_name = user_name.lower().strip()
         else:
@@ -20,10 +16,6 @@ class User:
             self.__password = None
 
         self.__liked_tracks: List[Track] = []
-
-    @property
-    def user_id(self) -> int:
-        return self.__user_id
 
     @property
     def user_name(self) -> str:
@@ -48,17 +40,17 @@ class User:
         self.__liked_tracks.remove(track)
 
     def __repr__(self):
-        return f'<User {self.user_name}, user id = {self.user_id}>'
+        return f'<User {self.user_name}>'
 
     def __eq__(self, other):
         if not isinstance(other, self.__class__):
             return False
-        return self.user_id == other.user_id
+        return self.user_name == other.user_name
 
     def __lt__(self, other):
         if not isinstance(other, self.__class__):
             return True
-        return self.user_id < other.user_id
+        return self.user_name < other.user_name
 
     def __hash__(self):
-        return hash(self.user_id)
+        return hash(self.user_name)

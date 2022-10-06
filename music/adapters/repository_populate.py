@@ -4,10 +4,15 @@ from music.adapters.repository import AbstractRepository
 from music.adapters.csvdatareader import TrackCSVReader, create_track_object, create_artist_object, extract_genres
 
 
-# Populate the memory/database repository with the data from the csv files using the csv reader class.
-def populate(data_path: Path, repo: AbstractRepository, database_mode: bool):
-    albums_filename = str(Path(data_path) / "raw_albums_excerpt.csv")
-    tracks_filename = str(Path(data_path) / "raw_tracks_excerpt.csv")
+# Populate the memory repository with the data from the csv files using the csv reader.
+def populate(data_path: Path, repo: AbstractRepository, testing: bool, database_mode: bool):
+    if testing:
+        # Different files for the testing mode.
+        albums_filename = str(Path(data_path) / "raw_albums_test.csv")
+        tracks_filename = str(Path(data_path) / "raw_tracks_test.csv")
+    else:
+        albums_filename = str(Path(data_path) / "raw_albums_excerpt.csv")
+        tracks_filename = str(Path(data_path) / "raw_tracks_excerpt.csv")
 
     # Construct a track csv reader class object.
     reader = TrackCSVReader(albums_filename, tracks_filename)

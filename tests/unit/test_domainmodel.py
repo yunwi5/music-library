@@ -517,67 +517,55 @@ class TestReview:
 class TestUser:
 
     def test_construction(self):
-        user1 = User(7231, 'amotys', 'amotys277')
-        user2 = User(9137, '  yunwi5  ', 'urrabbit978')
+        user1 = User('amotys', 'amotys277')
+        user2 = User('  yunwi5  ', 'urrabbit978')
 
-        assert str(user1) == '<User amotys, user id = 7231>'
-        assert str(user2) == '<User yunwi5, user id = 9137>'
-
-        # Invalid ID type raises error
-        with pytest.raises(ValueError):
-            User('invalid id', 'pedri', 'pedri1928')
-
-        # ID less than 0 raises error
-        with pytest.raises(ValueError):
-            User(-10, 'peri', 'pedri1928')
+        assert str(user1) == '<User amotys>'
+        assert str(user2) == '<User yunwi5>'
 
         # Test user_name is all lowercase
-        user3 = User(3829, ' GAVI ', 'gavi1928')
+        user3 = User(' GAVI ', 'gavi1928')
         assert user3.user_name == 'gavi'
 
         # Invalid user_name type sets user_name to None
-        user4 = User(8190, 1259, 'memphis212')
+        user4 = User(1259, 'memphis212')
         assert user4.user_name is None
 
         # Invalid password type set password to None
-        user5 = User(6737, 'Memphis', 325)
+        user5 = User('Memphis', 325)
         assert user5.password is None
 
-        user5 = User(9821, 'Memphis', '')
+        user5 = User('Memphis', '')
         assert user5.password is None
 
         # Password length < 7 sets password to None
-        user5 = User(6878, 'memphis', 'mempi')
+        user5 = User('memphis', 'mempi')
         assert user5.password is None
 
         # Password of length 7 sets the password correctly
-        user6 = User(2918, 'Memphis', 'mempi12')
+        user6 = User('Memphis', 'mempi12')
         assert user6.password == 'mempi12'
 
     # User class has getters for each attribute, but no setters.
     def test_attributes(self):
-        user1 = User(7231, '  AMOTYS  ', 'amotys277')
-        assert user1.user_id == 7231
+        user1 = User('  AMOTYS  ', 'amotys277')
         assert user1.user_name == 'amotys'
         assert user1.password == 'amotys277'
 
     def test_attributes_fail(self):
-        user1 = User(7231, '  LEOROSE  ', 'LEOROSE277')
+        user1 = User('  LEOROSE  ', 'LEOROSE277')
 
         with pytest.raises(AttributeError):
             user1.user_name = 'changed'
 
         with pytest.raises(AttributeError):
-            user1.user_id = 1232
-
-        with pytest.raises(AttributeError):
             user1.password = 'asdfe'
 
     def test_equality(self):
-        user1 = User(2231, 'amotys', 'amotys277')
-        user1_copy = User(2231, 'amotys', 'amotys277')
-        user2 = User(7232, 'gavi', 'gavi9281')
-        user3 = User(9300, 'phil', 'phi8901')
+        user1 = User('amotys', 'amotys277')
+        user1_copy = User('amotys', 'amotys277')
+        user2 = User('gavi', 'gavi9281')
+        user3 = User('phil', 'phi8901')
 
         assert user1 == user1_copy
         assert user1 != user2
@@ -591,9 +579,9 @@ class TestUser:
         assert user3 is not None
 
     def test_sorting(self):
-        user1 = User(2231, 'amotys', 'amotys277')
-        user2 = User(7232, 'gavi', 'gavi9281')
-        user3 = User(9300, 'phil', 'phi8901')
+        user1 = User('amotys', 'amotys277')
+        user2 = User('gavi', 'gavi9281')
+        user3 = User('phil', 'phi8901')
 
         assert user1 < user2
         assert user2 < user3
@@ -603,9 +591,9 @@ class TestUser:
         assert sorted(user_list) == [user1, user2, user2, user3]
 
     def test_set(self):
-        user1 = User(2231, 'amotys', 'amotys277')
-        user2 = User(7232, 'gavi', 'gavi9281')
-        user3 = User(9300, 'phil', 'phi8901')
+        user1 = User('amotys', 'amotys277')
+        user2 = User('gavi', 'gavi9281')
+        user3 = User('phil', 'phi8901')
 
         user_set = set()
         user_set.add(user1)
@@ -622,7 +610,7 @@ class TestUser:
 
     def test_track_methods(self):
         """ Test add_liked_track() and remove_liked_track() methods """
-        user1 = User(7232, 'pedri', 'pedri9281')
+        user1 = User('pedri', 'pedri9281')
         track1 = Track(1, 'Shivers')
         track2 = Track(2, 'Heat Waves')
         track3 = Track(3, 'Bad Habit')

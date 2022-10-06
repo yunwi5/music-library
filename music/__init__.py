@@ -21,22 +21,23 @@ def create_app(test_config=None):
     # Configure the app from configuration-file settings.
     app.config.from_object('config.Config')
     data_path = Path('music') / 'adapters' / 'data'
+    testing = False
 
     if test_config is not None:
         # Load test configuration, and override any configuration settings.
         app.config.from_mapping(test_config)
         data_path = app.config['TEST_DATA_PATH']
+        testing = True
 
-    # We can easily switch between in memory data and
-    # persistent database data storage for our application
-    # using the environment variable in .env file.
-
+   # We can easily switch between in memory data and
+   # persistent database data storage for our application
+   # using the environment variable in .env file.
     if app.config['REPOSITORY'] == 'memory':
         # Create the MemoryRepository implementation for a memory-based repository.
         repo.repo_instance = memory_repository.MemoryRepository()
         # fill the content of the repository from the provided csv files (has to be done every time we start app!)
         repository_populate.populate(
-            data_path, repo.repo_instance, database_mode=False)
+            data_path, repo.repo_instance, testing=testing, database_mode=False)
 
     elif app.config['REPOSITORY'] == 'database':
         # Configure database.
@@ -72,7 +73,7 @@ def create_app(test_config=None):
             map_model_to_tables()
 
             repository_populate.populate(
-                data_path, repo.repo_instance, database_mode=True)
+                data_path, repo.repo_instance, testing=testing, database_mode=True)
             print("REPOPULATING DATABASE... FINISHED")
 
         else:

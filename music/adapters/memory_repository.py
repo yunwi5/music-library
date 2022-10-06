@@ -2,8 +2,8 @@ from pathlib import Path
 from typing import List
 from bisect import insort_left
 
-from music.adapters.utils import search_string
 from music.adapters.repository import AbstractRepository
+from music.adapters.utils import search_string
 from music.domainmodel.user import User
 from music.domainmodel.artist import Artist
 from music.domainmodel.album import Album
@@ -27,8 +27,9 @@ class MemoryRepository(AbstractRepository):
             self.__users.append(user)
             print('New users:', self.__users)
 
-    def get_user(self, user_name) -> User:
-        return next((user for user in self.__users if user.user_name == user_name), None)
+    def get_user(self, user_name: str) -> User:
+        # Username must be lowercase case-insensitive.
+        return next((user for user in self.__users if user.user_name == user_name.strip().lower()), None)
 
     def get_track(self, track_id: int) -> Track:
         # Get a specific track by id
@@ -38,9 +39,10 @@ class MemoryRepository(AbstractRepository):
         return self.__tracks
 
     def add_track(self, track: Track):
-        # When inserting the track, keep the track list sorted alphabetically by the title.
-        # Tracks will be sorted by title due to __lt__ method of the Track class.
-        insort_left(self.__tracks, track)
+        if isinstance(track, Track):
+            # When inserting the track, keep the track list sorted alphabetically by the title.
+            # Tracks will be sorted by title due to __lt__ method of the Track class.
+            insort_left(self.__tracks, track)
 
     def add_many_tracks(self, tracks: List[Track]):
         for track in tracks:

@@ -1,7 +1,7 @@
 import pytest
 
 from music import create_app
-from music.adapters import memory_repository, repository_populate
+from music.adapters import repository_populate
 from music.adapters.memory_repository import MemoryRepository
 
 from utils import get_project_root
