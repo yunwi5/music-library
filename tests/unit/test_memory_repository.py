@@ -37,10 +37,10 @@ def test_repository_does_not_retrieve_a_non_existent_user(memory_repo: MemoryRep
 
 
 def test_repository_can_add_track(memory_repo: MemoryRepository):
-    article = Track(5001, 'My new track 101')
-    memory_repo.add_track(article)
+    track = Track(5001, 'My new track 101')
+    memory_repo.add_track(track)
 
-    assert memory_repo.get_track(5001) is article
+    assert memory_repo.get_track(5001) is track
 
 
 def test_repository_can_retrieve_track(memory_repo: MemoryRepository):
