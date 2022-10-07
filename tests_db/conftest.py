@@ -8,8 +8,6 @@ from music.adapters.orm import metadata, map_model_to_tables
 
 from utils import get_project_root
 
-TEST_DATA_PATH_DATABASE_FULL = get_project_root() / "music" / \
-    "adapters" / "data"
 TEST_DATA_PATH_DATABASE_LIMITED = get_project_root() / "tests" / "data"
 
 TEST_DATABASE_URI_IN_MEMORY = 'sqlite://'
@@ -32,7 +30,7 @@ def database_engine():
     repo_instance = database_repository.SqlAlchemyRepository(session_factory)
     database_mode = True
     repository_populate.populate(
-        TEST_DATA_PATH_DATABASE_LIMITED, repo_instance, database_mode)
+        TEST_DATA_PATH_DATABASE_LIMITED, repo_instance,  testing=True,  database_mode=database_mode)
     yield engine
     metadata.drop_all(engine)
 

@@ -1,7 +1,5 @@
-from datetime import date, datetime
 import pytest
 
-# import music.adapters.repository as repo
 from music.adapters.database_repository import SqlAlchemyRepository
 from music.domainmodel.user import User, Track
 from music.domainmodel.album import Album
