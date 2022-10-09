@@ -49,7 +49,7 @@ def populate_memory_repository(reader: TrackCSVReader, repo: AbstractRepository)
 
 # Populate repository for dataabase_database mode
 def populate_database_repository(reader: TrackCSVReader, repo: AbstractRepository):
-    print('DATABASE MODE POPULATE')
+    print('populate_database_repository')
     albums_dict = reader.read_albums_file_as_dict()
     track_rows = reader.read_tracks_file()
 
@@ -93,31 +93,31 @@ def populate_database_repository(reader: TrackCSVReader, repo: AbstractRepositor
                 else:
                     genre_tracks[genre] = [track.track_id]
 
-        repo.add_many_tracks(tracks)
+    repo.add_many_tracks(tracks)
 
-        for artist in artist_tracks:
-            if artist is None:
-                continue
-            for track_id in artist_tracks[artist]:
-                track = repo.get_track(track_id)
-                track.artist = artist
+    for artist in artist_tracks:
+        if artist is None:
+            continue
+        for track_id in artist_tracks[artist]:
+            track = repo.get_track(track_id)
+            track.artist = artist
 
-        repo.add_many_artists(artist_tracks.keys())
+    repo.add_many_artists(artist_tracks.keys())
 
-        for album in album_tracks:
-            if album is None:
-                continue
-            for track_id in album_tracks[album]:
-                track = repo.get_track(track_id)
-                track.album = album
+    for album in album_tracks:
+        if album is None:
+            continue
+        for track_id in album_tracks[album]:
+            track = repo.get_track(track_id)
+            track.album = album
 
-        repo.add_many_albums(album_tracks.keys())
+    repo.add_many_albums(album_tracks.keys())
 
-        for genre in genre_tracks:
-            if genre is None:
-                continue
-            for track_id in genre_tracks[genre]:
-                track = repo.get_track(track_id)
-                track.add_genre(genre)
+    for genre in genre_tracks:
+        if genre is None:
+            continue
+        for track_id in genre_tracks[genre]:
+            track = repo.get_track(track_id)
+            track.add_genre(genre)
 
-        repo.add_many_genres(genre_tracks.keys())
+    repo.add_many_genres(genre_tracks.keys())

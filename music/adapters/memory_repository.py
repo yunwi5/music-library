@@ -38,9 +38,8 @@ class MemoryRepository(AbstractRepository):
         return self.__tracks
 
     def add_track(self, track: Track):
+        # Verify that the track param is type Track.
         if isinstance(track, Track):
-            # When inserting the track, keep the track list sorted alphabetically by the title.
-            # Tracks will be sorted by title due to __lt__ method of the Track class.
             insort_left(self.__tracks, track)
 
     def add_many_tracks(self, tracks: List[Track]):
