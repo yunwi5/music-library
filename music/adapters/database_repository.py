@@ -2,7 +2,7 @@ from datetime import date
 from typing import List
 
 # from sqlalchemy import desc, asc
-from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
+from sqlalchemy.orm.exc import NoResultFound
 
 from sqlalchemy.orm import scoped_session
 
@@ -96,7 +96,8 @@ class SqlAlchemyRepository(AbstractRepository):
 
     def add_many_tracks(self, tracks: List[Track]):
         with self._session_cm as scm:
-            scm.session.add_all(tracks)
+            for track in tracks:
+                scm.session.merge(track)
             scm.commit()
 
     def get_number_of_tracks(self) -> List[Track]:
@@ -114,7 +115,8 @@ class SqlAlchemyRepository(AbstractRepository):
 
     def add_many_artists(self, artists: List[Artist]):
         with self._session_cm as scm:
-            scm.session.add_all(artists)
+            for artist in artists:
+                scm.session.merge(artist)
             scm.commit()
 
     def get_albums(self) -> List[Album]:
@@ -128,7 +130,8 @@ class SqlAlchemyRepository(AbstractRepository):
 
     def add_many_albums(self, albums: List[Album]):
         with self._session_cm as scm:
-            scm.session.add_all(albums)
+            for album in albums:
+                scm.session.merge(album)
             scm.commit()
 
     def get_genres(self) -> List[Genre]:
@@ -142,7 +145,8 @@ class SqlAlchemyRepository(AbstractRepository):
 
     def add_many_genres(self, genres: List[Genre]):
         with self._session_cm as scm:
-            scm.session.add_all(genres)
+            for genre in genres:
+                scm.session.merge(genre)
             scm.commit()
 
     def add_review(self, review: Review):
