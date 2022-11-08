@@ -91,7 +91,7 @@ class SqlAlchemyRepository(AbstractRepository):
 
     def add_track(self, track: Track):
         with self._session_cm as scm:
-            scm.session.add(track)
+            scm.session.merge(track)
             scm.commit()
 
     def add_many_tracks(self, tracks: List[Track]):
@@ -110,7 +110,7 @@ class SqlAlchemyRepository(AbstractRepository):
 
     def add_artist(self, artist: Artist):
         with self._session_cm as scm:
-            scm.session.add(artist)
+            scm.session.merge(artist)
             scm.commit()
 
     def add_many_artists(self, artists: List[Artist]):
@@ -125,7 +125,7 @@ class SqlAlchemyRepository(AbstractRepository):
 
     def add_album(self, album: Album):
         with self._session_cm as scm:
-            scm.session.add(album)
+            scm.session.merge(album)
             scm.commit()
 
     def add_many_albums(self, albums: List[Album]):
@@ -140,7 +140,7 @@ class SqlAlchemyRepository(AbstractRepository):
 
     def add_genre(self, genre: Genre):
         with self._session_cm as scm:
-            scm.session.add(genre)
+            scm.session.merge(genre)
             scm.commit()
 
     def add_many_genres(self, genres: List[Genre]):
@@ -152,7 +152,7 @@ class SqlAlchemyRepository(AbstractRepository):
     def add_review(self, review: Review):
         super().add_review(review)
         with self._session_cm as scm:
-            scm.session.add(review)
+            scm.session.merge(review)
             scm.commit()
 
     def get_reviews_for_track(self, track_id: str) -> List[Track]:
