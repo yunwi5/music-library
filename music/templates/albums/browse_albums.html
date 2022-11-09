@@ -20,11 +20,11 @@
         <tbody class="browse-table__body">
             {% for album in albums %}
             <tr class="browse-row album-row">
-                <td class="album-number">
-                    {{album.index + 1}}
+                <td class="browse-number">
+                    {{(album.index or 0) + 1}}
                 </td>
                 <td class="album-title">
-                    <a href="{{album.album_detail_url}}" class="link track-heading__title">{{album.title}}</a>
+                    <a href="{{album.album_detail_url}}" class="link">{{album.title}}</a>
                 </td>
                 <td class="album-type">
                     {{album.album_type}}

@@ -69,6 +69,11 @@ def album_detail():
     album = services.get_album(album_id, repo.repo_instance)
     album_tracks = services.get_tracks_by_album(album_id, repo.repo_instance)
 
+    # Insert track detail link for each album track
+    for track in album_tracks:
+        track['track_detail_url'] = url_for(
+            'tracks_bp.track_detail', track_id=track['track_id'])
+
     if album is None:
         flash(f'Album {album_id} was not found...', 'error')
         return redirect(url_for('albums_bp.browse_albums'))

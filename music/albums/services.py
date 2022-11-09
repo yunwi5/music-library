@@ -4,9 +4,6 @@ from music.adapters.repository import AbstractRepository
 from music.domainmodel.album import Album
 import music.tracks.services as tracks_services
 
-class NonExistentAlbumException(Exception):
-    pass
-
 class InvalidPageException(Exception):
     pass
 
