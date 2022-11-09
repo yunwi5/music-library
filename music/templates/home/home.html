@@ -3,8 +3,15 @@
     <h1 class="home__heading">Feel the extreme joy of music with CS235 Music Library</h1>
     <p class="home__sub-heading">We provide high quality tracks and albums produced by over 300 artists world wide.</p>
     <div class="home__action">
-        <a href="{{ url_for('tracks_bp.browse_tracks') }}" class="home__btn btn btn-empty">Explore</a>
+        <!-- If the username is not found, that means the user is not authenticated -->
+        {% if not user_name %}
+        <!-- Only show the register link if the user is not authenticated. -->
         <a href="{{ url_for('authentication_bp.register') }}" class="home__btn btn btn-fill">Get Started</a>
+        {% endif %}
+
+
+        <!-- Link to the track browsing page -->
+        <a href="{{ url_for('tracks_bp.browse_tracks') }}" class="home__btn btn btn-empty">Explore Tracks</a>
     </div>
 </main>
 {% endblock %}
