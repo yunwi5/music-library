@@ -20,7 +20,6 @@
     padding: 0.5rem 0.5rem;
     border-radius: 3px;
     font-size: 1.1rem;
-    box-shadow: var(--shadow-light);
     border: 2px solid transparent;
 }
 
@@ -42,7 +41,6 @@
     display: flex;
     border-radius: 3px;
     overflow: hidden;
-    box-shadow: var(--shadow-light);
 }
 
 .search-form__group:focus-within {

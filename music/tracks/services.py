@@ -121,6 +121,7 @@ def track_to_dict(track: Track, index: int = None):
         'track_id': track.track_id,
         'title': track.title,
         'artist': track.artist.full_name if track.artist is not None else None,
+        'album_id': track.album.album_id if track.album is not None else None,
         'album': track.album.title if track.album is not None else None,
         'track_url': track.track_url,
         'track_duration': get_duration_format(track.track_duration),

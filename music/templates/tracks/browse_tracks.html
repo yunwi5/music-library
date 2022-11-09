@@ -38,7 +38,11 @@
                     <a href="{{track.track_detail_url}}" class="link track-heading__title">{{track.title}}</a>
                     <span class="track-heading__artist">{{track.artist}}</span>
                 </td>
-                <td class="track-album">{{track.album}}</td>
+                <td class="track-album">
+                    <a href="{{track.album_detail_url}}" class="link">
+                        {{track.album}}
+                    </a>
+                </td>
                 <td>{{track.genres}}</td>
                 <td class="track-duration">{{track.track_duration}}</td>
             </tr>

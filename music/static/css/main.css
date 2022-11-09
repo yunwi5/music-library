@@ -98,6 +98,10 @@ button {
     cursor: pointer;
 }
 
+a:visited {
+    color: var(--color-gray-7);
+}
+
 .link,
 .link:visited {
     color: var(--color-gray-8);
@@ -122,13 +126,13 @@ button {
 }
 
 .btn-empty {
+    color: var(--color-primary-6) !important;
     border: 2px solid var(--color-primary-6);
     background-color: var(--color-white);
-    color: var(--color-primary-6);
 }
 
 .btn-fill {
-    color: var(--color-white);
+    color: var(--color-white) !important;
     border: 2px solid var(--color-primary-6);
     background-color: var(--color-primary-6);
 }

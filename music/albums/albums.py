@@ -75,7 +75,7 @@ def album_detail():
             'tracks_bp.track_detail', track_id=track['track_id'])
 
     if album is None:
-        flash(f'Album {album_id} was not found...', 'error')
+        flash(f'Album {album_id} was not found...', 'error')                                                          
         return redirect(url_for('albums_bp.browse_albums'))
 
     return render_template(
