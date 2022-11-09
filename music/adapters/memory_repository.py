@@ -46,6 +46,11 @@ class MemoryRepository(AbstractRepository):
     def get_number_of_tracks(self):
         return len(self.__tracks)
 
+    def get_tracks_by_album(self, album_id: int)->List[Album]:
+        # Get tracks associated with the album of the album_id using filter function
+        album_tracks = list(filter(lambda track: track.album.album_id == album_id if track.album is not None else False, self.__tracks))
+        return album_tracks
+
     def get_artists(self) -> list:
         return list(self.__artists)
 
@@ -53,6 +58,10 @@ class MemoryRepository(AbstractRepository):
         # Verify that the artist param is type Artist.
         if (isinstance(artist, Artist)):
             self.__artists.add(artist)
+
+    def get_album(self, album_id: int) -> Album:
+        # Get a specific album by id
+        return next((album for album in self.__albums if album.album_id == album_id), None)
 
     def get_albums(self) -> list:
         return list(self.__albums)

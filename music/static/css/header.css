@@ -77,12 +77,21 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    margin-left: -0.5rem;
+}
+
+.header__nav-items,
+.header__nav-auth {
+    display: flex;
+    align-items: center;
+}
+
+.header__nav-items {
+    gap: 1rem;
 }
 
 .header__nav-auth {
-    display: flex;
     gap: 0.5rem;
-    align-items: center;
 }
 
 /* Header user name indication */

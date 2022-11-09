@@ -1,21 +1,25 @@
-{% extends 'layout.html' %} {% block content %}
-<main id="tracks">
-    <header class="tracks-header">
+{% extends 'layout.html' %}
+
+{% block content %}
+<main id="browse">
+    <header class="browse-header">
         {% if not highlight %}
         <!-- Mark up for normal browsing page title heading -->
-        <h1>{{heading}}</h1>
+        <h1 class="browse__heading">{{heading}}</h1>
         {% else %}
         <!-- Mark up for the heading containing highlight such as search key 'Artist', 'Author' that should be emphasized -->
-        <h1>
-            <span class="heading">{{heading}}</span>
+        <h1 class="browse__heading">
+            <span class="heading-text">{{heading}}</span>
             <span class="highlight">{{highlight}}</span>
         </h1>
         {% endif %}
+
+        <h3 class="browse__subheading"><strong>{{number_of_tracks}}</strong> Tracks</h3>
     </header>
 
     <!-- Tracks table layout -->
-    <table class="track-table">
-        <thead class="track-table__head">
+    <table class="browse-table track-table">
+        <thead class="browse-table__head">
             <tr>
                 <th>Title</th>
                 <th>Album</th>
@@ -23,9 +27,9 @@
                 <th>Duration</th>
             </tr>
         </thead>
-        <tbody class="track-table__body">
+        <tbody class="browse-table__body">
             {% for track in tracks %}
-            <tr class="track-row">
+            <tr class="browse-row track-row">
                 <td class="track-heading">
                     <a href="{{track.track_detail_url}}" class="link track-heading__title">{{track.title}}</a>
                     <span class="track-heading__artist">{{track.artist}}</span>
@@ -42,7 +46,7 @@
 
     <!-- Page navigation -->
     <footer>
-        <nav class="tracks-nav">
+        <nav class="browse-nav">
             <div class="pave-nav">
                 {% if first_tracks_url %}
                 <button class="btn btn-fill" onclick="location.href='{{first_tracks_url}}'">First</button>

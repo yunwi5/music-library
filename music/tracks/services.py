@@ -1,7 +1,7 @@
 from typing import List
 
 from music.adapters.repository import AbstractRepository
-from music.domainmodel.user import Track
+from music.domainmodel.track import Track
 from music.domainmodel.review import Review
 
 
@@ -32,7 +32,7 @@ def get_number_of_tracks(repo: AbstractRepository):
     return repo.get_number_of_tracks()
 
 
-def get_tracks_for_page(page_index: int, tracks_per_page: str, repo: AbstractRepository):
+def get_tracks_for_page(page_index: int, tracks_per_page: int, repo: AbstractRepository):
     if type(page_index) is not int:
         raise InvalidPageException('Page should be a type integer')
     if page_index < 0:

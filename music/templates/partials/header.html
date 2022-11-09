@@ -24,7 +24,8 @@
 
     <nav class="header__nav">
         <div class="header__nav-items">
-            <a class="link" href="{{ url_for('tracks_bp.browse_tracks') }}">Browse</a>
+            <a class="link" href="{{ url_for('albums_bp.browse_albums') }}">Albums</a>
+            <a class="link" href="{{ url_for('tracks_bp.browse_tracks') }}">Tracks</a>
         </div>
         <div class="header__nav-auth">
             <!-- If the username is not found, that means user is not authenticated. So show login and register links -->

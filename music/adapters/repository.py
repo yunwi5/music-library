@@ -53,6 +53,11 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def get_tracks_by_album(self, album_id: int)->List[Album]:
+        """ Return a list of tracks associated with the album of the param id. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def get_artists(self) -> list:
         """ Returns artists as a list from the repository. """
         raise NotImplementedError
@@ -67,10 +72,18 @@ class AbstractRepository(abc.ABC):
         """ Returns albums as a list from the repository. """
         raise NotImplementedError
 
+
+    @abc.abstractmethod
+    def get_album(self, album_id: int) -> Album:
+        """ Return a specific album of the album_id param from the repository. """
+        raise NotImplementedError
+
     @abc.abstractmethod
     def add_album(self, album: Album):
         """ Add an album to the repository. """
         raise NotImplementedError
+
+
 
     @abc.abstractmethod
     def get_genres(self, genre: Genre) -> List[Genre]:
