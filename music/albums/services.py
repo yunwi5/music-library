@@ -1,10 +1,7 @@
 from typing import List
 
 from music.adapters.repository import AbstractRepository
-from music.domainmodel.track import Track
 from music.domainmodel.album import Album
-from music.domainmodel.review import Review
-
 import music.tracks.services as tracks_services
 
 class NonExistentAlbumException(Exception):
@@ -32,7 +29,7 @@ def get_albums_for_page(page_index: int, albums_per_page: int, repo: AbstractRep
         
     # Retrieve albums list for the curent page
     albums_for_page = albums[start_index:start_index+albums_per_page]
-    return albums_to_dict(albums_for_page)
+    return albums_to_dict(albums_for_page, start_index)
 
 
 def get_album(album_id: int, repo: AbstractRepository) -> dict:
@@ -52,16 +49,16 @@ def get_album(album_id: int, repo: AbstractRepository) -> dict:
     return album_dict
 
 
-def album_to_dict(album: Album)->dict:
+def album_to_dict(album: Album, index: int = None)->dict:
     album_dict = {
         'album_id': album.album_id,
         'title': album.title,
         'album_url': album.album_url,
         'release_year': album.release_year,
-        # 'artist:',
-        'album_type': album.album_type
+        'album_type': album.album_type,
+        'index': index
     }
     return album_dict
 
-def albums_to_dict(albums: List[Album])-> List[dict]:
-    return [album_to_dict(album) for album in albums]
+def albums_to_dict(albums: List[Album], start_index: int)-> List[dict]:
+    return [album_to_dict(album, start_index + index) for index, album in enumerate(albums)]

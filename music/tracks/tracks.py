@@ -48,7 +48,7 @@ def browse_tracks():
             'tracks_bp.track_detail', track_id=track['track_id'])
 
     return render_template(
-        'tracks/browse.html',
+        'tracks/browse_tracks.html',
         # Custom page title
         title=f'Browse Tracks | CS235 Music Library',
         # Page heading
@@ -118,7 +118,7 @@ def search_tracks():
             'tracks_bp.track_detail', track_id=track['track_id'])
 
     return render_template(
-        'tracks/browse.html',
+        'tracks/browse_tracks.html',
         # Custom page title
         title=f'Tracks By {search_key.capitalize()} | CS235 Music Library',
         # Page heading

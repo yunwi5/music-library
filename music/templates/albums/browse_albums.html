@@ -8,9 +8,10 @@
     </header>
 
     <!-- Albums table layout -->
-    <table class="browse-table">
+    <table class="browse-table albums-table">
         <thead class="browse-table__head">
             <tr>
+                <th>No</th>
                 <th>Title</th>
                 <th>Album Type</th>
                 <th>Year</th>
@@ -19,6 +20,9 @@
         <tbody class="browse-table__body">
             {% for album in albums %}
             <tr class="browse-row album-row">
+                <td class="album-number">
+                    {{album.index + 1}}
+                </td>
                 <td class="album-title">
                     <a href="{{album.album_detail_url}}" class="link track-heading__title">{{album.title}}</a>
                 </td>
