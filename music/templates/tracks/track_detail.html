@@ -25,7 +25,11 @@
         </article>
         <div class="track-action">
             <a href="{{track.track_url}}" class="link">More About This Track</a>
+
+            <!-- Show add review button only if there is no review by the current user -->
+            {% if not user_review %}
             <button class="btn btn-fill" onclick="location.href='{{track_review_url}}'">+ Review</button>
+            {% endif %}
         </div>
 
         <!-- Review form rendered only if it was included -->

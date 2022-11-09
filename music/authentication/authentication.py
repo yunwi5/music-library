@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, session, request
+from flask import Blueprint, render_template, redirect, url_for, session, flash, request
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
@@ -28,6 +28,9 @@ def register():
         try:
             services.add_user(form.user_name.data,
                               form.password.data, repo.repo_instance)
+
+            # Flash message to indicate the user register is done
+            flash('Registration successful!', 'success')
 
             # All is well, redirect the user to the login page.
             return redirect(url_for('authentication_bp.login'))
@@ -61,6 +64,7 @@ def login():
             # If the user is None, this means the user is not registered.
             # Hence, redirect the user to the register page.
             if user is None:
+                flash('You username was not found...', 'error')
                 return redirect(url_for('authentication_bp.register'))
 
             # Authenticate user.
@@ -70,6 +74,9 @@ def login():
             # Initialise session and redirect the user to the home page.
             session.clear()
             session['user_name'] = user['user_name']
+
+            # Flash message to indicate the user register is done
+            flash('Login successful!', 'success')
             return redirect(url_for('home_bp.home'))
 
         except services.UnknownUserException:
@@ -95,6 +102,8 @@ def login():
 @authentication_blueprint.route('/logout')
 def logout():
     session.clear()
+    # Flash message to notify that the user is logged out!
+    flash("You have been logged out!", "info")
     return redirect(url_for('home_bp.home'))
 
 

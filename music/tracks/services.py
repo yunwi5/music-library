@@ -72,10 +72,15 @@ def get_tracks_for_search(search_key: str, text: str, repo: AbstractRepository):
 
     return tracks_to_dicts(searched)
 
-
 def add_review(track_id: int,  user_name: str, review_text: str, rating: int,  repo: AbstractRepository):
     track = repo.get_track(track_id)
     user = repo.get_user(user_name)
+
+    # Do not allow the user to make review on the same track twice.
+    # If there is an existing review by this user, return it.
+    user_existing_review = get_review_for_track_by_user(track_id, user_name, repo)
+    if user_existing_review is not None:
+        return
 
     if track is None:
         raise NonExistentTrackException
@@ -91,6 +96,15 @@ def get_reviews_for_track(track_id: int, repo: AbstractRepository):
     track_reviews = repo.get_reviews_for_track(track_id)
     return reviews_to_dicts(track_reviews)
 
+
+# Get review made by the user for the track of the track_id
+def get_review_for_track_by_user(track_id: int, user_name: str, repo: AbstractRepository):
+    track_reviews = repo.get_reviews_for_track(track_id)
+    # If current user's reviews already exist for the track, do not allow review twice.
+    for review in track_reviews:
+        if review.user.user_name == user_name:
+            return review_to_dict(review)
+    return None
 
 # Helper function to calculate the duration format into mm:ss user readable format.
 def get_duration_format(total_seconds: int):

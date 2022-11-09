@@ -92,7 +92,7 @@ class MemoryRepository(AbstractRepository):
         super().add_review(review)
         self.__reviews.append(review)
 
-    def get_reviews_for_track(self, track_id: str) -> List[Track]:
+    def get_reviews_for_track(self, track_id: str) -> List[Review]:
         # Get reviews for track. Select reviews that have a track and its track_id matches the input track_id
         track_reviews = [
             review for review in self.__reviews if review.track and review.track.track_id == track_id]

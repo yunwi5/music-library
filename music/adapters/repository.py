@@ -113,7 +113,7 @@ class AbstractRepository(abc.ABC):
                 'Review not currently attched to a Track')
 
     @abc.abstractmethod
-    def get_reviews_for_track(self, track_id: str) -> List[Track]:
+    def get_reviews_for_track(self, track_id: str) -> List[Review]:
         """ Receives track_id, and searches for reviews for the track of this id.
         Returns a list of reviews for this track as a list. """
         raise NotImplementedError

@@ -9,6 +9,7 @@
 @import './browse.css';
 @import './track-detail.css';
 @import './reviews.css';
+@import './flash.css';
 
 :root {
     /* Primary color sheme */

@@ -15,6 +15,7 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </head>
 
 
@@ -22,6 +23,8 @@
     <div id="App">
         <!-- Include header partial. -->
         {% include 'partials/header.html' %}
+        <!-- Flash message partial. -->
+        {% include 'partials/flash.html' %}
 
         <div id="container">
             <!-- Main content block to be supplied by page. -->
