@@ -1,7 +1,7 @@
+<!-- Get all flash messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
 <div class="flash-container">
-    <!-- Get all flash messages -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
     <!-- Display all flash messages if there are any -->
     {% for category, message in messages %}
     <div class="flash flash-{{category}}">
@@ -16,6 +16,6 @@
         </svg>
     </div>
     {% endfor %}
-    {% endif %}
-    {% endwith %}
 </div>
+{% endif %}
+{% endwith %}
