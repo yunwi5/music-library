@@ -23,6 +23,8 @@ def client():
     my_app = create_app({
         # Set to True during testing.
         'TESTING': True,
+        # Set REPOSITORY mode to 'memory' always. Otherwise, it results in errors in e2e testing.
+        'REPOSITORY': 'memory',
         # Path for loading test data into the repository.
         'TEST_DATA_PATH': TEST_DATA_PATH,
         # test_client will not send a CSRF token, so disable validation.
