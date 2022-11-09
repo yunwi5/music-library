@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask import request, render_template, redirect, url_for, session
+from flask import request, render_template, redirect, url_for, session, flash
 
 from better_profanity import profanity
 from flask_wtf import FlaskForm
@@ -142,9 +142,12 @@ def track_detail():
 
     # Get tracks for the track_id and add its list of reviews to the dict.
     track = get_track_and_reviews(track_id)
+    # Current user's review on this track
+    user_review = services.get_review_for_track_by_user(track_id, user_name, repo.repo_instance)
 
     # If track was not found, redirect to the browsing page.
     if track is None:
+        flash(f'Track {track_id} was not found...', 'error')
         return redirect(url_for('tracks_bp.browse_tracks'))
 
     return render_template(
@@ -154,6 +157,7 @@ def track_detail():
             'tracks_bp.track_review', track_id=track['track_id']),
         search_form=SearchForm(),
         user_name=user_name,
+        user_review=user_review,
         track=track,
     )
 
@@ -174,22 +178,28 @@ def track_review():
         services.add_review(track_id, user_name, review_text,
                             rating, repo.repo_instance)
 
+        flash(f'Your review has been added!', 'success')
+        # Go back to the detail page of this track
         return redirect(url_for('tracks_bp.track_detail', track_id=track_id))
 
     track_id = None
     if request.method == 'GET':
         track_id = get_track_id_arg()
-        # Request is a HTTP GET to display the form.
         # Store the track id in the form.
         review_form.track_id.data = track_id
 
     else:
         # Request is a HTTP POST where form validation has failed.
+        # Request is a HTTP GET to display the form.
+        flash(f'Your review could not be added...', 'error')
+
         # Extract the track id being hidden in form.
         track_id = int(review_form.track_id.data)
 
     # Get tracks for the track_id and add its list of reviews to the dict.
     track = get_track_and_reviews(track_id)
+    # Current user's review on this track
+    user_review = services.get_review_for_track_by_user(track_id, user_name, repo.repo_instance)
 
     return render_template(
         'tracks/track_detail.html',
@@ -197,11 +207,12 @@ def track_review():
         track=track,
         user_name=user_name,
         search_form=SearchForm(),
+        user_review=user_review,
         review_form=review_form,
     )
 
 
-# Helper functions to get track_id query param as an integer.
+# Helper function to get track_id query param as an integer.
 def get_track_id_arg():
     track_id = request.args.get('track_id')
     track_id = int(
