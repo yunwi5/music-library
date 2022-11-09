@@ -77,7 +77,7 @@ def test_get_track(memory_repo):
 def test_get_number_of_tracks(memory_repo):
     num_tracks = tracks_services.get_number_of_tracks(memory_repo)
 
-    # Test service layer retrieves correct number of tracks; total 10 tracks for testing csv file
+    # Test service layer retrieves correct number of tracks (total 10 in testing mode)
     assert num_tracks == 10
 
 
