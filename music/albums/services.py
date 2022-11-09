@@ -35,19 +35,19 @@ def get_albums_for_page(page_index: int, albums_per_page: int, repo: AbstractRep
 def get_album(album_id: int, repo: AbstractRepository) -> dict:
     album = repo.get_album(album_id)
     if album is None:
-        raise NonExistentAlbumException
+        return None
 
     # Convert album to album dict
-    album_dict = album_to_dict(album)
+    return album_to_dict(album)
 
+
+def get_tracks_by_album(album_id: int, repo: AbstractRepository) -> List[dict]:
     # List of tracks of this album
     album_tracks = repo.get_tracks_by_album(album_id)
     # Convert tracks to track dicts
     album_track_dicts = tracks_services.tracks_to_dicts(album_tracks)
-    # Insert tracks as its attribute so that the album page can display its tracks
-    album_dict['tracks'] = album_track_dicts
-    return album_dict
 
+    return album_track_dicts
 
 def album_to_dict(album: Album, index: int = None)->dict:
     album_dict = {

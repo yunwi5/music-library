@@ -1,0 +1,61 @@
+/* Styles for album detail section */
+#album-detail {
+    padding: 4rem 3rem;
+}
+
+.album-wrapper {
+    min-width: 45rem;
+}
+
+.album-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1rem;
+    row-gap: 1rem;
+}
+
+.album-grid__section strong {
+    display: inline-block;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-primary-7);
+    margin-bottom: 0.15rem;
+}
+
+.album-grid__long {
+    grid-column: 1/-1;
+}
+
+.album__link {
+    display: block;
+    margin-top: 1.05rem;
+    font-weight: 600;
+    color: var(--color-primary-7) !important;
+}
+
+/* Album tracks section */
+.album__tracks {
+    margin-top: 2rem;
+}
+
+.album__tracks p {
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+/* Album tracks table styling */
+#album-detail .track-table {
+    margin-top: 0.75rem;
+    width: 100%;
+}
+
+#album-detail .track-table .track-heading__title {
+    margin-bottom: 2px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--color-gray-7);
+}
+
+#album-detail .track-table .track-heading__artist {
+    font-size: 0.8em;
+}

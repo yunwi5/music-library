@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<main id="album-detail">
+    <section class="wrapper album-wrapper">
+        <article class="album-grid">
+            <div class="album-grid__section album-grid__long">
+                <strong>Album Title</strong>
+                <h2>{{album.title}}</h2>
+            </div>
+            <div class="album-grid__section">
+                <strong>Album Type</strong>
+                <p>{{album.album_type}}</p>
+            </div>
+            <div class="album-grid__section">
+                <strong>Release Year</strong>
+                <p>{{album.release_year}}</p>
+            </div>
+        </article>
+
+        <a class="album__link link" href="{{album.album_url}}" target="_blank">More About This Album</a>
+
+
+        <div class="album__tracks">
+            <p class="album__subheading"><strong>{{number_of_tracks}}</strong> Tracks</p>
+
+            <!-- List of tracks associated with this album -->
+            <table class="browse-table track-table">
+                <thead class="browse-table__head">
+                    <tr>
+                        <th>Track Title</th>
+                        <th>Genre(s)</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody class="browse-table__body">
+                    {% for track in album_tracks %}
+                    <tr class="browse-row track-row">
+                        <td class="track-heading">
+                            <a href="{{track.track_detail_url}}" class="link track-heading__title">{{track.title}}</a>
+                            <span class="track-heading__artist">{{track.artist}}</span>
+                        </td>
+                        <td>
+                            {{track.genres}}
+                        </td>
+                        <td class="track-duration">{{track.track_duration}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+{% endblock %}

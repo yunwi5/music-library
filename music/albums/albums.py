@@ -62,7 +62,29 @@ def browse_albums():
 
 @albums_blueprint.route('/album_detail', methods=['GET'])
 def album_detail():
-    pass
+    user_name = session['user_name'] if 'user_name' in session else None
+    album_id = get_album_id_arg()
 
+    # Get album and with its tracks
+    album = services.get_album(album_id, repo.repo_instance)
+    album_tracks = services.get_tracks_by_album(album_id, repo.repo_instance)
 
+    if album is None:
+        flash(f'Album {album_id} was not found...', 'error')
+        return redirect(url_for('albums_bp.browse_albums'))
 
+    return render_template(
+        'albums/album_detail.html',
+        title=f'Album {album["title"]} | CS235 Music Library',
+        album=album,
+        album_tracks=album_tracks,
+        number_of_tracks=len(album_tracks),
+        search_form=SearchForm(),
+        user_name=user_name,
+    )
+
+# Helper function to get album_id query param as an integer.
+def get_album_id_arg():
+    album_id = request.args.get('album_id')
+    album_id = int(album_id) if album_id is not None and album_id.isdigit() else None
+    return album_id
