@@ -1,4 +1,4 @@
-# COMPSCI 235 Model Answer for Assignment 2
+# COMPSCI 235 Model Answer for Assignment 3
 This is a model answer repository for the assignment 3 of CompSci 235 in Semester 2, 2022.
 
 
