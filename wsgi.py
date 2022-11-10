@@ -7,5 +7,4 @@ app = create_app()
 if __name__ == "__main__":
     port = environ.get('PORT')
     print(f"port: {port}")
-    app.run(host=f'0.0.0.0', port=port)
-    # app.run(host='localhost', port=5000, threaded=False)
+    app.run(host='0.0.0.0', port=5000)
