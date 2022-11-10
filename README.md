@@ -5,6 +5,17 @@ This project is a music library application where users can browse various album
 
 <br />
 
+## Deployment
+### Cloud Platform
+<img width="500" height="300" src="https://user-images.githubusercontent.com/86972879/201107417-7ecd8145-f7c0-4198-87d6-6597962f8f1b.png" />
+
+The project has been deployed via <strong>[Render](https://render.com/)</strong> that hosts the application on the web.
+ 
+### Deployment URL
+[https://music-library-pxnb.onrender.com/](https://music-library-pxnb.onrender.com/)
+
+<br />
+
 ## Installation
 
 Please make sure you have `Python` installed on your machine. This application was developed with Python version 3.10,
