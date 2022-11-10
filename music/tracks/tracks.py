@@ -187,10 +187,15 @@ def track_review():
         rating = review_form.rating.data
 
         # Use the service function to add the review to the repository
-        services.add_review(track_id, user_name, review_text,
+        added = services.add_review(track_id, user_name, review_text,
                             rating, repo.repo_instance)
 
-        flash(f'Your review has been added!', 'success')
+        # Flash message feedback to indicate if their review request was successful
+        if added:
+            flash(f'Your review has been added!', 'success')
+        else:
+            flash(f'Your review may have been added already..', 'error')
+
         # Go back to the detail page of this track
         return redirect(url_for('tracks_bp.track_detail', track_id=track_id))
 

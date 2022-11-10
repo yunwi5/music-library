@@ -126,14 +126,14 @@ a:visited {
 }
 
 .btn-empty,
-a.btn-empty:visited {
+.btn-empty:visited {
     color: var(--color-primary-6);
     border: 2px solid var(--color-primary-6);
     background-color: var(--color-white);
 }
 
 .btn-fill,
-a.btn-fill:visited {
+.btn-fill:visited {
     color: var(--color-white);
     border: 2px solid var(--color-primary-6);
     background-color: var(--color-primary-6);
@@ -144,8 +144,8 @@ a.btn-fill:visited {
     cursor: not-allowed;
 }
 
-.btn-empty:hover,
-.btn-fill:hover {
+.btn:hover,
+.btn:visited:hover {
     border: 2px solid var(--color-primary-8);
     background-color: var(--color-primary-8);
     color: var(--color-white) !important;
