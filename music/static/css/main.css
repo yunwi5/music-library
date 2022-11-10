@@ -144,8 +144,8 @@ a.btn-fill:visited {
     cursor: not-allowed;
 }
 
-.btn-empty:hover,
-.btn-fill:hover {
+.btn:hover,
+.btn:visited:hover {
     border: 2px solid var(--color-primary-8);
     background-color: var(--color-primary-8);
     color: var(--color-white) !important;
