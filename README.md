@@ -8,8 +8,8 @@ This is a model answer repository for the assignment 2 of CompSci 235 in Semeste
 This repository contains an implementation of the domain model from Assignment 1. It contains unit tests on domain models which can be run through pytest.
 
 ### Content from Assignment 2
-This branch contains MVP features for a music library application such as browsing tracks with pagination, 
-searching tracks based on artists, albums and genres, authentication (login & register), and reviews on tracks.
+This branch contains MVP features for a music library application such as authentication (login & register), browsing tracks with pagination, 
+searching tracks based on artists, albums and genres, browsing albums with pagination, and reviews on tracks.
 
 It contains unit tests, integration tests and e2e tests that will test domain models, memory repository methods,
  services, and a web app as a whole through pytest. The tests are located in `/tests` directory.
@@ -17,6 +17,9 @@ It contains unit tests, integration tests and e2e tests that will test domain mo
  <br />
 
 ## Installation
+
+Please make sure you have `Python` installed on your machine. This application was developed with Python version 3.10,
+but other versions of Python 3 would work as well.
 
 **Installation via requirements.txt**
 
@@ -66,8 +69,8 @@ This will run all unit, integration and e2e tests for domain models, memory repo
 ### Programming Language
 * Python (3.10)
 
-### Framework
-* Flask (2.0.3) - Web framework
+### Web Framework
+* Flask (2.0.3)
 
 ### Libraries
 * flask-wtf (0.15.0)
@@ -80,6 +83,36 @@ This will run all unit, integration and e2e tests for domain models, memory repo
 * CSS
 
 You can view the full list of dependencies in `requirements.txt` file.
+
+<br />
+
+## Features
+
+### Login & Register
+<img width="600" height="300" src="https://user-images.githubusercontent.com/86972879/201021556-7d544e5f-d156-494b-b883-8ba0c00db9fc.png" />
+
+Users can login and register to the application, and can logout by clicking the logout button.
+
+### Browsing Tracks
+<img width="600" height="300" src="https://user-images.githubusercontent.com/86972879/201022026-5218b48f-a613-4701-aa1b-34e1c86cf58a.png" />
+
+Users can browse the list of tracks with 10 tracks displayed on each page. Users can navigate between pages to browse the tracks they want.
+
+### View Track Detail & Reviews
+<img width="490" height="350" src="https://user-images.githubusercontent.com/86972879/201022581-026aa583-6119-4aff-a8bf-fdcd22ecb5f6.png" />
+
+Users can view the details of a track such as genres and duration, and can make reviews. <br />
+Only authenticated users can make a review for the track.
+
+### Browsing Albums
+<img width="550" height="300" src="https://user-images.githubusercontent.com/86972879/201022756-45244a39-ff23-4d27-8f85-f0254bd991ff.png" />
+
+Users can browse the list of albums with 10 albums displayed on each page. Users can navigate between pages to browse the albums they want.
+
+### View Album Detail
+<img width="500" height="360" src="https://user-images.githubusercontent.com/86972879/201022940-378e2ab1-dcb2-4547-a94e-dc8801f8ca9a.png" />
+
+Users can view the details of an album such as album type and release year, and they can view the list of tracks associated with this album.
 
 <br />
 
