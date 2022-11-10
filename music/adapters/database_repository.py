@@ -1,13 +1,11 @@
-from datetime import date
 from typing import List
 
 # from sqlalchemy import desc, asc
 from sqlalchemy.orm.exc import NoResultFound
-
 from sqlalchemy.orm import scoped_session
 
-from music.adapters.utils import search_string
 from music.adapters.repository import AbstractRepository
+from music.adapters.utils import search_string, sort_entities_by_title
 from music.domainmodel.user import User
 from music.domainmodel.artist import Artist
 from music.domainmodel.album import Album
@@ -75,9 +73,11 @@ class SqlAlchemyRepository(AbstractRepository):
             print(f'User {user_name} was not found')
         return user
 
-    def get_tracks(self) -> List[Track]:
+    def get_tracks(self, sorting: bool = False) -> List[Track]:
         tracks = self._session_cm.session.query(Track).all()
-        return tracks
+        if not sorting:
+            return tracks
+        return sort_entities_by_title(tracks)
 
     def get_track(self, track_id: int) -> Track:
         track = None
@@ -104,6 +104,12 @@ class SqlAlchemyRepository(AbstractRepository):
         num_tracks = self._session_cm.session.query(Track).count()
         return num_tracks
 
+    def get_tracks_by_album(self, album_id: int)->List[Album]:
+        album = self.get_album(album_id)
+        album_tracks = self._session_cm.session.query(Track).filter(
+            Track._Track__album == album).all()
+        return album_tracks
+
     def get_artists(self) -> List[Artist]:
         artists = self._session_cm.session.query(Artist).all()
         return artists
@@ -119,9 +125,22 @@ class SqlAlchemyRepository(AbstractRepository):
                 scm.session.merge(artist)
             scm.commit()
 
-    def get_albums(self) -> List[Album]:
+    def get_album(self, album_id: int)-> Album:
+        # Get a specific album by id
+        album = None
+        try:
+            album = self._session_cm.session.query(
+                Album).filter(Album._Album__album_id == album_id).one()
+        except NoResultFound:
+            print(f'Album {album_id} was not found')
+
+        return album
+
+    def get_albums(self, sorting: bool = False) -> List[Album]:
         albums = self._session_cm.session.query(Album).all()
-        return albums
+        if not sorting:
+            return albums
+        return sort_entities_by_title(albums)
 
     def add_album(self, album: Album):
         with self._session_cm as scm:
@@ -133,6 +152,10 @@ class SqlAlchemyRepository(AbstractRepository):
             for album in albums:
                 scm.session.merge(album)
             scm.commit()
+
+    def get_number_of_albums(self) -> int:
+        num_albums = self._session_cm.session.query(Album).count()
+        return num_albums
 
     def get_genres(self) -> List[Genre]:
         genres = self._session_cm.session.query(Genre).all()
@@ -185,14 +208,9 @@ class SqlAlchemyRepository(AbstractRepository):
 
         searched_tracks = []
         for track in tracks:
-
-            contained = False
             for genre in track.genres:
                 if search_string(genre.name, genre_string):
-                    contained = True
+                    searched_tracks.append(track)
                     break
-
-            if contained:
-                searched_tracks.append(track)
 
         return searched_tracks

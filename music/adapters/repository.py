@@ -73,13 +73,8 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def add_many_artist(self, artists: List[Artist]):
+    def add_many_artists(self, artists: List[Artist]):
         """ Add a list of artists to the repository. """
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def get_albums(self, sorting: bool) -> list:
-        """ Returns albums as a list from the repository. """
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -87,6 +82,11 @@ class AbstractRepository(abc.ABC):
         """ Return a specific album of the album_id param from the repository. """
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def get_albums(self, sorting: bool) -> list:
+        """ Returns albums as a list from the repository. """
+        raise NotImplementedError
+    
     @abc.abstractmethod
     def add_album(self, album: Album):
         """ Add an album to the repository. """
