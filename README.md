@@ -5,14 +5,15 @@ This project is a music library application where users can browse various album
 
 <br />
 
+
 ## Deployment
 ### Cloud Platform
-<img width="500" height="300" src="https://user-images.githubusercontent.com/86972879/201107417-7ecd8145-f7c0-4198-87d6-6597962f8f1b.png" />
+<img width="200" height="200" src="https://user-images.githubusercontent.com/86972879/201139651-0ac4b320-3dd6-447b-b8f2-c7c5f5c5350c.png" />
 
-The project has been deployed via <strong>[Render](https://render.com/)</strong> that hosts the application on the web.
+The project has been deployed via <strong>[Railway](https://railway.app/)</strong> that hosts the application on the web.
  
 ### Deployment URL
-[https://music-library-pxnb.onrender.com/](https://music-library-pxnb.onrender.com/)
+[https://music-library.up.railway.app/](https://music-library.up.railway.app/)
 
 <br />
 
