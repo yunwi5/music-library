@@ -32,7 +32,7 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_tracks(self) -> List[Track]:
+    def get_tracks(self, sorting: bool) -> List[Track]:
         """ Returns the list of tracks. """
         raise NotImplementedError
 
@@ -48,8 +48,18 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def add_many_tracks(self, tracks: List[Track]):
+        """ Add many tracks to the repository list of tracks. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def get_number_of_tracks(self):
         """ Returns a number of tracks exist in the repository. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_tracks_by_album(self, album_id: int)->List[Album]:
+        """ Return a list of tracks associated with the album of the param id. """
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -63,13 +73,33 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_albums(self) -> list:
-        """ Returns albums as a list from the repository. """
+    def add_many_artists(self, artists: List[Artist]):
+        """ Add a list of artists to the repository. """
         raise NotImplementedError
 
     @abc.abstractmethod
+    def get_album(self, album_id: int) -> Album:
+        """ Return a specific album of the album_id param from the repository. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_albums(self, sorting: bool) -> list:
+        """ Returns albums as a list from the repository. """
+        raise NotImplementedError
+    
+    @abc.abstractmethod
     def add_album(self, album: Album):
         """ Add an album to the repository. """
+        raise NotImplementedError
+    
+    @abc.abstractmethod
+    def add_many_albums(self, albums: List[Album]):
+        """ Add many albums as a list to the repository. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_number_of_albums(self)->int:
+        """ Return the number of albums in the repository. """
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -83,6 +113,11 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def add_many_genres(self, genres: List[Genre]):
+        """ Add many genres to the repository. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def add_review(self, review: Review):
         """ Adds a Review to the repository.
         If the Review doesn't have a link to the track, this method raises a
@@ -93,7 +128,7 @@ class AbstractRepository(abc.ABC):
                 'Review not currently attched to a Track')
 
     @abc.abstractmethod
-    def get_reviews_for_track(self, track_id: str) -> List[Track]:
+    def get_reviews_for_track(self, track_id: str) -> List[Review]:
         """ Receives track_id, and searches for reviews for the track of this id.
         Returns a list of reviews for this track as a list. """
         raise NotImplementedError

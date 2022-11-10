@@ -14,6 +14,7 @@ class SearchForm(FlaskForm):
         choices=[('title', 'Title'), ('artist', 'Artist'), ('album', 'Album'), ('genre', 'Genre')])
     text = StringField('Text', [
         DataRequired(message='Search text is required'),
-        Length(min=1, message='Search text is too short')])
+        Length(min=1, message='Search text is too short')],
+        render_kw={"placeholder": "Search for tracks"})
     # Instead of a submit field, define custom submit button on the header.html template.
     submit = SubmitField('Search')

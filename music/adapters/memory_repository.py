@@ -1,15 +1,14 @@
-from pathlib import Path
 from typing import List
 from bisect import insort_left
 
 from music.adapters.repository import AbstractRepository
-from music.adapters.utils import search_string
 from music.domainmodel.user import User
 from music.domainmodel.artist import Artist
 from music.domainmodel.album import Album
 from music.domainmodel.track import Track
 from music.domainmodel.review import Review
 from music.domainmodel.genre import Genre
+from music.adapters.utils import search_string, sort_entities_by_title
 
 
 class MemoryRepository(AbstractRepository):
@@ -35,17 +34,27 @@ class MemoryRepository(AbstractRepository):
         # Get a specific track by id
         return next((track for track in self.__tracks if track.track_id == track_id), None)
 
-    def get_tracks(self) -> List[Track]:
-        return self.__tracks
+    def get_tracks(self, sorting: bool = False) -> List[Track]:
+        if not sorting:
+            return self.__tracks
+        return sort_entities_by_title(self.__tracks)
 
     def add_track(self, track: Track):
+        # Verify that the track param is type Track.
         if isinstance(track, Track):
-            # When inserting the track, keep the track list sorted alphabetically by the title.
-            # Tracks will be sorted by title due to __lt__ method of the Track class.
             insort_left(self.__tracks, track)
+
+    def add_many_tracks(self, tracks: List[Track]):
+        for track in tracks:
+            self.add_track(track)
 
     def get_number_of_tracks(self):
         return len(self.__tracks)
+
+    def get_tracks_by_album(self, album_id: int)->List[Album]:
+        # Get tracks associated with the album of the album_id using filter function
+        album_tracks = list(filter(lambda track: track.album.album_id == album_id if track.album is not None else False, self.__tracks))
+        return album_tracks
 
     def get_artists(self) -> list:
         return list(self.__artists)
@@ -55,13 +64,30 @@ class MemoryRepository(AbstractRepository):
         if (isinstance(artist, Artist)):
             self.__artists.add(artist)
 
-    def get_albums(self) -> list:
-        return list(self.__albums)
+    def add_many_artists(self, artists: List[Artist]):
+        for artist in artists:
+            self.add_artist(artist)
+
+    def get_album(self, album_id: int) -> Album:
+        # Get a specific album by id
+        return next((album for album in self.__albums if album.album_id == album_id), None)
+
+    def get_albums(self, sorting: bool = False) -> list:
+        if not sorting:
+            return list(self.__albums)
+        return sort_entities_by_title(list(self.__albums))
 
     def add_album(self, album: Album):
         # Verify that the album param is type Album.
         if (isinstance(album, Album)):
             self.__albums.add(album)
+
+    def add_many_albums(self, albums: List[Album]):
+        for album in albums:
+            self.add_album(album)
+
+    def get_number_of_albums(self) -> int:
+        return len(self.__albums)
 
     def get_genres(self) -> list:
         return list(self.__genres)
@@ -71,6 +97,10 @@ class MemoryRepository(AbstractRepository):
         if (isinstance(genre, Genre)):
             self.__genres.add(genre)
 
+    def add_many_genres(self, genres: List[Genre]):
+        for genre in genres:
+            self.add_genre(genre)
+
     def add_review(self, review: Review):
         if not isinstance(review, Review):
             return
@@ -78,7 +108,7 @@ class MemoryRepository(AbstractRepository):
         super().add_review(review)
         self.__reviews.append(review)
 
-    def get_reviews_for_track(self, track_id: str) -> List[Track]:
+    def get_reviews_for_track(self, track_id: str) -> List[Review]:
         # Get reviews for track. Select reviews that have a track and its track_id matches the input track_id
         track_reviews = [
             review for review in self.__reviews if review.track and review.track.track_id == track_id]
@@ -112,14 +142,9 @@ class MemoryRepository(AbstractRepository):
         # If any of its genre name contains the input substring genre_string, the track will be searched.
         searched_tracks = []
         for track in self.__tracks:
-
-            contained = False
             for genre in track.genres:
                 if search_string(genre.name, genre_string):
-                    contained = True
+                    searched_tracks.append(track)
                     break
-
-            if contained:
-                searched_tracks.append(track)
 
         return searched_tracks

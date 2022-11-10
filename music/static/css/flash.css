@@ -1,0 +1,75 @@
+.flash-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    max-width: min(95vw, 45rem);
+    margin: 2rem auto 0px auto;
+}
+
+.flash {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    border-radius: 3px;
+
+    color: var(--color-gray-6);
+    font-weight: 600;
+
+    transition: background-color 0.3s ease-in-out;
+}
+
+.flash:last-child {
+    margin-bottom: -2.5rem;
+}
+
+.flash-info {
+    color: #0369a1;
+    background-color: #bae6fdee;
+}
+
+.flash-info:hover {
+    background-color: #7dd3fcee;
+}
+
+.flash-info .flash__exit {
+    fill: #0369a1;
+}
+
+.flash-success {
+    color: #047857;
+    background-color: #a7f3d0ee;
+}
+
+.flash-success:hover {
+    background-color: #6ee7b7ee;
+}
+
+.flash-success .flash__exit {
+    fill: #065f46ee;
+}
+
+.flash-error {
+    color: #be123c;
+    background-color: #fecdd3ee;
+}
+
+.flash-error:hover {
+    background-color: #fda4afee;
+}
+
+.flash-error .flash__exit {
+    fill: #be123c;
+}
+
+.flash__exit {
+    cursor: pointer;
+}
+
+.flash__exit:hover {
+    scale: 115%;
+}

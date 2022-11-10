@@ -1,11 +1,10 @@
 from pathlib import Path
-
 from music.adapters.repository import AbstractRepository
 from music.adapters.csvdatareader import TrackCSVReader
 
 
 # Populate the memory repository with the data from the csv files using the csv reader.
-def populate(data_path: Path, repo: AbstractRepository, testing: bool = False):
+def populate(data_path: Path, repo: AbstractRepository, testing: bool, database_mode: bool):
     if testing:
         # Different files for the testing mode.
         albums_filename = str(Path(data_path) / "raw_albums_test.csv")
@@ -17,6 +16,11 @@ def populate(data_path: Path, repo: AbstractRepository, testing: bool = False):
     # Construct a track csv reader class object.
     reader = TrackCSVReader(albums_filename, tracks_filename)
 
+    # Populate repository data (including database if it is a database mode)
+    populate_repository(reader, repo)
+
+# Populate repository for both memory and database mode
+def populate_repository(reader: TrackCSVReader, repo: AbstractRepository):
     # Read two csv files tracks and albums csv.
     reader.read_csv_files()
 
@@ -26,17 +30,13 @@ def populate(data_path: Path, repo: AbstractRepository, testing: bool = False):
     tracks = reader.dataset_of_tracks
 
     # Add albums to the repo
-    for album in albums:
-        repo.add_album(album)
+    repo.add_many_albums(albums)
 
     # Add artists to the repo
-    for artist in artists:
-        repo.add_artist(artist)
+    repo.add_many_artists(artists)
 
     # Add genres to the repo
-    for genre in genres:
-        repo.add_genre(genre)
+    repo.add_many_genres(genres)
 
     # Add tracks to the repo
-    for track in tracks:
-        repo.add_track(track)
+    repo.add_many_tracks(tracks)

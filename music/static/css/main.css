@@ -9,6 +9,8 @@
 @import './browse.css';
 @import './track-detail.css';
 @import './reviews.css';
+@import './album_detail.css';
+@import './flash.css';
 
 :root {
     /* Primary color sheme */
@@ -77,6 +79,10 @@ h5 {
     font-weight: 500;
 }
 
+strong {
+    font-weight: 700;
+}
+
 input,
 select,
 button {
@@ -90,6 +96,10 @@ input[type='submit'] {
 a,
 button {
     cursor: pointer;
+}
+
+a:visited {
+    color: var(--color-gray-7);
 }
 
 .link,
@@ -115,13 +125,15 @@ button {
     box-shadow: var(--shadow-light);
 }
 
-.btn-empty {
+.btn-empty,
+.btn-empty:visited {
+    color: var(--color-primary-6);
     border: 2px solid var(--color-primary-6);
     background-color: var(--color-white);
-    color: var(--color-primary-6);
 }
 
-.btn-fill {
+.btn-fill,
+.btn-fill:visited {
     color: var(--color-white);
     border: 2px solid var(--color-primary-6);
     background-color: var(--color-primary-6);
@@ -132,11 +144,11 @@ button {
     cursor: not-allowed;
 }
 
-.btn-empty:hover,
-.btn-fill:hover {
+.btn:hover,
+.btn:visited:hover {
     border: 2px solid var(--color-primary-8);
     background-color: var(--color-primary-8);
-    color: var(--color-white);
+    color: var(--color-white) !important;
 }
 
 .wrapper {
