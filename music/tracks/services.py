@@ -38,7 +38,7 @@ def get_tracks_for_page(page_index: int, tracks_per_page: int, repo: AbstractRep
     if page_index < 0:
         raise InvalidPageException('Negative page does not exist.')
 
-    tracks = repo.get_tracks()
+    tracks = repo.get_tracks(sorting=True)
 
     # Find the start index of the tracks for the current page.
     start_index = page_index * tracks_per_page

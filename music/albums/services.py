@@ -8,7 +8,7 @@ class InvalidPageException(Exception):
     pass
 
 def get_number_of_albums(repo: AbstractRepository)->int:
-    return len(repo.get_albums())
+    return repo.get_number_of_albums()
 
 
 def get_albums_for_page(page_index: int, albums_per_page: int, repo: AbstractRepository)->List[dict]:
@@ -17,7 +17,7 @@ def get_albums_for_page(page_index: int, albums_per_page: int, repo: AbstractRep
     if page_index < 0:
         raise InvalidPageException('Negative page does not exist.')
 
-    albums = repo.get_albums()
+    albums = repo.get_albums(sorting=True)
 
      # Find the start index of the albums for the current page.
     start_index = page_index * albums_per_page

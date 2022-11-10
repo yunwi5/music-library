@@ -32,7 +32,7 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_tracks(self) -> List[Track]:
+    def get_tracks(self, sorting: bool) -> List[Track]:
         """ Returns the list of tracks. """
         raise NotImplementedError
 
@@ -68,10 +68,9 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_albums(self) -> list:
+    def get_albums(self, sorting: bool) -> list:
         """ Returns albums as a list from the repository. """
         raise NotImplementedError
-
 
     @abc.abstractmethod
     def get_album(self, album_id: int) -> Album:
@@ -82,8 +81,11 @@ class AbstractRepository(abc.ABC):
     def add_album(self, album: Album):
         """ Add an album to the repository. """
         raise NotImplementedError
-
-
+    
+    @abc.abstractmethod
+    def get_number_of_albums(self)->int:
+        """ Return the number of albums in the repository. """
+        raise NotImplementedError
 
     @abc.abstractmethod
     def get_genres(self, genre: Genre) -> List[Genre]:
