@@ -1,4 +1,6 @@
-{% extends 'layout.html' %} {% block content %}
+{% extends 'layout.html' %}
+
+{% block content %}
 <main id="track-detail">
     <section class="wrapper track-wrapper">
         <article class="track-grid">
@@ -12,7 +14,9 @@
             </div>
             <div class="track-grid__section">
                 <strong>Album</strong>
-                <p>{{track.album}}</p>
+                <p>
+                    <a href="{{track.album_detail_url}}" class="link">{{track.album}}</a>
+                </p>
             </div>
             <div class="track-grid__section">
                 <strong>Genres</strong>
@@ -24,7 +28,8 @@
             </div>
         </article>
         <div class="track-action">
-            <a href="{{track.track_url}}" class="link">More About This Track</a>
+            <!-- Open external track page in a new tab -->
+            <a href="{{track.track_url}}" target="_blank" class="link">More About This Track</a>
 
             <!-- Show add review button only if there is no review by the current user -->
             {% if not user_review %}

@@ -7,6 +7,8 @@
         {% if not user_name %}
         <!-- Only show the register link if the user is not authenticated. -->
         <a href="{{ url_for('authentication_bp.register') }}" class="home__btn btn btn-fill">Get Started</a>
+        {% else %}
+        <a href="{{ url_for('albums_bp.browse_albums') }}" class="home__btn btn btn-fill">Explore Albums</a>
         {% endif %}
 
 

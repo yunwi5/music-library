@@ -27,6 +27,9 @@ def browse_tracks():
     num_tracks = services.get_number_of_tracks(repo.repo_instance)
     page_tracks = services.get_tracks_for_page(
         page, tracks_per_page, repo.repo_instance)
+    
+    # Insert album detail page link to each track
+    insert_album_detail_urls(page_tracks)
 
     first_tracks_url, prev_tracks_url, next_tracks_url, last_tracks_url = None, None, None, None
 
@@ -48,7 +51,7 @@ def browse_tracks():
             'tracks_bp.track_detail', track_id=track['track_id'])
 
     return render_template(
-        'tracks/browse.html',
+        'tracks/browse_tracks.html',
         # Custom page title
         title=f'Browse Tracks | CS235 Music Library',
         # Page heading
@@ -57,6 +60,7 @@ def browse_tracks():
         search_form=SearchForm(),
         user_name=user_name,
         tracks=page_tracks,
+        number_of_tracks=num_tracks,
         first_tracks_url=first_tracks_url,
         prev_tracks_url=prev_tracks_url,
         next_tracks_url=next_tracks_url,
@@ -94,6 +98,9 @@ def search_tracks():
     searched_page_tracks = searched_tracks[page *
                                            tracks_per_page:page*tracks_per_page+tracks_per_page]
 
+    # Insert album detail page link to each track
+    insert_album_detail_urls(searched_page_tracks)
+
     first_tracks_url, prev_tracks_url, next_tracks_url, last_tracks_url = None, None, None, None
 
     # Previous page exists
@@ -117,7 +124,7 @@ def search_tracks():
             'tracks_bp.track_detail', track_id=track['track_id'])
 
     return render_template(
-        'tracks/browse.html',
+        'tracks/browse_tracks.html',
         # Custom page title
         title=f'Tracks By {search_key.capitalize()} | CS235 Music Library',
         # Page heading
@@ -128,6 +135,7 @@ def search_tracks():
         search_form=search_form,
         user_name=user_name,
         tracks=searched_page_tracks,
+        number_of_tracks=number_of_searched_tracks,
         first_tracks_url=first_tracks_url,
         prev_tracks_url=prev_tracks_url,
         next_tracks_url=next_tracks_url,
@@ -138,18 +146,22 @@ def search_tracks():
 @tracks_blueprint.route('/track_detail', methods=['GET'])
 def track_detail():
     user_name = session['user_name'] if 'user_name' in session else None
-    track_id = get_track_id_arg()
+    track_id = get_track_id()
 
     # Get tracks for the track_id and add its list of reviews to the dict.
     track = get_track_and_reviews(track_id)
     # Current user's review on this track
     user_review = services.get_review_for_track_by_user(track_id, user_name, repo.repo_instance)
 
+
     # If track was not found, redirect to the browsing page.
     if track is None:
         flash(f'Track {track_id} was not found...', 'error')
         return redirect(url_for('tracks_bp.browse_tracks'))
 
+    # Insert album detail link so that clicking the album name will navigate to the album detail page
+    insert_album_detail_url(track)
+    
     return render_template(
         'tracks/track_detail.html',
         title=f"Track {track['title']} | CS235 Music Library",
@@ -184,15 +196,13 @@ def track_review():
 
     track_id = None
     if request.method == 'GET':
-        track_id = get_track_id_arg()
+        # Request is a HTTP GET to display the form.
+        track_id = get_track_id()
         # Store the track id in the form.
         review_form.track_id.data = track_id
 
     else:
         # Request is a HTTP POST where form validation has failed.
-        # Request is a HTTP GET to display the form.
-        flash(f'Your review could not be added...', 'error')
-
         # Extract the track id being hidden in form.
         track_id = int(review_form.track_id.data)
 
@@ -200,6 +210,8 @@ def track_review():
     track = get_track_and_reviews(track_id)
     # Current user's review on this track
     user_review = services.get_review_for_track_by_user(track_id, user_name, repo.repo_instance)
+    # Insert album detail link so that clicking the album name will navigate to the album detail page
+    insert_album_detail_url(track)
 
     return render_template(
         'tracks/track_detail.html',
@@ -213,7 +225,8 @@ def track_review():
 
 
 # Helper function to get track_id query param as an integer.
-def get_track_id_arg():
+# Return None if the track_id is of invalid type
+def get_track_id():
     track_id = request.args.get('track_id')
     track_id = int(
         track_id) if track_id is not None and track_id.isdigit() else None
@@ -231,6 +244,17 @@ def get_track_and_reviews(track_id: int):
     review_dicts = services.get_reviews_for_track(track_id, repo.repo_instance)
     track['reviews'] = review_dicts
     return track
+
+
+# Helper function to insert the album detail link
+def insert_album_detail_url(track: dict):
+    # Insert album detail link so that clicking the album name will navigate to the album detail page
+    track['album_detail_url'] = url_for('albums_bp.album_detail', album_id=track['album_id'])
+
+def insert_album_detail_urls(tracks: list[dict]):\
+    # Insert album detail link to the list of tracks
+    for track in tracks:
+        insert_album_detail_url(track)    
 
 
 class ProfanityFree:

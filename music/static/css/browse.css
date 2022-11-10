@@ -1,65 +1,98 @@
-#tracks {
+/* Album and track browsing page common styling */
+#browse {
     display: flex;
     padding: 3rem 15%;
     gap: 2rem;
     align-items: stretch;
 }
 
-.tracks-header {
+/* Browsing header styling */
+.browse-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
     text-transform: capitalize;
     color: var(--color-primary-7);
 }
 
-.tracks-header .heading {
+.browse-header .heading-text {
     color: var(--color-gray-7);
     font-weight: 400;
 }
 
-.tracks-header .highlight {
+.browse-header .highlight {
     color: var(--color-primary-7);
 }
 
-.track-table {
-    border-collapse: separate;
-    border-spacing: 0px 5px;
+.browse__subheading {
+    align-self: flex-end;
+    color: var(--color-gray-7);
+    font-weight: 600;
 }
 
-.track-table__head {
+/* Browsing table styling */
+.browse-table {
+    border-collapse: separate;
+    border-spacing: 0px 0px;
+}
+
+.browse-table__head {
     border-bottom: 2.5px solid var(--color-gray-4);
 }
 
-.track-table__head th {
-    text-align: left;
+.browse-table__head th {
     padding: 5px 0;
-    color: var(--color-primary-8);
     border-bottom: 2px solid var(--color-gray-4);
     border-collapse: separate;
+    color: var(--color-primary-8);
+    text-align: left;
 }
 
-.track-table__head th:not(:last-child) {
+.browse-table__head th:not(:last-child) {
     padding-right: 1.5rem;
 }
 
-.track-row:hover,
-.tracks-row:hover {
-    background-color: var(--color-primary-1);
+.browse-table td:first-child,
+.browse-table th:first-child {
+    padding-left: 3px;
 }
 
-.genres-row .genres-cell {
-    margin-top: -5px;
-    padding: 7px 0;
+.browse-row:hover {
+    background-color: var(--color-primary-1) !important;
 }
 
-.track-row td {
-    padding: 5px 0;
+.browse-row:nth-of-type(2n) {
+    background-color: var(--color-gray-2);
 }
 
-.track-row .track-heading {
+.browse-row td {
+    padding: 6px 0;
+}
+
+.browse-row .browse-number {
+    font-weight: 600;
+    width: 23.5px;
+}
+
+/* Album browsing page styling */
+.album-row .album-title {
+    font-weight: 600;
+    color: var(--color-gray-7);
+    cursor: pointer;
+}
+
+.album-row td {
+    padding: 13.5px 0;
+}
+
+/* Track browsing page styling */
+.track-heading {
     display: flex;
     flex-direction: column;
 }
 
-.track-row .track-heading__title {
+.track-heading__title {
     font-weight: 600;
     font-size: 1.25rem;
     color: var(--color-gray-7);
@@ -71,25 +104,23 @@
     color: var(--color-gray-6);
 }
 
-/* Tracks Navigation */
-.tracks-nav {
+/* Browsing Navigation */
+.browse-nav {
     display: flex;
     align-items: center;
-    /* justify-content: center; */
-    /* gap: 5rem; */
     margin-bottom: 1rem;
 }
 
-.tracks-nav .pave-nav {
+.browse-nav .pave-nav {
     display: flex;
     gap: 0.5rem;
 }
 
-.tracks-nav .pave-nav:last-child {
+.browse-nav .pave-nav:last-child {
     margin-right: 2.5rem;
 }
 
-.tracks-nav .page {
+.browse-nav .page {
     flex: 1;
     text-align: center;
 }

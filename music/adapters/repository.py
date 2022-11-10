@@ -32,7 +32,7 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_tracks(self) -> List[Track]:
+    def get_tracks(self, sorting: bool) -> List[Track]:
         """ Returns the list of tracks. """
         raise NotImplementedError
 
@@ -58,6 +58,11 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def get_tracks_by_album(self, album_id: int)->List[Album]:
+        """ Return a list of tracks associated with the album of the param id. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def get_artists(self) -> list:
         """ Returns artists as a list from the repository. """
         raise NotImplementedError
@@ -68,23 +73,33 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def add_many_artists(self, artists: List[Artist]):
-        """ Add many artists to the repository. """
+    def add_many_artist(self, artists: List[Artist]):
+        """ Add a list of artists to the repository. """
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_albums(self) -> list:
+    def get_albums(self, sorting: bool) -> list:
         """ Returns albums as a list from the repository. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_album(self, album_id: int) -> Album:
+        """ Return a specific album of the album_id param from the repository. """
         raise NotImplementedError
 
     @abc.abstractmethod
     def add_album(self, album: Album):
         """ Add an album to the repository. """
         raise NotImplementedError
-
+    
     @abc.abstractmethod
     def add_many_albums(self, albums: List[Album]):
         """ Add many albums as a list to the repository. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_number_of_albums(self)->int:
+        """ Return the number of albums in the repository. """
         raise NotImplementedError
 
     @abc.abstractmethod
