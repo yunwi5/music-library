@@ -1,3 +1,4 @@
+from typing import List
 from flask import Blueprint
 from flask import request, render_template, redirect, url_for, session, flash
 
@@ -256,7 +257,7 @@ def insert_album_detail_url(track: dict):
     # Insert album detail link so that clicking the album name will navigate to the album detail page
     track['album_detail_url'] = url_for('albums_bp.album_detail', album_id=track['album_id'])
 
-def insert_album_detail_urls(tracks: list[dict]):\
+def insert_album_detail_urls(tracks: List[dict]):
     # Insert album detail link to the list of tracks
     for track in tracks:
         insert_album_detail_url(track)    
