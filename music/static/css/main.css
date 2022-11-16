@@ -63,6 +63,26 @@ body {
     color: var(--color-gray-8);
 }
 
+/* Apply small font sizes for small screen <= 900px using css inheritance */
+@media only screen and (max-width: 900px) {
+    html {
+        font-size: calc(16px * 0.95);
+    }
+}
+
+/* Apply smaller font sizes for small screen <= 600px using css inheritance */
+@media only screen and (max-width: 600px) {
+    html {
+        font-size: calc(16px * 0.9);
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    html {
+        font-size: calc(16px * 0.85);
+    }
+}
+
 main {
     min-height: 82.5vh;
     display: flex;
