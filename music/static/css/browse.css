@@ -70,7 +70,7 @@
     padding: 6px 0;
 }
 
-.browse-row .browse-number {
+.browse-row .browse-table__number {
     font-weight: 600;
     width: 23.5px;
 }
