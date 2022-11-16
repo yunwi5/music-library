@@ -178,9 +178,17 @@ a.btn-fill:visited {
     box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
 }
 
+/* Reduce the padding relative to the screen size for mobile screens */
 @media only screen and (max-width: 900px) {
     .wrapper {
         padding: 2rem 3vw;
+    }
+}
+
+/* Reduce the shadow in mobile screens <= 600px */
+@media only screen and (max-width: 600px) {
+    .wrapper {
+        box-shadow: 1px 1px 2.5px rgba(0, 0, 0, 0.3);
     }
 }
 
