@@ -5,6 +5,12 @@
     gap: 2rem;
 }
 
+@media only screen and (max-width: 900px) {
+    #home {
+        padding: 5rem 3%;
+    }
+}
+
 .home__heading {
     max-width: 65rem;
     font-size: 3.8rem;
@@ -13,9 +19,16 @@
     color: var(--color-primary-9);
 }
 
+@media only screen and (max-width: 900px) {
+    .home__heading {
+        font-size: 9vw;
+    }
+}
+
 .home__sub-heading {
     color: var(--color-gray-6);
     font-size: 1.2rem;
+    text-align: center;
 }
 
 .home__action {
@@ -27,8 +40,20 @@
     gap: 1rem 1.5rem;
 }
 
+@media only screen and (max-width: 600px) {
+    .home__action {
+        margin-top: 1rem;
+    }
+}
+
 .home__btn {
     min-width: 12.5rem;
     text-align: center;
     font-size: 1.45rem !important;
+}
+
+@media only screen and (max-width: 400px) {
+    .home__btn {
+        width: 95%;
+    }
 }
