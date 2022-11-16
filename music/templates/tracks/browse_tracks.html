@@ -23,15 +23,15 @@
             <tr>
                 <th>No</th>
                 <th>Title</th>
-                <th>Album</th>
-                <th>Genre(s)</th>
-                <th>Duration</th>
+                <th class="track-album">Album</th>
+                <th class="track-genres">Genre(s)</th>
+                <th class="track-duration">Duration</th>
             </tr>
         </thead>
         <tbody class="browse-table__body">
             {% for track in tracks %}
             <tr class="browse-row track-row">
-                <td class="browse-number">
+                <td>
                     {{(track.index or 0) + 1}}
                 </td>
                 <td class="track-heading">
@@ -43,7 +43,7 @@
                         {{track.album}}
                     </a>
                 </td>
-                <td>{{track.genres}}</td>
+                <td class="track-genres">{{track.genres}}</td>
                 <td class="track-duration">{{track.track_duration}}</td>
             </tr>
             {% endfor %}
