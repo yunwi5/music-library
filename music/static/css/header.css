@@ -1,3 +1,4 @@
+/* Re-usable header component styling */
 #header {
     display: flex;
     justify-content: space-between;
@@ -9,10 +10,20 @@
     border-bottom: 2px solid var(--color-gray-3);
 }
 
-/* Hide the heading for mobile screen  */
-@media only screen and (max-width: 690px) {
-    .header__heading {
-        display: none;
+/* Search icon for showing the search form in the mobile screen */
+.search-icon {
+    background-color: transparent;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.search-icon:hover {
+    background-color: var(--color-gray-3);
+}
+
+@media only screen and (min-width: 690px) {
+    .search-icon {
+        display: hidden;
     }
 }
 
@@ -25,6 +36,7 @@
 @media only screen and (max-width: 690px) {
     .search-form {
         width: 100%;
+        display: none;
     }
 }
 
