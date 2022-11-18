@@ -61,7 +61,7 @@
     font-size: 1.05rem;
 }
 
-#album-detail .track-table {
+#album-detail .browse-table {
     margin-top: 0.75rem;
     width: 100%;
 }
@@ -72,12 +72,12 @@
     }
 }
 
-#album-detail .track-table .track-heading__title {
+#album-detail .track-heading__title {
     margin-bottom: 2px;
     font-weight: 600;
     font-size: 1.05rem;
 }
 
-#album-detail .track-table .track-heading__artist {
+#album-detail .track-heading__artist {
     font-size: 0.8em;
 }

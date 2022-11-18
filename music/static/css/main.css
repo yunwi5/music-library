@@ -159,7 +159,7 @@ a.btn-fill:visited {
     background-color: var(--color-primary-6);
 }
 
-.btn-disabled {
+.btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
