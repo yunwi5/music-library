@@ -124,6 +124,22 @@ def test_repository_can_retrieve_albums(memory_repo: MemoryRepository):
     assert len(albums) == 5
 
 
+def test_repository_can_get_tracks_by_album(memory_repo: MemoryRepository):
+    album_id = 1
+    # Get all tracks of this album
+    album_tracks = memory_repo.get_tracks_by_album(album_id)
+
+    # Check that the data type is list
+    assert type(album_tracks) is list
+    # Check there are total 4 tracks for this album
+    assert len(album_tracks) == 4
+
+    track_titles = [track.title for track  in album_tracks]
+    # Check there is a track 'Food' in the list
+    assert 'Food' in track_titles
+    assert 'Electric Ave' in track_titles
+    
+
 def test_repository_can_add_artist(memory_repo: MemoryRepository):
     artist = Artist(923892, 'A new artist')
     memory_repo.add_artist(artist)
