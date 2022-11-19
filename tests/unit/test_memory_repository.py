@@ -68,7 +68,6 @@ def test_repository_does_not_retrieve_a_non_existent_track(memory_repo: MemoryRe
 
 def test_repository_can_retrieve_track_count(memory_repo: MemoryRepository):
     number_of_tracks = memory_repo.get_number_of_tracks()
-
     # Check that the query returned 10 tracks
     assert number_of_tracks == 10
 
@@ -101,6 +100,22 @@ def test_repository_can_add_album(memory_repo: MemoryRepository):
     # Test repo has a new album inside
     albums = memory_repo.get_albums()
     assert album in albums
+
+
+def test_repository_can_retrieve_album(memory_repo: MemoryRepository):
+    album_id = 1
+    album = memory_repo.get_album(album_id)
+
+    # Check that the album has right title
+    assert album.title == 'AWOL - A Way Of Life'
+
+    # Check that the album has correct release year
+    assert album.release_year == 2009
+
+
+def test_repository_does_not_retrieve_a_non_existent_album(memory_repo: MemoryRepository):
+    album = memory_repo.get_album(134123123121)
+    assert album is None
 
 
 def test_repository_can_retrieve_albums(memory_repo: MemoryRepository):
