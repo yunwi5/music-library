@@ -3,8 +3,14 @@
     padding: 4rem 3rem;
 }
 
+@media only screen and (max-width: 900px) {
+    #track-detail {
+        padding: 3rem 2vw;
+    }
+}
+
 .track-wrapper {
-    min-width: 35rem;
+    width: clamp(20rem, 35rem, 97vw);
 }
 
 /* Track information grid styling */

@@ -44,9 +44,9 @@ def browse_albums():
     return render_template(
         'albums/browse_albums.html',
         # Custom page title
-        title=f'Browse albums | CS235 Music Library',
+        title=f'Browse Albums | CS235 Music Library',
         # Page heading
-        heading='Browse albums',
+        heading='Browse Albums',
         page=page,
         search_form=SearchForm(),
         user_name=user_name,

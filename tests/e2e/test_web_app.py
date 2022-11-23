@@ -3,7 +3,7 @@ import pytest
 from flask import session
 
 
-# Helper function to register and login the sample user (NOT an actual testing function)
+# Helper function only to register and login the sample user (NOT an actual testing function)
 def perform_login(client, auth):
     # First register a sample user.
     client.post(
@@ -89,9 +89,41 @@ def test_home(client):
     assert b'Feel the extreme joy of music with CS235 Music Library' in response.data
 
 
+def test_browse_albums(client):
+    # test /browse_albums route
+    # Check that we can retrieve the browsing page.
+    response = client.get('/browse_albums')
+    assert response.status_code == 200
+
+    # Check the browsing page heading in the response data
+    assert b'Browse Albums' in response.data
+
+    #  # Check the sample album is in the response data
+    assert b'Every Man For Himself' in response.data
+
+
+def test_album_detail(client):
+    # Test /album_detail route
+    album_id = 1  # Album id for album 'AWOL - A Way Of Life'
+    response = client.get(f'/album_detail?album_id={album_id}')
+
+    # Test that we can retrieve the album detail page
+    assert response.status_code == 200
+
+    # Test the title of the album is displayed on the page
+    assert b'AWOL - A Way Of Life' in response.data
+
+    # Test album type is displayed on the page
+    assert b'Album' in response.data
+
+    # Test release year is displayed on the page
+    assert b'2009' in response.data
+
+    # Test its tracks such as 'Food' are displayed on the page
+    assert b'Food' in response.data
+
 def test_browse_tracks(client):
     # Test /browse_tracks route
-
     # Check that we can retrieve the browsing page.
     response = client.get('/browse_tracks')
     assert response.status_code == 200
@@ -102,7 +134,6 @@ def test_browse_tracks(client):
 
 def test_track_detail(client):
     # Test /track_detail route
-
     track_id = 2  # Track id for track 'Food'
     response = client.get(f'/track_detail?track_id={track_id}')
 
@@ -186,6 +217,14 @@ def test_review_with_invalid_rating(client, auth, rating, messages):
         assert message in response.data
 
 
+def test_search_form(client):
+    # Make a POST request and submit the search form in its request
+    response = client.post('/search_tracks', data={'search_key': 'title', 'text': 'food'})
+    
+    # After POST, it should display the list of tracks for that title
+    assert b'Food' in response.data
+
+
 # Test searching
 def test_search_tracks_by_title(client):
     title = 'food'
@@ -196,10 +235,8 @@ def test_search_tracks_by_title(client):
 
     # Test the appropirate heading is displayed on the page
     assert b'Titles based on' in response.data
-
     # Test tracks of the searhed title is displayed on the page
     assert b'Food' in response.data
-
     # Test the artist is displayed on the page
     assert b'AWOL' in response.data
     # Test the album is displayed on the page
@@ -214,13 +251,10 @@ def test_search_tracks_by_artist(client):
         f'/search_tracks?page=0&search_key=artist&text={artist_name}')
 
     assert response.status_code == 200
-
     # Test the appropirate heading is displayed on the page
     assert b'Artists based on' in response.data
-
     # Test tracks of the artist is displayed on the page
     assert b'Food' in response.data
-
     # Test albums of the artist is displayed on the page
     assert b'AWOL - A Way Of Life' in response.data
 
@@ -231,12 +265,11 @@ def test_search_tracks_by_album(client):
         f'/search_tracks?page=0&search_key=album&text={album_name}')
 
     assert response.status_code == 200
-
     # Test the appropirate heading is displayed on the page
     assert b'Albums based on' in response.data
-
     # Test tracks of the album is displayed on the page
     assert b'Food' in response.data
+    # Test its tracks are displayed on the page
     assert b'Electric Ave' in response.data
 
 
@@ -246,9 +279,7 @@ def test_search_tracks_by_genre(client):
         f'/search_tracks?page=0&search_key=genre&text={genre_name}')
 
     assert response.status_code == 200
-
     # Test the appropirate heading is displayed on the page
     assert b'Genres based on' in response.data
-
     # Test tracks of the album is displayed on the page
     assert b'Electric Ave' in response.data

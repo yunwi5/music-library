@@ -57,8 +57,8 @@ def test_repository_can_add_track(session_factory):
     repo.add_track(track)
     repo.add_track(track2)
 
-    assert repo.get_track(5001) is track
-    assert repo.get_track(5002) is track2
+    assert repo.get_track(5001) == track
+    assert repo.get_track(5002) == track2
 
 
 def test_repository_can_retrieve_track(session_factory):

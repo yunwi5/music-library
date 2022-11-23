@@ -1,7 +1,6 @@
 # COMPSCI 235 Model Answer for Assignment 3
 This is a model answer repository for the assignment 3 of CompSci 235 in Semester 2, 2022.
 
-
 ## Description
 This project is a music library application where users can browse various albums and tracks, view the details of albums and tracks, and make reviews.
 
