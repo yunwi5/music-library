@@ -1,27 +1,21 @@
-# COMPSCI 235 Model Answer for Assignment 3
-This is a model answer repository for the assignment 3 of CompSci 235 in Semester 2, 2022.
+# Music Library
 
 ## Description
 This project is a music library application where users can browse various albums and tracks, view the details of albums and tracks, and make reviews.
 
-### Content from Assignment 1
-This repository contains an implementation of the domain model from Assignment 1. It contains unit tests on domain models which can be run through pytest.
+<br />
 
-### Content from Assignment 2
-It contains MVP features for a music library application such as authentication (login & register), browsing tracks with pagination, 
-searching tracks based on artists, albums and genres, browsing albums with pagination, and reviews on tracks.
 
-It contains unit tests, integration tests and e2e tests that will test domain models, memory repository methods,
- services, and a web app as a whole through pytest. The tests are located in `/tests` directory.
+## Deployment
+### Cloud Platform
+<img width="200" height="200" src="https://user-images.githubusercontent.com/86972879/201139651-0ac4b320-3dd6-447b-b8f2-c7c5f5c5350c.png" />
+
+The project has been deployed via <strong>[Railway](https://railway.app/)</strong> that hosts the application on the web.
  
- ### Content from Assignment 3
-It contains a database implementation of all features implemented in Assignment 2 solution. The database has been set up with SQLite3
-  and database repository has been implemented to retrieve and store the data with persistence.
-  
-It contains tests for ORM, database repository and database populatation inside `/tests_db` directory. 
-The existing tests in `/tests` directory still work the same.
+### Deployment URL
+[https://music-library.up.railway.app/](https://music-library.up.railway.app/)
 
- <br />
+<br />
 
 ## Installation
 
