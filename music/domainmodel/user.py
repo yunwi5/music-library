@@ -1,6 +1,5 @@
-from typing import  List
+from typing import List
 from music.domainmodel.track import Track
-
 
 class User:
 

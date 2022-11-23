@@ -63,6 +63,26 @@ body {
     color: var(--color-gray-8);
 }
 
+/* Apply small font sizes for small screen <= 900px using css inheritance */
+@media only screen and (max-width: 900px) {
+    html {
+        font-size: calc(16px * 0.95);
+    }
+}
+
+/* Apply smaller font sizes for small screen <= 600px using css inheritance */
+@media only screen and (max-width: 600px) {
+    html {
+        font-size: calc(16px * 0.9);
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    html {
+        font-size: calc(16px * 0.85);
+    }
+}
+
 main {
     min-height: 82.5vh;
     display: flex;
@@ -139,7 +159,7 @@ a:visited {
     background-color: var(--color-primary-6);
 }
 
-.btn-disabled {
+.btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
@@ -156,6 +176,20 @@ a:visited {
     border-radius: 10px;
     border: 2px solid var(--color-gray-4);
     box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Reduce the padding relative to the screen size for mobile screens */
+@media only screen and (max-width: 900px) {
+    .wrapper {
+        padding: 2rem 3vw;
+    }
+}
+
+/* Reduce the shadow in mobile screens <= 600px */
+@media only screen and (max-width: 600px) {
+    .wrapper {
+        box-shadow: 1px 1px 2.5px rgba(0, 0, 0, 0.3);
+    }
 }
 
 .heading-2 {

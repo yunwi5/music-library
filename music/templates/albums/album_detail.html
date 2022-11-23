@@ -30,21 +30,21 @@
                     <tr>
                         <th>No</th>
                         <th>Track Title</th>
-                        <th>Genre(s)</th>
+                        <th class='track-genres'>Genre(s)</th>
                         <th>Duration</th>
                     </tr>
                 </thead>
                 <tbody class="browse-table__body">
                     {% for track in album_tracks %}
                     <tr class="browse-row track-row">
-                        <td class="browse-number">
+                        <td>
                             {{(track.index or 0) + 1}}
                         </td>
                         <td class="track-heading">
                             <a href="{{track.track_detail_url}}" class="link track-heading__title">{{track.title}}</a>
                             <span class="track-heading__artist">{{track.artist}}</span>
                         </td>
-                        <td>
+                        <td class="track-genres">
                             {{track.genres}}
                         </td>
                         <td class="track-duration">{{track.track_duration}}</td>

@@ -4,6 +4,7 @@ import pytest
 
 from music.authentication.services import AuthenticationException
 
+from music.albums import services as albums_services
 from music.tracks import services as tracks_services
 from music.authentication import services as auth_services
 from music.tracks.services import NonExistentTrackException, InvalidSearchKeyException, InvalidPageException, UnknownUserException
@@ -60,6 +61,30 @@ def test_authentication_with_invalid_credentials(memory_repo):
             new_user_name, 'invalid password', memory_repo)
 
 
+def test_get_album(memory_repo):
+    album_id = 1
+    # Test service layer returns an album dict
+    album = albums_services.get_album(album_id, memory_repo)
+    
+    # Test its attributes
+    assert album['title'] == 'AWOL - A Way Of Life'
+    assert album['release_year'] == 2009
+
+    # Test non-existing album returns none
+    album = albums_services.get_album(-100, memory_repo)
+    assert album is None
+
+
+def test_get_albums_for_page(memory_repo):
+    page_albums = albums_services.get_albums_for_page(0, 5, memory_repo)
+    # Test only 5 albums are retrieved from the service layer
+    assert len(page_albums) == 5
+
+    page_albums = albums_services.get_albums_for_page(0, 10, memory_repo)
+    # Test only 5 albums retrieved with no errors as there are only 5 albums in total
+    assert len(page_albums) == 5
+
+
 def test_get_track(memory_repo):
     track_id = 2
 
@@ -76,7 +101,6 @@ def test_get_track(memory_repo):
 
 def test_get_number_of_tracks(memory_repo):
     num_tracks = tracks_services.get_number_of_tracks(memory_repo)
-
     # Test service layer retrieves correct number of tracks (total 10 in testing mode)
     assert num_tracks == 10
 

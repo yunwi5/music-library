@@ -9,6 +9,21 @@
     padding: 0.75rem 3px;
 }
 
+/* Footer stretches the full height in the mobile <= 900px */
+@media only screen and (max-width: 900px) {
+    #footer {
+        margin: 0 !important;
+    }
+}
+
+/* Footer switches to column layout for mobile <= 600px */
+@media only screen and (max-width: 600px) {
+    #footer {
+        gap: 0.75rem;
+        flex-direction: column;
+    }
+}
+
 #footer .heading-2 {
     font-size: 1.35rem;
 }
@@ -16,4 +31,5 @@
 #footer .footer__content {
     color: var(--color-gray-6);
     opacity: 0.9;
+    text-align: center;
 }

@@ -1,6 +1,3 @@
-#auth {
-}
-
 #auth .form-wrapper {
     padding: 2rem 3rem;
     border-radius: 10px;
@@ -9,10 +6,7 @@
 }
 
 .auth-heading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.1rem;
+    text-align: center;
 }
 
 .auth-heading .auth-heading__title {
@@ -91,4 +85,18 @@
 .auth-form__errors {
     max-width: 20rem;
     margin-bottom: -5px;
+}
+
+@media only screen and (max-width: 800px) {
+    #auth {
+        min-height: 80vh;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    #auth .form-wrapper {
+        width: clamp(18rem, 23rem, 95vw);
+        margin: 0 auto;
+        padding: 1.5rem 1.7rem;
+    }
 }

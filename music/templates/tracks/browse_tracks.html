@@ -10,7 +10,7 @@
         <!-- Mark up for the heading containing highlight such as search key 'Artist', 'Author' that should be emphasized -->
         <h1 class="browse__heading">
             <span class="heading-text">{{heading}}</span>
-            <span class="highlight">{{highlight}}</span>
+            <span class="heading-highlight">{{highlight}}</span>
         </h1>
         {% endif %}
 
@@ -23,19 +23,19 @@
             <tr>
                 <th>No</th>
                 <th>Title</th>
-                <th>Album</th>
-                <th>Genre(s)</th>
-                <th>Duration</th>
+                <th class="track-album">Album</th>
+                <th class="track-genres">Genre(s)</th>
+                <th class="track-duration">Duration</th>
             </tr>
         </thead>
         <tbody class="browse-table__body">
             {% for track in tracks %}
-            <tr class="browse-row track-row">
-                <td class="browse-number">
+            <tr class="browse-row">
+                <td>
                     {{(track.index or 0) + 1}}
                 </td>
                 <td class="track-heading">
-                    <a href="{{track.track_detail_url}}" class="link track-heading__title">{{track.title}}</a>
+                    <a class="link track-heading__title" href="{{track.track_detail_url}}">{{track.title}}</a>
                     <span class="track-heading__artist">{{track.artist}}</span>
                 </td>
                 <td class="track-album">
@@ -43,7 +43,7 @@
                         {{track.album}}
                     </a>
                 </td>
-                <td>{{track.genres}}</td>
+                <td class="track-genres">{{track.genres}}</td>
                 <td class="track-duration">{{track.track_duration}}</td>
             </tr>
             {% endfor %}
@@ -57,13 +57,13 @@
                 {% if first_tracks_url %}
                 <button class="btn btn-fill" onclick="location.href='{{first_tracks_url}}'">First</button>
                 {% else %}
-                <button class="btn btn-fill btn-disabled" disabled>First</button>
+                <button class="btn btn-fill" disabled>First</button>
                 {% endif %}
 
                 {% if prev_tracks_url %}
                 <button class="btn btn-fill" onclick="location.href='{{prev_tracks_url}}'">Previous</button>
                 {% else %}
-                <button class="btn btn-fill btn-disabled" disabled>Previous</button>
+                <button class="btn btn-fill" disabled>Previous</button>
                 {% endif %}
             </div>
             <div class="page">
@@ -73,13 +73,13 @@
                 {% if next_tracks_url %}
                 <button class="btn btn-fill" onclick="location.href='{{next_tracks_url}}'">Next</button>
                 {% else %}
-                <button class="btn btn-fill btn-disabled" disabled>Next</button>
+                <button class="btn btn-fill" disabled>Next</button>
                 {% endif %}
 
                 {% if last_tracks_url %}
                 <button class="btn btn-fill" onclick="location.href='{{last_tracks_url}}'">Last</button>
                 {% else %}
-                <button class="btn btn-fill btn-disabled" disabled>Last</button>
+                <button class="btn btn-fill" disabled>Last</button>
                 {% endif %}
             </div>
         </nav>
