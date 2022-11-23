@@ -6,14 +6,28 @@
     align-items: stretch;
 }
 
+@media only screen and (max-width: 900px) {
+    #browse {
+        padding: 3rem 3vw;
+    }
+}
+
 /* Browsing header styling */
 .browse-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 0.3rem 1rem;
 
     text-transform: capitalize;
     color: var(--color-primary-7);
+}
+
+@media only screen and (max-width: 600px) {
+    .browse-header .browse__heading {
+        font-size: 1.75rem;
+    }
 }
 
 .browse-header .heading-text {
@@ -21,7 +35,7 @@
     font-weight: 400;
 }
 
-.browse-header .highlight {
+.browse-header .heading-highlight {
     color: var(--color-primary-7);
 }
 
@@ -49,7 +63,8 @@
     text-align: left;
 }
 
-.browse-table__head th:not(:last-child) {
+.browse-table__head th:not(:last-child),
+.browse-table__body td:not(:last-child) {
     padding-right: 1.5rem;
 }
 
@@ -70,7 +85,7 @@
     padding: 6px 0;
 }
 
-.browse-row .browse-number {
+.browse-row .browse-table__number {
     font-weight: 600;
     width: 23.5px;
 }
@@ -86,6 +101,12 @@
     padding: 13.5px 0;
 }
 
+@media only screen and (max-width: 600px) {
+    .album-row .album-type {
+        display: none;
+    }
+}
+
 /* Track browsing page styling */
 .track-heading {
     display: flex;
@@ -99,9 +120,39 @@
     cursor: pointer;
 }
 
+@media only screen and (max-width: 600px) {
+    .track-heading__title {
+        font-size: 1.075rem;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .track-heading__title {
+        font-size: 1rem;
+    }
+}
+
 .track-heading__artist {
     font-size: 0.9rem;
     color: var(--color-gray-6);
+}
+
+@media only screen and (max-width: 600px) {
+    .track-heading__artist {
+        font-size: 0.85rem;
+    }
+    .track-genres {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .track-album {
+        padding-left: 2rem;
+    }
+    .track-duration {
+        display: none;
+    }
 }
 
 /* Browsing Navigation */
@@ -114,10 +165,6 @@
 .browse-nav .pave-nav {
     display: flex;
     gap: 0.5rem;
-}
-
-.browse-nav .pave-nav:last-child {
-    margin-right: 2.5rem;
 }
 
 .browse-nav .page {

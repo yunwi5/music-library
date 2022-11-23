@@ -102,11 +102,43 @@ def test_repository_can_add_album(memory_repo: MemoryRepository):
     assert album in albums
 
 
+def test_repository_can_retrieve_album(memory_repo: MemoryRepository):
+    album_id = 1
+    album = memory_repo.get_album(album_id)
+
+    # Check that the album has right title
+    assert album.title == 'AWOL - A Way Of Life'
+
+    # Check that the album has correct release year
+    assert album.release_year == 2009
+
+
+def test_repository_does_not_retrieve_a_non_existent_album(memory_repo: MemoryRepository):
+    album = memory_repo.get_album(134123123121)
+    assert album is None
+
+
 def test_repository_can_retrieve_albums(memory_repo: MemoryRepository):
     albums = memory_repo.get_albums()
     # Test there are total 5 albums inside the test csv file.
     assert len(albums) == 5
 
+
+def test_repository_can_get_tracks_by_album(memory_repo: MemoryRepository):
+    album_id = 1
+    # Get all tracks of this album
+    album_tracks = memory_repo.get_tracks_by_album(album_id)
+
+    # Check that the data type is list
+    assert type(album_tracks) is list
+    # Check there are total 4 tracks for this album
+    assert len(album_tracks) == 4
+
+    track_titles = [track.title for track  in album_tracks]
+    # Check there is a track 'Food' in the list
+    assert 'Food' in track_titles
+    assert 'Electric Ave' in track_titles
+    
 
 def test_repository_can_add_artist(memory_repo: MemoryRepository):
     artist = Artist(923892, 'A new artist')

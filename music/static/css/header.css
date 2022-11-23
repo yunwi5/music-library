@@ -1,11 +1,30 @@
+/* Re-usable header component styling */
 #header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 2rem;
+    flex-wrap: wrap;
+    gap: 0.8rem 2rem;
 
-    padding: 0.75rem 3rem;
+    padding: 0.75rem 3.5vw;
     border-bottom: 2px solid var(--color-gray-3);
+}
+
+/* Search icon for showing the search form in the mobile screen */
+.search-icon {
+    background-color: transparent;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.search-icon:hover {
+    background-color: var(--color-gray-3);
+}
+
+@media only screen and (min-width: 690px) {
+    .search-icon {
+        display: none;
+    }
 }
 
 /* Header searchbar form styling */
@@ -14,10 +33,18 @@
     gap: 0.5rem;
 }
 
+@media only screen and (max-width: 690px) {
+    .search-form {
+        width: 100%;
+        display: none;
+    }
+}
+
 .search-form select {
+    min-height: 42px;
     background-color: var(--color-primary-6);
     color: var(--color-white);
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem;
     border-radius: 3px;
     font-size: 1.1rem;
     border: 2px solid transparent;
@@ -41,20 +68,30 @@
     display: flex;
     border-radius: 3px;
     overflow: hidden;
+    flex-grow: 1;
 }
 
 .search-form__group:focus-within {
     outline: var(--color-primary-6) solid 2px;
 }
 
+.search-form__group .search-form__field {
+    flex-grow: 1;
+}
+
 .search-form__group .input {
     height: 100%;
     width: 100%;
     padding: 0 7px;
-    min-width: 13.5rem;
+    border: 1.5px solid var(--color-gray-4);
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
-    border: 1.5px solid var(--color-gray-4);
+}
+
+@media only screen and (min-width: 600px) {
+    .search-form__group .input {
+        min-width: 14rem;
+    }
 }
 
 .search-form__group .submit {
@@ -75,7 +112,6 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    margin-left: -0.5rem;
 }
 
 .header__nav-items,
