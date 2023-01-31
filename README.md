@@ -17,8 +17,27 @@ The project has been deployed via <strong>[Railway](https://railway.app/)</stron
 
 <br />
 
-## Installation
+## Docker Setup
 
+You can easily set up the project with Docker to run the application in an isolated environment (recommended).
+
+**Setup via Docker**
+
+```bash
+# Builds an image for the application
+$ make docker-build
+# Runs the image in the port 5000
+$ make docker-run
+```
+
+You can view the docker environment setup and configuration in `Dockerfile` and `Makefile` in the root directory.
+
+<br />
+
+
+## Local Installation Setup
+
+You can set up the environment locally as well. <br />
 Please make sure you have `Python` installed on your machine. This application was developed with Python version 3.10,
 but other versions of Python 3 would work as well.
 
