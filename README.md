@@ -24,9 +24,21 @@ but other versions of Python 3 would work as well.
 
 **Installation via requirements.txt**
 
+### Windows Guide
 ```shell
+# Create a virtual environment
+py -3 -m venv venv
 # Activate the virtual environment
-$ py -3 -m venv venv
+venv\Scripts\activate
+# Install all dependencies in requirements.txt file
+pip install -r requirements.txt
+```
+
+### Linux Guide
+```bash
+# Create a virtual environment
+$ python3 -m venv venv
+# Activate the virtual environment
 $ venv\Scripts\activate
 # Install all dependencies in requirements.txt file
 $ pip install -r requirements.txt
