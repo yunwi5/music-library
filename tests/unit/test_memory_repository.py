@@ -37,10 +37,10 @@ def test_repository_does_not_retrieve_a_non_existent_user(memory_repo: MemoryRep
 
 
 def test_repository_can_add_track(memory_repo: MemoryRepository):
-    article = Track(5001, 'My new track 101')
-    memory_repo.add_track(article)
+    track = Track(5001, 'My new track 101')
+    memory_repo.add_track(track)
 
-    assert memory_repo.get_track(5001) is article
+    assert memory_repo.get_track(5001) is track
 
 
 def test_repository_can_retrieve_track(memory_repo: MemoryRepository):
@@ -68,7 +68,7 @@ def test_repository_does_not_retrieve_a_non_existent_track(memory_repo: MemoryRe
 
 def test_repository_can_retrieve_track_count(memory_repo: MemoryRepository):
     number_of_tracks = memory_repo.get_number_of_tracks()
-    # Check that the query returned 10 tracks
+    # Check that the query returned 10 tracks in the testing file raw_tracks_test.csv.
     assert number_of_tracks == 10
 
 
@@ -150,7 +150,6 @@ def test_repository_can_add_artist(memory_repo: MemoryRepository):
 
 def test_repository_can_retrieve_artists(memory_repo: MemoryRepository):
     artists = memory_repo.get_artists()
-
     # Test there are total 5 artits inside the test csv file.
     assert len(artists) == 5
 

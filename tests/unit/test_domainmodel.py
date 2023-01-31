@@ -423,9 +423,9 @@ class TestTrack:
         assert sorted(track_list) == [track1, track1, track2, track3]
 
     def test_set(self):
-        track1 = Track(1, 'Shivers')
+        track1 = Track(1, 'Bad Habit')
         track2 = Track(8, 'Heat Waves')
-        track3 = Track(10, 'Bad Habit')
+        track3 = Track(10, 'Shivers')
 
         track_set = set()
         track_set.add(track1)

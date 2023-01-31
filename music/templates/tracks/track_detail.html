@@ -87,6 +87,7 @@
             <h2 class="heading">Reviews</h2>
             <ul class="reviews">
                 <!-- Render list of review dics as html element -->
+                <!-- Jinja syntax requires dot notation to access dictionary attributes. -->
                 {% for review in track.reviews %}
                 <li class="review-card">
                     <div class="review-card__info">

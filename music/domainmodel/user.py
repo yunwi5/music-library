@@ -1,7 +1,6 @@
 from typing import List
 from music.domainmodel.track import Track
 
-
 class User:
 
     def __init__(self, user_name: str, password: str):
@@ -26,7 +25,7 @@ class User:
         return self.__password
 
     @property
-    def liked_tracks(self) -> list:
+    def liked_tracks(self) -> List[Track]:
         return self.__liked_tracks
 
     def add_liked_track(self, track: Track):

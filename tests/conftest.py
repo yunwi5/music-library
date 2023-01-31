@@ -14,7 +14,7 @@ TEST_DATA_PATH = get_project_root() / "tests" / "data"
 @pytest.fixture
 def memory_repo():
     repo = MemoryRepository()
-    repository_populate.populate(TEST_DATA_PATH, repo, testing=True)
+    repository_populate.populate(TEST_DATA_PATH, repo, testing=True, database_mode=False)
     return repo
 
 
@@ -23,6 +23,8 @@ def client():
     my_app = create_app({
         # Set to True during testing.
         'TESTING': True,
+        # Set REPOSITORY mode to 'memory' always. Otherwise, it results in errors in e2e testing.
+        'REPOSITORY': 'memory',
         # Path for loading test data into the repository.
         'TEST_DATA_PATH': TEST_DATA_PATH,
         # test_client will not send a CSRF token, so disable validation.
