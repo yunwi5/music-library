@@ -16,8 +16,8 @@ COPY . /app
 # Set the environment variable for Flask
 ENV FLASK_APP=wsgi.py
 
-# Expose port 5000 for Flask to listen on
+# Expose port 5000 for Gunicorn to listen on
 EXPOSE 5000
 
 # Command to run the Flask application
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD [ "gunicorn", "wsgi:app", "-b", "0.0.0.0:5000"]
