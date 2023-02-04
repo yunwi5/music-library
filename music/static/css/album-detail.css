@@ -20,12 +20,6 @@
     row-gap: 1rem;
 }
 
-@media only screen and (max-width: 600px) {
-    .album-grid {
-        grid-template-columns: repeat(1, 1fr);
-    }
-}
-
 .album-grid__section strong {
     display: inline-block;
     font-weight: 600;

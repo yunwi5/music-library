@@ -58,7 +58,7 @@ pip install -r requirements.txt
 # Create a virtual environment
 $ python3 -m venv venv
 # Activate the virtual environment
-$ venv\Scripts\activate
+$ source venv/bin/activate
 # Install all dependencies in requirements.txt file
 $ pip install -r requirements.txt
 ```

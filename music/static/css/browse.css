@@ -1,5 +1,5 @@
 /* Album and track browsing page common styling */
-#browse {
+#browse-tracks, #browse-albums {
     display: flex;
     padding: 3rem 15%;
     gap: 2rem;
@@ -7,7 +7,7 @@
 }
 
 @media only screen and (max-width: 900px) {
-    #browse {
+    #browse-tracks, #browse-albums {
         padding: 3rem 3vw;
     }
 }
@@ -107,12 +107,7 @@
     }
 }
 
-/* Track browsing page styling */
-.track-heading {
-    display: flex;
-    flex-direction: column;
-}
-
+/* Track browsing page specific styling */
 .track-heading__title {
     font-weight: 600;
     font-size: 1.25rem;
@@ -150,7 +145,7 @@
     .track-album {
         padding-left: 2rem;
     }
-    .track-duration {
+    #browse-tracks .track-duration {
         display: none;
     }
 }
