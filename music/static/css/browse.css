@@ -107,12 +107,7 @@
     }
 }
 
-/* Track browsing page styling */
-.track-heading {
-    display: flex;
-    flex-direction: column;
-}
-
+/* Track browsing page specific styling */
 .track-heading__title {
     font-weight: 600;
     font-size: 1.25rem;
