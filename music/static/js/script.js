@@ -7,7 +7,7 @@ const headerHeading = document.querySelector('.header__heading');
 
 const searchIcon = document.querySelector('#search-icon');
 searchIcon.addEventListener('click', () => {
-    if (window.innerWidth >= MOBILE_BP) return;
+    if (window.innerWidth > MOBILE_BP) return;
     searchForm.style.display = 'flex';
     headerHeading.style.display = 'none';
     searchIcon.style.display = 'none';
@@ -20,7 +20,7 @@ function turnOffSearchMode() {
 }
 
 window.addEventListener('resize', () => {
-    if (window.innerWidth >= MOBILE_BP) {
+    if (window.innerWidth > MOBILE_BP) {
         headerHeading.style.display = 'block';
         searchForm.style.display = 'flex';
         searchIcon.style.display = 'none';
@@ -30,7 +30,7 @@ window.addEventListener('resize', () => {
 });
 
 window.addEventListener('click', function (e) {
-    if (!header.contains(e.target) && window.innerWidth < MOBILE_BP) {
+    if (!header.contains(e.target) && window.innerWidth <= MOBILE_BP) {
         turnOffSearchMode();
     }
 });
