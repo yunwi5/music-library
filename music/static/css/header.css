@@ -41,7 +41,7 @@
 }
 
 .search-form select {
-    min-height: 42px;
+    height: 42px !important;
     background-color: var(--color-primary-6);
     color: var(--color-white);
     padding: 0.5rem;
