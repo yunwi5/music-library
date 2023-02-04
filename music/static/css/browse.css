@@ -1,5 +1,5 @@
 /* Album and track browsing page common styling */
-#browse-tracks {
+#browse-tracks, #browse-albums {
     display: flex;
     padding: 3rem 15%;
     gap: 2rem;
@@ -7,7 +7,7 @@
 }
 
 @media only screen and (max-width: 900px) {
-    #browse-tracks {
+    #browse-tracks, #browse-albums {
         padding: 3rem 3vw;
     }
 }
